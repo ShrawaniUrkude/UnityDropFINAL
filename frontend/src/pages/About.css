@@ -1,0 +1,221 @@
+.about-mission__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 72px;
+    align-items: center;
+}
+
+.about-mission__visual img {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.about-mission__values {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 28px;
+}
+
+.about-value {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 14px 18px;
+}
+
+.about-value__icon {
+    font-size: 1.4rem;
+    width: 42px;
+    height: 42px;
+    border-radius: var(--radius-md);
+    background: rgba(76, 175, 135, 0.09);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.about-value strong {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--gray-800);
+    margin-bottom: 3px;
+}
+
+.about-value p {
+    font-size: 0.82rem;
+    color: var(--gray-500);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ── TIMELINE ── */
+.about-timeline {
+    max-width: 720px;
+    margin: 56px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+}
+
+.about-timeline::before {
+    content: '';
+    position: absolute;
+    left: 80px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--primary), var(--accent));
+}
+
+.about-timeline__item {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 28px;
+    position: relative;
+}
+
+.about-timeline__year {
+    width: 60px;
+    font-family: var(--font-display);
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: var(--primary);
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.about-timeline__dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--primary);
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+    box-shadow: 0 0 0 4px rgba(26, 58, 107, 0.15);
+}
+
+.about-timeline__content {
+    flex: 1;
+    padding: 16px 20px;
+}
+
+.about-timeline__content strong {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+}
+
+.about-timeline__content p {
+    font-size: 0.83rem;
+    color: var(--gray-500);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* ── TEAM ── */
+.about-team {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+    text-align: center;
+}
+
+.about-team-card {
+    padding: 28px 20px;
+}
+
+.about-team-card__avatar {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    border: 4px solid rgba(26, 58, 107, 0.15);
+    margin: 0 auto 14px;
+    background: var(--gray-100);
+}
+
+.about-team-card h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-900);
+    margin-bottom: 4px;
+}
+
+.about-team-card__role {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--primary);
+    margin-bottom: 10px;
+}
+
+.about-team-card__bio {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    line-height: 1.7;
+}
+
+/* ── PRESS ── */
+.about-press {
+    padding: 56px 0;
+}
+
+.about-press .text-center {
+    margin-bottom: 40px;
+}
+
+.about-press__logos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+}
+
+.about-press__logo {
+    padding: 12px 24px;
+    border-radius: var(--radius-md);
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.about-press__logo:hover {
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.12);
+}
+
+@media (max-width: 1024px) {
+    .about-team {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .about-mission__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .about-mission__visual {
+        display: none;
+    }
+
+    .about-timeline::before {
+        left: 60px;
+    }
+}
+
+@media (max-width: 600px) {
+    .about-team {
+        grid-template-columns: 1fr;
+    }
+}

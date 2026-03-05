@@ -1,0 +1,202 @@
+.volunteers-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.volunteers-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+/* Volunteer Card */
+.volunteer-card {
+    text-align: center;
+    overflow: visible;
+}
+
+.volunteer-card__header {
+    position: relative;
+    padding: 32px 20px 16px;
+    background: linear-gradient(135deg, var(--secondary) 0%, var(--secondary-light) 100%);
+}
+
+.volunteer-card__avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 4px solid var(--white);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    margin: 0 auto;
+    background: var(--gray-100);
+}
+
+.volunteer-card__rank {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--primary);
+    color: var(--white);
+    font-size: 0.72rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.volunteer-card__body {
+    padding: 18px 20px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.volunteer-card__badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--primary);
+    background: rgba(26, 58, 107, 0.07);
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    display: inline-block;
+}
+
+.volunteer-card__name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-900);
+}
+
+.volunteer-card__role {
+    font-size: 0.82rem;
+    color: var(--gray-500);
+}
+
+.volunteer-card__location {
+    font-size: 0.8rem;
+    color: var(--gray-400);
+}
+
+.volunteer-card__stats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    background: var(--gray-50);
+    border-radius: var(--radius-md);
+    padding: 12px 0;
+    margin: 4px 0;
+}
+
+.volunteer-card__stat {
+    flex: 1;
+    text-align: center;
+}
+
+.volunteer-card__stat strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--gray-900);
+    line-height: 1;
+}
+
+.volunteer-card__stat span {
+    font-size: 0.7rem;
+    color: var(--gray-400);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+    display: block;
+}
+
+.volunteer-card__stat-divider {
+    width: 1px;
+    height: 32px;
+    background: var(--border);
+}
+
+.volunteer-card__skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+}
+
+.volunteer-card__cta {
+    width: 100%;
+    justify-content: center;
+    margin-top: 4px;
+}
+
+/* ──── Join Section ──── */
+.volunteer-join__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+}
+
+.volunteer-join__perks {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 24px 0;
+}
+
+.volunteer-join__perk {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 0.95rem;
+    color: var(--gray-700);
+    font-weight: 500;
+}
+
+.volunteer-join__perk span:first-child {
+    font-size: 1.2rem;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(76, 175, 135, 0.09);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+}
+
+.volunteer-join__visual img {
+    width: 100%;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-xl);
+}
+
+@media (max-width: 1024px) {
+    .volunteers-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .volunteer-join__inner {
+        grid-template-columns: 1fr;
+    }
+
+    .volunteer-join__visual {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .volunteers-grid {
+        grid-template-columns: 1fr;
+    }
+}
