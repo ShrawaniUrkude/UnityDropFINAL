@@ -1,10 +1,12 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { 
     Search, RotateCcw, ArrowUp, Circle, Hand, MapPin, Compass, 
     User, Users, Box, Map as MapIcon, ChevronDown, Filter,
     Bed, Heart, Baby, Stethoscope, FlaskConical, Utensils, 
     Pill, Package, Activity, Scan, Phone, Clock, CheckCircle,
-    AlertTriangle, Wrench, Eye, Navigation, Building2, Layers
+    AlertTriangle, Wrench, Eye, Navigation, Building2, Layers,
+    UserCircle, Calendar, FileText, Route, Target, X, ChevronRight,
+    Timer, Hourglass, Zap, ShieldAlert, ListOrdered, ArrowRightLeft
 } from 'lucide-react';
 import './Hospital.css';
 
@@ -180,6 +182,94 @@ const statusColors = {
     'low': { bg: '#ef4444', label: 'Low/Critical' },
 };
 
+// Patient condition colors
+const conditionColors = {
+    'stable': { bg: '#22c55e', label: 'Stable', icon: '✓' },
+    'moderate': { bg: '#f59e0b', label: 'Moderate', icon: '⚠' },
+    'critical': { bg: '#ef4444', label: 'Critical', icon: '!' },
+    'recovering': { bg: '#3b82f6', label: 'Recovering', icon: '↑' },
+};
+
+// Admitted Patients Data
+const admittedPatients = [
+    // Ground Floor - Emergency
+    { id: 'P001', name: 'John Smith', age: 45, gender: 'Male', floor: 'ground', room: 'emergency', bed: 'E-01', condition: 'critical', admissionDate: '2024-01-15', doctor: 'Dr. Sarah Wilson', diagnosis: 'Cardiac Emergency', contact: '+1-555-0101', x: 18, y: 38 },
+    { id: 'P002', name: 'Emily Davis', age: 32, gender: 'Female', floor: 'ground', room: 'emergency', bed: 'E-03', condition: 'moderate', admissionDate: '2024-01-16', doctor: 'Dr. James Chen', diagnosis: 'Severe Allergic Reaction', contact: '+1-555-0102', x: 22, y: 42 },
+    { id: 'P003', name: 'Robert Johnson', age: 58, gender: 'Male', floor: 'ground', room: 'emergency', bed: 'E-05', condition: 'stable', admissionDate: '2024-01-16', doctor: 'Dr. Sarah Wilson', diagnosis: 'Fracture - Left Arm', contact: '+1-555-0103', x: 26, y: 38 },
+    
+    // First Floor - ICU
+    { id: 'P004', name: 'Maria Garcia', age: 67, gender: 'Female', floor: 'first', room: 'icu', bed: 'ICU-01', condition: 'critical', admissionDate: '2024-01-14', doctor: 'Dr. Michael Brown', diagnosis: 'Post Cardiac Surgery', contact: '+1-555-0104', x: 62, y: 38 },
+    { id: 'P005', name: 'David Lee', age: 52, gender: 'Male', floor: 'first', room: 'icu', bed: 'ICU-02', condition: 'critical', admissionDate: '2024-01-15', doctor: 'Dr. Michael Brown', diagnosis: 'Respiratory Failure', contact: '+1-555-0105', x: 66, y: 42 },
+    { id: 'P006', name: 'Susan Miller', age: 41, gender: 'Female', floor: 'first', room: 'icu', bed: 'ICU-04', condition: 'moderate', admissionDate: '2024-01-16', doctor: 'Dr. Lisa Park', diagnosis: 'Sepsis', contact: '+1-555-0106', x: 70, y: 38 },
+    
+    // First Floor - Recovery
+    { id: 'P007', name: 'James Wilson', age: 55, gender: 'Male', floor: 'first', room: 'recovery', bed: 'R-02', condition: 'recovering', admissionDate: '2024-01-13', doctor: 'Dr. Robert Kim', diagnosis: 'Post Appendectomy', contact: '+1-555-0107', x: 86, y: 42 },
+    { id: 'P008', name: 'Patricia Brown', age: 38, gender: 'Female', floor: 'first', room: 'recovery', bed: 'R-05', condition: 'stable', admissionDate: '2024-01-14', doctor: 'Dr. Robert Kim', diagnosis: 'Post Knee Surgery', contact: '+1-555-0108', x: 90, y: 38 },
+    
+    // Second Floor - Maternity
+    { id: 'P009', name: 'Jennifer Martinez', age: 28, gender: 'Female', floor: 'second', room: 'maternity', bed: 'M-03', condition: 'stable', admissionDate: '2024-01-16', doctor: 'Dr. Amanda White', diagnosis: 'Labor & Delivery', contact: '+1-555-0109', x: 18, y: 42 },
+    { id: 'P010', name: 'Ashley Thompson', age: 31, gender: 'Female', floor: 'second', room: 'maternity', bed: 'M-07', condition: 'stable', admissionDate: '2024-01-15', doctor: 'Dr. Amanda White', diagnosis: 'Post Cesarean', contact: '+1-555-0110', x: 22, y: 38 },
+    
+    // Second Floor - NICU
+    { id: 'P011', name: 'Baby Martinez', age: 0, gender: 'Male', floor: 'second', room: 'nicu', bed: 'NICU-02', condition: 'moderate', admissionDate: '2024-01-16', doctor: 'Dr. Emily Ross', diagnosis: 'Premature - 34 weeks', contact: '+1-555-0109', x: 40, y: 42 },
+    
+    // Second Floor - Pediatrics
+    { id: 'P012', name: 'Tommy Anderson', age: 8, gender: 'Male', floor: 'second', room: 'pediatrics', bed: 'PED-04', condition: 'stable', admissionDate: '2024-01-15', doctor: 'Dr. Emily Ross', diagnosis: 'Appendicitis - Post Op', contact: '+1-555-0112', x: 66, y: 38 },
+    { id: 'P013', name: 'Sophia Clark', age: 5, gender: 'Female', floor: 'second', room: 'pediatrics', bed: 'PED-08', condition: 'recovering', admissionDate: '2024-01-14', doctor: 'Dr. Emily Ross', diagnosis: 'Pneumonia', contact: '+1-555-0113', x: 70, y: 42 },
+    
+    // Third Floor - General Ward A (Male)
+    { id: 'P014', name: 'Michael Taylor', age: 62, gender: 'Male', floor: 'third', room: 'general-ward-a', bed: 'A-05', condition: 'stable', admissionDate: '2024-01-14', doctor: 'Dr. James Chen', diagnosis: 'Diabetes Management', contact: '+1-555-0114', x: 16, y: 38 },
+    { id: 'P015', name: 'William Harris', age: 48, gender: 'Male', floor: 'third', room: 'general-ward-a', bed: 'A-12', condition: 'recovering', admissionDate: '2024-01-13', doctor: 'Dr. James Chen', diagnosis: 'Hernia Surgery Recovery', contact: '+1-555-0115', x: 20, y: 42 },
+    { id: 'P016', name: 'Richard Moore', age: 71, gender: 'Male', floor: 'third', room: 'general-ward-a', bed: 'A-18', condition: 'stable', admissionDate: '2024-01-15', doctor: 'Dr. Sarah Wilson', diagnosis: 'Hip Replacement Recovery', contact: '+1-555-0116', x: 24, y: 38 },
+    
+    // Third Floor - General Ward B (Female)
+    { id: 'P017', name: 'Linda Jackson', age: 56, gender: 'Female', floor: 'third', room: 'general-ward-b', bed: 'B-03', condition: 'stable', admissionDate: '2024-01-15', doctor: 'Dr. Lisa Park', diagnosis: 'Gallbladder Surgery Recovery', contact: '+1-555-0117', x: 38, y: 42 },
+    { id: 'P018', name: 'Barbara White', age: 64, gender: 'Female', floor: 'third', room: 'general-ward-b', bed: 'B-09', condition: 'moderate', admissionDate: '2024-01-14', doctor: 'Dr. Lisa Park', diagnosis: 'Kidney Infection', contact: '+1-555-0118', x: 42, y: 38 },
+    
+    // Third Floor - Private Rooms
+    { id: 'P019', name: 'Charles Robinson', age: 54, gender: 'Male', floor: 'third', room: 'private-rooms', bed: 'PR-02', condition: 'recovering', admissionDate: '2024-01-13', doctor: 'Dr. Michael Brown', diagnosis: 'Bypass Surgery Recovery', contact: '+1-555-0119', x: 66, y: 42 },
+    { id: 'P020', name: 'Elizabeth Thomas', age: 45, gender: 'Female', floor: 'third', room: 'private-rooms', bed: 'PR-06', condition: 'stable', admissionDate: '2024-01-16', doctor: 'Dr. Amanda White', diagnosis: 'Observation', contact: '+1-555-0120', x: 70, y: 38 },
+    
+    // Third Floor - VIP Suite
+    { id: 'P021', name: 'George Thompson', age: 68, gender: 'Male', floor: 'third', room: 'vip-suite', bed: 'VIP-01', condition: 'stable', admissionDate: '2024-01-15', doctor: 'Dr. Michael Brown', diagnosis: 'Executive Health Check', contact: '+1-555-0121', x: 88, y: 40 },
+];
+
+// ═══════════════════════════════════════════════════════════════
+// PRIORITY LEVELS FOR RESOURCE ALLOCATION
+// ═══════════════════════════════════════════════════════════════
+const priorityLevels = {
+    'critical': { level: 1, label: 'Critical Emergency', color: '#ef4444', waitTime: 0 },
+    'moderate': { level: 2, label: 'Moderate/Urgent', color: '#f59e0b', waitTime: 15 },
+    'stable': { level: 3, label: 'Stable/Non-Critical', color: '#22c55e', waitTime: 30 },
+    'recovering': { level: 4, label: 'Recovering', color: '#3b82f6', waitTime: 45 },
+};
+
+// Resource requests - who needs what equipment
+const initialResourceRequests = [
+    // Critical patients - Immediate priority
+    { id: 'RR001', patientId: 'P001', resourceId: 'vent-001', resourceType: 'ventilator', priority: 'critical', requestTime: '2024-01-16T08:00:00', status: 'allocated', estimatedDuration: 120 },
+    { id: 'RR002', patientId: 'P004', resourceId: 'vent-003', resourceType: 'ventilator', priority: 'critical', requestTime: '2024-01-16T08:15:00', status: 'allocated', estimatedDuration: 180 },
+    { id: 'RR003', patientId: 'P005', resourceId: 'mon-003', resourceType: 'monitor', priority: 'critical', requestTime: '2024-01-16T08:30:00', status: 'allocated', estimatedDuration: 240 },
+    
+    // Moderate patients - Waiting or allocated
+    { id: 'RR004', patientId: 'P002', resourceId: 'mon-001', resourceType: 'monitor', priority: 'moderate', requestTime: '2024-01-16T09:00:00', status: 'allocated', estimatedDuration: 60 },
+    { id: 'RR005', patientId: 'P006', resourceId: 'vent-002', resourceType: 'ventilator', priority: 'moderate', requestTime: '2024-01-16T09:30:00', status: 'waiting', waitingSince: '2024-01-16T09:30:00', estimatedWait: 25 },
+    { id: 'RR006', patientId: 'P011', resourceId: 'inc-001', resourceType: 'monitor', priority: 'moderate', requestTime: '2024-01-16T09:45:00', status: 'allocated', estimatedDuration: 480 },
+    { id: 'RR007', patientId: 'P018', resourceId: 'mon-009', resourceType: 'monitor', priority: 'moderate', requestTime: '2024-01-16T10:00:00', status: 'waiting', waitingSince: '2024-01-16T10:00:00', estimatedWait: 15 },
+    
+    // Stable/Non-critical patients - Lower priority, may wait
+    { id: 'RR008', patientId: 'P003', resourceId: 'wc-001', resourceType: 'wheelchair', priority: 'stable', requestTime: '2024-01-16T10:30:00', status: 'waiting', waitingSince: '2024-01-16T10:30:00', estimatedWait: 35 },
+    { id: 'RR009', patientId: 'P008', resourceId: 'str-004', resourceType: 'stretcher', priority: 'stable', requestTime: '2024-01-16T10:45:00', status: 'waiting', waitingSince: '2024-01-16T10:45:00', estimatedWait: 40 },
+    { id: 'RR010', patientId: 'P012', resourceId: 'wc-004', resourceType: 'wheelchair', priority: 'stable', requestTime: '2024-01-16T11:00:00', status: 'allocated', estimatedDuration: 30 },
+    { id: 'RR011', patientId: 'P014', resourceId: 'inf-004', resourceType: 'infusion', priority: 'stable', requestTime: '2024-01-16T11:15:00', status: 'waiting', waitingSince: '2024-01-16T11:15:00', estimatedWait: 50 },
+    
+    // Recovering patients - Lowest priority
+    { id: 'RR012', patientId: 'P007', resourceId: 'wc-005', resourceType: 'wheelchair', priority: 'recovering', requestTime: '2024-01-16T11:30:00', status: 'waiting', waitingSince: '2024-01-16T11:30:00', estimatedWait: 60 },
+    { id: 'RR013', patientId: 'P013', resourceId: 'o2-003', resourceType: 'oxygen', priority: 'recovering', requestTime: '2024-01-16T11:45:00', status: 'allocated', estimatedDuration: 45 },
+    { id: 'RR014', patientId: 'P015', resourceId: 'str-005', resourceType: 'stretcher', priority: 'recovering', requestTime: '2024-01-16T12:00:00', status: 'waiting', waitingSince: '2024-01-16T12:00:00', estimatedWait: 70 },
+    { id: 'RR015', patientId: 'P019', resourceId: 'mon-009', resourceType: 'monitor', priority: 'recovering', requestTime: '2024-01-16T12:15:00', status: 'queued', queuePosition: 3, estimatedWait: 90 },
+];
+
 // ═══════════════════════════════════════════════════════════════
 // COMPONENTS
 // ═══════════════════════════════════════════════════════════════
@@ -284,6 +374,37 @@ const EquipmentItem = ({ equipment, isSelected, onClick }) => (
 // MAIN COMPONENT
 // ═══════════════════════════════════════════════════════════════
 
+// Patient Item Component
+const PatientItem = ({ patient, isSelected, onClick, onNavigate }) => (
+    <div 
+        className={`patient-item ${isSelected ? 'patient-item--selected' : ''}`}
+        onClick={() => onClick(patient)}
+    >
+        <div 
+            className="patient-item__condition"
+            style={{ backgroundColor: conditionColors[patient.condition]?.bg }}
+        >
+            {conditionColors[patient.condition]?.icon}
+        </div>
+        <div className="patient-item__info">
+            <span className="patient-item__name">{patient.name}</span>
+            <span className="patient-item__details">
+                {patient.bed} • {patient.room} • {patient.age}y
+            </span>
+        </div>
+        <button 
+            className="patient-item__nav-btn"
+            onClick={(e) => { e.stopPropagation(); onNavigate(patient); }}
+            title="Navigate to patient"
+        >
+            <Route size={14} />
+        </button>
+        <span className={`patient-item__badge patient-item__badge--${patient.condition}`}>
+            {conditionColors[patient.condition]?.label}
+        </span>
+    </div>
+);
+
 export default function Hospital() {
     // State
     const [viewMode, setViewMode] = useState('2d'); // '2d' or '3d'
@@ -294,6 +415,18 @@ export default function Hospital() {
     const [searchQuery, setSearchQuery] = useState('');
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [showAllFloors, setShowAllFloors] = useState(false);
+    
+    // Patient tracking state
+    const [selectedPatient, setSelectedPatient] = useState(null);
+    const [patientSearch, setPatientSearch] = useState('');
+    const [isNavigating, setIsNavigating] = useState(false);
+    const [navigationTarget, setNavigationTarget] = useState(null);
+    const [showPatientList, setShowPatientList] = useState(true);
+    
+    // Resource allocation state
+    const [resourceRequests, setResourceRequests] = useState(initialResourceRequests);
+    const [showResourcePanel, setShowResourcePanel] = useState(false);
+    const [conflictAlert, setConflictAlert] = useState(null);
     
     // 3D view controls
     const [viewAngle, setViewAngle] = useState({ rotateX: 60, rotateZ: -45 });
@@ -348,6 +481,210 @@ export default function Hospital() {
         const matchesFloor = showAllFloors || eq.floor === activeFloor;
         return matchesSearch && matchesCategory && matchesFloor;
     });
+
+    // Filter patients
+    const filteredPatients = admittedPatients.filter(patient => {
+        const matchesSearch = patient.name.toLowerCase().includes(patientSearch.toLowerCase()) ||
+                             patient.id.toLowerCase().includes(patientSearch.toLowerCase()) ||
+                             patient.bed.toLowerCase().includes(patientSearch.toLowerCase()) ||
+                             patient.room.toLowerCase().includes(patientSearch.toLowerCase()) ||
+                             patient.diagnosis.toLowerCase().includes(patientSearch.toLowerCase());
+        return matchesSearch;
+    });
+
+    // Get patients on current floor
+    const patientsOnFloor = admittedPatients.filter(p => p.floor === activeFloor);
+
+    // Patient stats
+    const patientStats = {
+        total: admittedPatients.length,
+        critical: admittedPatients.filter(p => p.condition === 'critical').length,
+        moderate: admittedPatients.filter(p => p.condition === 'moderate').length,
+        stable: admittedPatients.filter(p => p.condition === 'stable' || p.condition === 'recovering').length,
+    };
+
+    // Navigate to patient function
+    const navigateToPatient = (patient) => {
+        setNavigationTarget(patient);
+        setIsNavigating(true);
+        setActiveFloor(patient.floor);
+        setSelectedPatient(patient);
+        const room = Object.values(hospitalRooms).flat().find(r => r.id === patient.room);
+        if (room) setSelectedRoom(room);
+    };
+
+    // Stop navigation
+    const stopNavigation = () => {
+        setIsNavigating(false);
+        setNavigationTarget(null);
+    };
+
+    // ═══════════════════════════════════════════════════════════════
+    // RESOURCE ALLOCATION FUNCTIONS
+    // ═══════════════════════════════════════════════════════════════
+
+    // Get priority level number (lower = higher priority)
+    const getPriorityLevel = (priority) => priorityLevels[priority]?.level || 99;
+
+    // Get waiting queue sorted by priority
+    const getWaitingQueue = () => {
+        return resourceRequests
+            .filter(r => r.status === 'waiting' || r.status === 'queued')
+            .sort((a, b) => {
+                // First sort by priority level
+                const priorityDiff = getPriorityLevel(a.priority) - getPriorityLevel(b.priority);
+                if (priorityDiff !== 0) return priorityDiff;
+                // Then by request time
+                return new Date(a.requestTime) - new Date(b.requestTime);
+            });
+    };
+
+    // Get allocated resources
+    const getAllocatedResources = () => {
+        return resourceRequests.filter(r => r.status === 'allocated');
+    };
+
+    // Check for resource conflicts (multiple patients requesting same resource)
+    const getResourceConflicts = () => {
+        const resourceMap = {};
+        resourceRequests.forEach(req => {
+            if (!resourceMap[req.resourceId]) {
+                resourceMap[req.resourceId] = [];
+            }
+            resourceMap[req.resourceId].push(req);
+        });
+        
+        return Object.entries(resourceMap)
+            .filter(([_, requests]) => requests.length > 1)
+            .map(([resourceId, requests]) => ({
+                resourceId,
+                resourceName: equipmentInventory.find(e => e.id === resourceId)?.name || resourceId,
+                requests: requests.sort((a, b) => getPriorityLevel(a.priority) - getPriorityLevel(b.priority))
+            }));
+    };
+
+    // Resolve conflict by allocating to highest priority patient
+    const resolveConflict = (resourceId) => {
+        const conflicts = getResourceConflicts().find(c => c.resourceId === resourceId);
+        if (!conflicts) return;
+
+        const sortedRequests = conflicts.requests;
+        const winner = sortedRequests[0]; // Highest priority gets it
+        
+        setResourceRequests(prev => prev.map(req => {
+            if (req.resourceId === resourceId) {
+                if (req.id === winner.id) {
+                    return { ...req, status: 'allocated' };
+                } else {
+                    // Calculate wait time based on priority difference
+                    const basewait = priorityLevels[req.priority]?.waitTime || 30;
+                    return { 
+                        ...req, 
+                        status: 'waiting', 
+                        estimatedWait: basewait + Math.floor(Math.random() * 20),
+                        waitingSince: new Date().toISOString()
+                    };
+                }
+            }
+            return req;
+        }));
+
+        // Show allocation notification
+        const winnerPatient = admittedPatients.find(p => p.id === winner.patientId);
+        setConflictAlert({
+            type: 'resolved',
+            message: `Resource allocated to ${winnerPatient?.name || winner.patientId} (${priorityLevels[winner.priority]?.label})`,
+            resourceName: conflicts.resourceName
+        });
+        setTimeout(() => setConflictAlert(null), 5000);
+    };
+
+    // Request resource for a patient
+    const requestResource = (patientId, resourceId, resourceType) => {
+        const patient = admittedPatients.find(p => p.id === patientId);
+        if (!patient) return;
+
+        // Check if resource is already requested/allocated
+        const existingRequest = resourceRequests.find(r => r.resourceId === resourceId && r.status === 'allocated');
+        
+        const newRequest = {
+            id: `RR${Date.now()}`,
+            patientId,
+            resourceId,
+            resourceType,
+            priority: patient.condition,
+            requestTime: new Date().toISOString(),
+            status: existingRequest ? 'waiting' : 'allocated',
+            estimatedWait: existingRequest ? priorityLevels[patient.condition]?.waitTime || 30 : 0,
+            waitingSince: existingRequest ? new Date().toISOString() : null
+        };
+
+        setResourceRequests(prev => [...prev, newRequest]);
+
+        // If there's a conflict, check if new request has higher priority
+        if (existingRequest && getPriorityLevel(patient.condition) < getPriorityLevel(
+            admittedPatients.find(p => p.id === existingRequest.patientId)?.condition
+        )) {
+            // Critical patient preempts - show conflict alert
+            setConflictAlert({
+                type: 'conflict',
+                message: `Critical patient ${patient.name} needs resource currently in use`,
+                resourceName: equipmentInventory.find(e => e.id === resourceId)?.name,
+                canPreempt: true,
+                newRequestId: newRequest.id,
+                existingRequestId: existingRequest.id
+            });
+        }
+    };
+
+    // Preempt resource (give to higher priority patient)
+    const preemptResource = (newRequestId, existingRequestId) => {
+        setResourceRequests(prev => prev.map(req => {
+            if (req.id === newRequestId) {
+                return { ...req, status: 'allocated', estimatedWait: 0 };
+            }
+            if (req.id === existingRequestId) {
+                const patient = admittedPatients.find(p => p.id === req.patientId);
+                return { 
+                    ...req, 
+                    status: 'waiting',
+                    estimatedWait: priorityLevels[patient?.condition]?.waitTime || 30,
+                    waitingSince: new Date().toISOString()
+                };
+            }
+            return req;
+        }));
+        setConflictAlert(null);
+    };
+
+    // Release resource (mark as available)
+    const releaseResource = (requestId) => {
+        setResourceRequests(prev => {
+            const updated = prev.filter(r => r.id !== requestId);
+            return updated;
+        });
+        
+        // Check waiting queue and allocate to next patient
+        const waitingQueue = getWaitingQueue();
+        if (waitingQueue.length > 0) {
+            const nextRequest = waitingQueue[0];
+            setResourceRequests(prev => prev.map(req => 
+                req.id === nextRequest.id 
+                    ? { ...req, status: 'allocated', estimatedWait: 0 }
+                    : req
+            ));
+        }
+    };
+
+    // Get patient's resource requests
+    const getPatientResources = (patientId) => {
+        return resourceRequests.filter(r => r.patientId === patientId);
+    };
+
+    // Computed values for resource allocation
+    const waitingQueue = getWaitingQueue();
+    const allocatedResources = getAllocatedResources();
+    const resourceConflicts = getResourceConflicts();
 
     // Get current floor rooms
     const currentRooms = hospitalRooms[activeFloor] || [];
@@ -407,12 +744,185 @@ export default function Hospital() {
                 </div>
 
                 <div className="topbar-right">
+                    {/* Resource Allocation Toggle */}
+                    <button 
+                        className={`resource-toggle-btn ${showResourcePanel ? 'active' : ''} ${waitingQueue.length > 0 ? 'has-waiting' : ''}`}
+                        onClick={() => setShowResourcePanel(!showResourcePanel)}
+                    >
+                        <ListOrdered size={16} />
+                        <span>Resources</span>
+                        {waitingQueue.length > 0 && (
+                            <span className="waiting-badge">{waitingQueue.length}</span>
+                        )}
+                    </button>
+
                     <div className="emergency-btn">
                         <Phone size={16} />
                         <span>Emergency: 108</span>
                     </div>
                 </div>
             </div>
+
+            {/* Conflict Alert Banner */}
+            {conflictAlert && (
+                <div className={`conflict-alert conflict-alert--${conflictAlert.type}`}>
+                    <div className="conflict-alert__content">
+                        <ShieldAlert size={20} />
+                        <div className="conflict-alert__text">
+                            <strong>{conflictAlert.type === 'conflict' ? 'Resource Conflict!' : 'Resolved'}</strong>
+                            <span>{conflictAlert.message}</span>
+                            {conflictAlert.resourceName && <span className="conflict-resource">Resource: {conflictAlert.resourceName}</span>}
+                        </div>
+                    </div>
+                    {conflictAlert.canPreempt && (
+                        <div className="conflict-alert__actions">
+                            <button 
+                                className="btn-preempt"
+                                onClick={() => preemptResource(conflictAlert.newRequestId, conflictAlert.existingRequestId)}
+                            >
+                                <Zap size={14} />
+                                Allocate to Critical
+                            </button>
+                            <button 
+                                className="btn-dismiss"
+                                onClick={() => setConflictAlert(null)}
+                            >
+                                Keep Current
+                            </button>
+                        </div>
+                    )}
+                    {!conflictAlert.canPreempt && (
+                        <button className="conflict-alert__close" onClick={() => setConflictAlert(null)}>
+                            <X size={16} />
+                        </button>
+                    )}
+                </div>
+            )}
+
+            {/* Resource Allocation Panel */}
+            {showResourcePanel && (
+                <div className="resource-panel">
+                    <div className="resource-panel__header">
+                        <h3><ArrowRightLeft size={18} /> Resource Allocation</h3>
+                        <button onClick={() => setShowResourcePanel(false)}><X size={18} /></button>
+                    </div>
+
+                    {/* Priority Legend */}
+                    <div className="priority-legend">
+                        {Object.entries(priorityLevels).map(([key, value]) => (
+                            <div key={key} className="priority-item">
+                                <span className="priority-dot" style={{ backgroundColor: value.color }}></span>
+                                <span>{value.label}</span>
+                                <span className="priority-wait">~{value.waitTime} min wait</span>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* Conflict Warnings */}
+                    {resourceConflicts.length > 0 && (
+                        <div className="conflicts-section">
+                            <h4><AlertTriangle size={14} /> Resource Conflicts ({resourceConflicts.length})</h4>
+                            {resourceConflicts.map(conflict => (
+                                <div key={conflict.resourceId} className="conflict-item">
+                                    <div className="conflict-resource-name">
+                                        <Package size={14} />
+                                        {conflict.resourceName}
+                                    </div>
+                                    <div className="conflict-patients">
+                                        {conflict.requests.map((req, idx) => {
+                                            const patient = admittedPatients.find(p => p.id === req.patientId);
+                                            return (
+                                                <div 
+                                                    key={req.id} 
+                                                    className={`conflict-patient ${idx === 0 ? 'winner' : 'waiting'}`}
+                                                >
+                                                    <span 
+                                                        className="priority-indicator"
+                                                        style={{ backgroundColor: priorityLevels[req.priority]?.color }}
+                                                    />
+                                                    <span>{patient?.name}</span>
+                                                    <span className="priority-label">{priorityLevels[req.priority]?.label}</span>
+                                                    {idx === 0 && <CheckCircle size={12} className="winner-icon" />}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                    <button 
+                                        className="resolve-btn"
+                                        onClick={() => resolveConflict(conflict.resourceId)}
+                                    >
+                                        Auto-Resolve by Priority
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Waiting Queue */}
+                    <div className="waiting-section">
+                        <h4><Hourglass size={14} /> Waiting Queue ({waitingQueue.length})</h4>
+                        {waitingQueue.length === 0 ? (
+                            <p className="no-waiting">No patients waiting for resources</p>
+                        ) : (
+                            <div className="waiting-list">
+                                {waitingQueue.map((request, idx) => {
+                                    const patient = admittedPatients.find(p => p.id === request.patientId);
+                                    const resource = equipmentInventory.find(e => e.id === request.resourceId);
+                                    return (
+                                        <div key={request.id} className="waiting-item">
+                                            <div className="waiting-position">#{idx + 1}</div>
+                                            <div 
+                                                className="waiting-priority"
+                                                style={{ backgroundColor: priorityLevels[request.priority]?.color }}
+                                            />
+                                            <div className="waiting-info">
+                                                <span className="waiting-patient">{patient?.name}</span>
+                                                <span className="waiting-resource">
+                                                    Needs: {resource?.name || request.resourceType}
+                                                </span>
+                                            </div>
+                                            <div className="waiting-time">
+                                                <Timer size={12} />
+                                                <span>~{request.estimatedWait} min</span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Currently Allocated */}
+                    <div className="allocated-section">
+                        <h4><CheckCircle size={14} /> Currently Allocated ({allocatedResources.length})</h4>
+                        <div className="allocated-list">
+                            {allocatedResources.slice(0, 6).map(request => {
+                                const patient = admittedPatients.find(p => p.id === request.patientId);
+                                const resource = equipmentInventory.find(e => e.id === request.resourceId);
+                                return (
+                                    <div key={request.id} className="allocated-item">
+                                        <div 
+                                            className="allocated-priority"
+                                            style={{ backgroundColor: priorityLevels[request.priority]?.color }}
+                                        />
+                                        <div className="allocated-info">
+                                            <span>{patient?.name}</span>
+                                            <span className="allocated-resource">{resource?.name}</span>
+                                        </div>
+                                        <button 
+                                            className="release-btn"
+                                            onClick={() => releaseResource(request.id)}
+                                            title="Release resource"
+                                        >
+                                            <X size={12} />
+                                        </button>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* ═══════════════════════════════════════════════════════════════
                 MAIN CONTENT AREA
@@ -498,29 +1008,113 @@ export default function Hospital() {
                         </>
                     ) : (
                         <>
-                            {/* Patient Mode - Department Directory */}
+                            {/* Patient Mode - Patient List & Search */}
                             <div className="sidebar-section">
-                                <h3><Building2 size={16} /> Department Directory</h3>
-                                <div className="department-list">
-                                    {Object.entries(hospitalRooms).map(([floorId, rooms]) => (
-                                        <div key={floorId} className="department-floor">
-                                            <h4>{floors.find(f => f.id === floorId)?.name}</h4>
-                                            {rooms.filter(r => r.type !== 'service' && r.type !== 'utility' && r.type !== 'storage').map(room => (
-                                                <div 
-                                                    key={room.id}
-                                                    className={`department-item ${selectedRoom?.id === room.id ? 'active' : ''}`}
-                                                    onClick={() => {
-                                                        setActiveFloor(floorId);
-                                                        setSelectedRoom(room);
-                                                    }}
-                                                >
-                                                    <span className="dept-icon">{room.icon}</span>
-                                                    <span className="dept-name">{room.name}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    ))}
+                                <h3><UserCircle size={16} /> Find Patient</h3>
+                                <div className="search-box">
+                                    <Search size={16} />
+                                    <input 
+                                        type="text"
+                                        placeholder="Search by name, ID, bed, room..."
+                                        value={patientSearch}
+                                        onChange={(e) => setPatientSearch(e.target.value)}
+                                    />
                                 </div>
+                            </div>
+
+                            {/* Patient Stats */}
+                            <div className="sidebar-section">
+                                <h3><Activity size={16} /> Patient Overview</h3>
+                                <div className="stats-grid stats-grid--4">
+                                    <div className="stat-box">
+                                        <span className="stat-value">{patientStats.total}</span>
+                                        <span className="stat-label">Total</span>
+                                        <div className="stat-bar" style={{ backgroundColor: '#3b82f6' }}></div>
+                                    </div>
+                                    <div className="stat-box">
+                                        <span className="stat-value">{patientStats.critical}</span>
+                                        <span className="stat-label">Critical</span>
+                                        <div className="stat-bar" style={{ backgroundColor: '#ef4444' }}></div>
+                                    </div>
+                                    <div className="stat-box">
+                                        <span className="stat-value">{patientStats.moderate}</span>
+                                        <span className="stat-label">Moderate</span>
+                                        <div className="stat-bar" style={{ backgroundColor: '#f59e0b' }}></div>
+                                    </div>
+                                    <div className="stat-box">
+                                        <span className="stat-value">{patientStats.stable}</span>
+                                        <span className="stat-label">Stable</span>
+                                        <div className="stat-bar" style={{ backgroundColor: '#22c55e' }}></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Admitted Patients List */}
+                            <div className="sidebar-section sidebar-section--scroll">
+                                <h3>
+                                    <Bed size={16} /> 
+                                    Admitted Patients ({filteredPatients.length})
+                                </h3>
+                                <div className="patient-list">
+                                    {filteredPatients.map(patient => (
+                                        <PatientItem 
+                                            key={patient.id}
+                                            patient={patient}
+                                            isSelected={selectedPatient?.id === patient.id}
+                                            onClick={(p) => {
+                                                setSelectedPatient(p);
+                                                setActiveFloor(p.floor);
+                                                setSelectedRoom(null);
+                                                setSelectedEquipment(null);
+                                            }}
+                                            onNavigate={navigateToPatient}
+                                        />
+                                    ))}
+                                    {filteredPatients.length === 0 && (
+                                        <p className="no-results">No patients found matching your search</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            {/* Department Directory */}
+                            <div className="sidebar-section sidebar-section--collapsed">
+                                <h3 
+                                    onClick={() => setShowPatientList(!showPatientList)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    <Building2 size={16} /> 
+                                    Department Directory
+                                    <ChevronDown 
+                                        size={16} 
+                                        style={{ 
+                                            marginLeft: 'auto', 
+                                            transform: showPatientList ? 'rotate(180deg)' : 'none',
+                                            transition: 'transform 0.2s'
+                                        }} 
+                                    />
+                                </h3>
+                                {!showPatientList && (
+                                    <div className="department-list">
+                                        {Object.entries(hospitalRooms).map(([floorId, rooms]) => (
+                                            <div key={floorId} className="department-floor">
+                                                <h4>{floors.find(f => f.id === floorId)?.name}</h4>
+                                                {rooms.filter(r => r.type !== 'service' && r.type !== 'utility' && r.type !== 'storage').map(room => (
+                                                    <div 
+                                                        key={room.id}
+                                                        className={`department-item ${selectedRoom?.id === room.id ? 'active' : ''}`}
+                                                        onClick={() => {
+                                                            setActiveFloor(floorId);
+                                                            setSelectedRoom(room);
+                                                        }}
+                                                    >
+                                                        <span className="dept-icon">{room.icon}</span>
+                                                        <span className="dept-name">{room.name}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
                             </div>
                         </>
                     )}
@@ -631,6 +1225,81 @@ export default function Hospital() {
                                     </div>
                                 )}
 
+                                {/* Patient Markers (Patient Mode) */}
+                                {userMode === 'patient' && (
+                                    <div className="patient-overlay">
+                                        {patientsOnFloor.map(patient => (
+                                            <div 
+                                                key={patient.id}
+                                                className={`patient-marker ${selectedPatient?.id === patient.id ? 'patient-marker--selected' : ''} ${navigationTarget?.id === patient.id ? 'patient-marker--navigating' : ''}`}
+                                                style={{ 
+                                                    left: `${patient.x}%`, 
+                                                    top: `${patient.y}%`,
+                                                    '--condition-color': conditionColors[patient.condition]?.bg
+                                                }}
+                                                onClick={() => {
+                                                    setSelectedPatient(patient);
+                                                    setSelectedRoom(null);
+                                                    setSelectedEquipment(null);
+                                                }}
+                                                title={`${patient.name} - ${patient.bed}`}
+                                            >
+                                                <UserCircle size={16} />
+                                                <span className="patient-marker__label">{patient.bed}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                )}
+
+                                {/* Navigation Path Visualization */}
+                                {isNavigating && navigationTarget && navigationTarget.floor === activeFloor && (
+                                    <svg className="navigation-path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                        {/* Entrance point (reception/main entrance) */}
+                                        <circle 
+                                            cx="50" 
+                                            cy="95" 
+                                            r="2" 
+                                            fill="#22c55e" 
+                                            className="nav-point nav-point--start"
+                                        />
+                                        {/* Path from entrance through corridor to patient */}
+                                        <path 
+                                            d={`M 50 95 L 50 50 L ${navigationTarget.x} 50 L ${navigationTarget.x} ${navigationTarget.y}`}
+                                            className="nav-path"
+                                            fill="none"
+                                            stroke="#3b82f6"
+                                            strokeWidth="0.8"
+                                            strokeDasharray="2,1"
+                                        />
+                                        {/* Target point */}
+                                        <circle 
+                                            cx={navigationTarget.x} 
+                                            cy={navigationTarget.y} 
+                                            r="2.5" 
+                                            fill="#ef4444" 
+                                            className="nav-point nav-point--end"
+                                        />
+                                    </svg>
+                                )}
+
+                                {/* Navigation Banner */}
+                                {isNavigating && navigationTarget && (
+                                    <div className="navigation-banner">
+                                        <div className="navigation-banner__content">
+                                            <Target size={18} className="pulse-icon" />
+                                            <div className="navigation-banner__info">
+                                                <span className="navigation-banner__title">Navigating to: {navigationTarget.name}</span>
+                                                <span className="navigation-banner__subtitle">
+                                                    {floors.find(f => f.id === navigationTarget.floor)?.name} → {navigationTarget.room} → Bed {navigationTarget.bed}
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <button className="navigation-banner__close" onClick={stopNavigation}>
+                                            <X size={16} />
+                                        </button>
+                                    </div>
+                                )}
+
                                 {/* Main Corridor */}
                                 <div className="corridor-2d">
                                     <span>Main Corridor</span>
@@ -704,6 +1373,28 @@ export default function Hospital() {
                                         </div>
                                     ))
                                 }
+
+                                {/* Patient Markers in 3D */}
+                                {userMode === 'patient' && patientsOnFloor.map(patient => (
+                                    <div 
+                                        key={patient.id}
+                                        className={`marker-3d marker-3d--patient ${selectedPatient?.id === patient.id ? 'marker-3d--selected' : ''} ${navigationTarget?.id === patient.id ? 'marker-3d--navigating' : ''}`}
+                                        style={{ 
+                                            left: `${patient.x * 2}px`, 
+                                            top: `${patient.y * 2}px`,
+                                            '--marker-color': conditionColors[patient.condition]?.bg
+                                        }}
+                                        onClick={() => {
+                                            setSelectedPatient(patient);
+                                            setSelectedRoom(null);
+                                            setSelectedEquipment(null);
+                                        }}
+                                        title={`${patient.name} - ${patient.bed}`}
+                                    >
+                                        <div className="marker-pin"></div>
+                                        <span className="marker-label-3d">{patient.bed}</span>
+                                    </div>
+                                ))}
                             </div>
                         )}
                     </div>
@@ -724,28 +1415,14 @@ export default function Hospital() {
                             </>
                         ) : (
                             <>
-                                <h4>Department Types</h4>
+                                <h4>Patient Condition</h4>
                                 <div className="legend-items">
-                                    <div className="legend-item">
-                                        <span className="legend-dot" style={{ backgroundColor: '#ef4444' }}></span>
-                                        <span>Emergency/ICU</span>
-                                    </div>
-                                    <div className="legend-item">
-                                        <span className="legend-dot" style={{ backgroundColor: '#ec4899' }}></span>
-                                        <span>Surgery</span>
-                                    </div>
-                                    <div className="legend-item">
-                                        <span className="legend-dot" style={{ backgroundColor: '#f59e0b' }}></span>
-                                        <span>Wards</span>
-                                    </div>
-                                    <div className="legend-item">
-                                        <span className="legend-dot" style={{ backgroundColor: '#3b82f6' }}></span>
-                                        <span>Diagnostics</span>
-                                    </div>
-                                    <div className="legend-item">
-                                        <span className="legend-dot" style={{ backgroundColor: '#22c55e' }}></span>
-                                        <span>Services</span>
-                                    </div>
+                                    {Object.entries(conditionColors).map(([key, value]) => (
+                                        <div key={key} className="legend-item">
+                                            <span className="legend-dot" style={{ backgroundColor: value.bg }}></span>
+                                            <span>{value.label}</span>
+                                        </div>
+                                    ))}
                                 </div>
                             </>
                         )}
@@ -848,10 +1525,133 @@ export default function Hospital() {
                                     </button>
                                 )}
                             </div>
+                        ) : selectedPatient ? (
+                            <div className="detail-card detail-card--patient">
+                                <div className="detail-header">
+                                    <div 
+                                        className="patient-avatar"
+                                        style={{ backgroundColor: conditionColors[selectedPatient.condition]?.bg }}
+                                    >
+                                        <UserCircle size={24} />
+                                    </div>
+                                    <div>
+                                        <h4>{selectedPatient.name}</h4>
+                                        <span className={`condition-badge condition-badge--${selectedPatient.condition}`}>
+                                            {conditionColors[selectedPatient.condition]?.icon} {conditionColors[selectedPatient.condition]?.label}
+                                        </span>
+                                    </div>
+                                </div>
+                                
+                                <div className="detail-info">
+                                    <div className="info-row">
+                                        <span>Patient ID:</span>
+                                        <strong>{selectedPatient.id}</strong>
+                                    </div>
+                                    <div className="info-row">
+                                        <span>Age / Gender:</span>
+                                        <strong>{selectedPatient.age}y / {selectedPatient.gender}</strong>
+                                    </div>
+                                    <div className="info-row">
+                                        <span>Bed:</span>
+                                        <strong>{selectedPatient.bed}</strong>
+                                    </div>
+                                    <div className="info-row">
+                                        <span>Room:</span>
+                                        <strong>{selectedPatient.room}</strong>
+                                    </div>
+                                    <div className="info-row">
+                                        <span>Floor:</span>
+                                        <strong>{floors.find(f => f.id === selectedPatient.floor)?.name}</strong>
+                                    </div>
+                                </div>
+
+                                <div className="patient-medical-info">
+                                    <div className="medical-row">
+                                        <FileText size={14} />
+                                        <div>
+                                            <span className="medical-label">Diagnosis</span>
+                                            <span className="medical-value">{selectedPatient.diagnosis}</span>
+                                        </div>
+                                    </div>
+                                    <div className="medical-row">
+                                        <Stethoscope size={14} />
+                                        <div>
+                                            <span className="medical-label">Attending Doctor</span>
+                                            <span className="medical-value">{selectedPatient.doctor}</span>
+                                        </div>
+                                    </div>
+                                    <div className="medical-row">
+                                        <Calendar size={14} />
+                                        <div>
+                                            <span className="medical-label">Admission Date</span>
+                                            <span className="medical-value">{selectedPatient.admissionDate}</span>
+                                        </div>
+                                    </div>
+                                    <div className="medical-row">
+                                        <Phone size={14} />
+                                        <div>
+                                            <span className="medical-label">Emergency Contact</span>
+                                            <span className="medical-value">{selectedPatient.contact}</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Patient Resource Allocation Status */}
+                                {getPatientResources(selectedPatient.id).length > 0 && (
+                                    <div className="patient-resources">
+                                        <h5><Package size={14} /> Allocated Resources</h5>
+                                        {getPatientResources(selectedPatient.id).map(req => {
+                                            const resource = equipmentInventory.find(e => e.id === req.resourceId);
+                                            return (
+                                                <div key={req.id} className={`patient-resource-item patient-resource-item--${req.status}`}>
+                                                    <span 
+                                                        className="resource-status-dot"
+                                                        style={{ 
+                                                            backgroundColor: req.status === 'allocated' ? '#22c55e' : 
+                                                                req.status === 'waiting' ? '#f59e0b' : '#94a3b8'
+                                                        }}
+                                                    />
+                                                    <div className="resource-info">
+                                                        <span className="resource-name">{resource?.name || req.resourceType}</span>
+                                                        <span className="resource-status-text">
+                                                            {req.status === 'allocated' && 'Currently using'}
+                                                            {req.status === 'waiting' && `Waiting ~${req.estimatedWait} min`}
+                                                            {req.status === 'queued' && `Queue position: ${req.queuePosition}`}
+                                                        </span>
+                                                    </div>
+                                                    {req.status === 'waiting' && (
+                                                        <div className="wait-timer">
+                                                            <Hourglass size={12} className="spin-slow" />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+
+                                <button 
+                                    className="action-btn action-btn--primary"
+                                    onClick={() => navigateToPatient(selectedPatient)}
+                                >
+                                    <Route size={16} />
+                                    Navigate to Patient
+                                </button>
+                                
+                                {isNavigating && navigationTarget?.id === selectedPatient.id && (
+                                    <button 
+                                        className="action-btn action-btn--danger"
+                                        onClick={stopNavigation}
+                                    >
+                                        <X size={16} />
+                                        Stop Navigation
+                                    </button>
+                                )}
+                            </div>
                         ) : (
                             <div className="detail-empty">
                                 <Compass size={40} />
-                                <p>Select a room or equipment to view details</p>
+                                <p>{userMode === 'patient' ? 'Select a patient to view details' : 'Select a room or equipment to view details'}</p>
                             </div>
                         )}
                     </div>
