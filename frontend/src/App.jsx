@@ -9,6 +9,7 @@ import NGOs from './pages/NGOs';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import Donate from './pages/Donate';
+import Hospital from './pages/Hospital';
 
 /* Scroll to top on navigation */
 function ScrollToTop() {
@@ -30,6 +31,7 @@ function AppInner() {
         <Route path="/ngos" element={<NGOs />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/about" element={<About />} />
+        <Route path="/hospital" element={<Hospital />} />
         <Route path="/donate" element={<Donate />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

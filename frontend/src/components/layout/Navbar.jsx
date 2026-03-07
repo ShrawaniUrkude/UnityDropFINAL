@@ -7,6 +7,7 @@ const navLinks = [
     { to: '/campaigns', label: 'Campaigns' },
     { to: '/volunteers', label: 'Volunteers' },
     { to: '/ngos', label: 'NGOs' },
+    { to: '/hospital', label: 'Hospital' },
     { to: '/dashboard', label: 'Dashboard' },
     { to: '/about', label: 'About' },
 ];

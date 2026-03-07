@@ -1,0 +1,1224 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   HOSPITAL COMPREHENSIVE MAP - COMPLETE STYLESHEET
+   Features: 2D/3D Views, Multi-floor, Equipment Tracking, Patient/Staff Modes
+══════════════════════════════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════════════
+   BASE LAYOUT
+═══════════════════════════════════════════════════════════════ */
+.hospital-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    display: flex;
+    flex-direction: column;
+    padding-top: 70px;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TOP BAR
+═══════════════════════════════════════════════════════════════ */
+.hospital-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.topbar-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+}
+
+.topbar-center h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.topbar-center svg {
+    color: #3b82f6;
+}
+
+.topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* View Toggle */
+.view-toggle, .mode-toggle {
+    display: flex;
+    gap: 2px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 3px;
+    border-radius: 10px;
+}
+
+.toggle-btn, .mode-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.toggle-btn.active, .mode-btn.active {
+    background: #3b82f6;
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+}
+
+.toggle-btn:not(.active):hover, .mode-btn:not(.active):hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+}
+
+.emergency-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: #ef4444;
+    color: #fff;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    animation: pulse-emergency 2s ease-in-out infinite;
+}
+
+@keyframes pulse-emergency {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.5); }
+    50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════════════════════════ */
+.hospital-main {
+    flex: 1;
+    display: flex;
+    gap: 16px;
+    padding: 16px;
+    overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   SIDEBARS
+═══════════════════════════════════════════════════════════════ */
+.hospital-sidebar {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.hospital-sidebar--left {
+    overflow-y: auto;
+}
+
+.sidebar-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sidebar-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0 0 12px 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sidebar-section h3 svg {
+    color: #3b82f6;
+}
+
+.sidebar-section--scroll {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-section--scroll .equipment-list {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 350px;
+}
+
+/* Search Box */
+.search-box {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 8px;
+    padding: 10px 12px;
+    margin-bottom: 10px;
+}
+
+.search-box svg {
+    color: rgba(255, 255, 255, 0.5);
+    flex-shrink: 0;
+}
+
+.search-box input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.search-box input::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Filter Row */
+.filter-row {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-row select {
+    flex: 1;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+    font-size: 0.8rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.filter-row select option {
+    background: #1e293b;
+    color: #fff;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.checkbox-label input {
+    accent-color: #3b82f6;
+}
+
+/* Stats Grid */
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+}
+
+.stat-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-value {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.stat-label {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.stat-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+}
+
+/* Equipment List */
+.equipment-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.equipment-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: 1px solid transparent;
+}
+
+.equipment-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.equipment-item--selected {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: #3b82f6;
+}
+
+.equipment-item__status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.equipment-item__info {
+    flex: 1;
+    min-width: 0;
+}
+
+.equipment-item__name {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.equipment-item__location {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.equipment-item__badge {
+    font-size: 0.65rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+}
+
+.equipment-item__badge--available {
+    background: rgba(34, 197, 94, 0.2);
+    color: #22c55e;
+}
+
+.equipment-item__badge--in-use {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+}
+
+.equipment-item__badge--maintenance {
+    background: rgba(245, 158, 11, 0.2);
+    color: #f59e0b;
+}
+
+.equipment-item__badge--low {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+}
+
+/* Department List (Patient Mode) */
+.department-list {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+.department-floor {
+    margin-bottom: 16px;
+}
+
+.department-floor h4 {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 8px 0;
+}
+
+.department-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.department-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.department-item.active {
+    background: rgba(59, 130, 246, 0.2);
+}
+
+.dept-icon {
+    font-size: 1rem;
+}
+
+.dept-name {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAP AREA
+═══════════════════════════════════════════════════════════════ */
+.hospital-map-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+    position: relative;
+}
+
+/* Floor Selector */
+.floor-selector {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.floor-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    padding: 10px 20px;
+    border: 2px solid var(--floor-color, #64748b);
+    border-radius: 10px;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.floor-btn:hover {
+    transform: translateY(-2px);
+}
+
+.floor-btn.active {
+    color: #fff;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.floor-level {
+    font-size: 1.1rem;
+    font-weight: 800;
+}
+
+.floor-name {
+    font-size: 0.7rem;
+    opacity: 0.8;
+}
+
+/* 3D Controls */
+.controls-3d {
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+    min-width: 180px;
+}
+
+.controls-3d__header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.controls-3d__buttons {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.controls-3d__buttons button {
+    flex: 1;
+    padding: 8px;
+    border: none;
+    border-radius: 6px;
+    background: #f1f5f9;
+    color: #64748b;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.controls-3d__buttons button:hover {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.controls-3d__zoom {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.controls-3d__zoom input[type="range"] {
+    flex: 1;
+    height: 4px;
+    border-radius: 2px;
+    background: #e2e8f0;
+    appearance: none;
+    cursor: pointer;
+}
+
+.controls-3d__zoom input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #8b5cf6;
+    cursor: pointer;
+}
+
+.controls-3d__hint {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    text-align: center;
+    margin: 8px 0 0 0;
+}
+
+/* Map Canvas */
+.map-canvas {
+    flex: 1;
+    background: linear-gradient(180deg, #1e3a5f 0%, #0f172a 100%);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    min-height: 450px;
+}
+
+.map-canvas--3d {
+    cursor: grab;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-canvas--3d:active {
+    cursor: grabbing;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   2D FLOOR PLAN
+═══════════════════════════════════════════════════════════════ */
+.floor-plan-2d {
+    position: relative;
+    height: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.floor-header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.floor-header h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.room-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 12px;
+    flex: 1;
+}
+
+/* Room Card */
+.room-card {
+    position: relative;
+    border: 3px solid;
+    border-radius: 12px;
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-height: 100px;
+}
+
+.room-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.room-card--selected {
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.3), 0 8px 25px rgba(0, 0, 0, 0.2);
+    transform: translateY(-3px);
+}
+
+.room-card--span-2 {
+    grid-column: span 2;
+}
+
+.room-card__icon {
+    font-size: 1.5rem;
+}
+
+.room-card__info h4 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0;
+}
+
+.room-card__subtitle {
+    font-size: 0.7rem;
+    color: #64748b;
+}
+
+.room-card__beds {
+    position: absolute;
+    bottom: 8px;
+    right: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #475569;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 2px 8px;
+    border-radius: 4px;
+}
+
+.room-card__equipment-count {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.15);
+    padding: 3px 8px;
+    border-radius: 4px;
+}
+
+.room-eq-dot {
+    position: absolute;
+    bottom: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+}
+
+/* Equipment Overlay */
+.equipment-overlay {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.eq-marker {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.eq-marker:hover,
+.eq-marker--selected {
+    transform: translate(-50%, -50%) scale(1.5);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3), 0 4px 10px rgba(0, 0, 0, 0.4);
+    z-index: 10;
+}
+
+/* 2D Corridor */
+.corridor-2d {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(254, 249, 195, 0.8);
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: 2px dashed #facc15;
+}
+
+.corridor-2d span {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #854d0e;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   3D VIEW
+═══════════════════════════════════════════════════════════════ */
+.scene-3d {
+    position: relative;
+    width: 500px;
+    height: 300px;
+    transform-style: preserve-3d;
+    transition: transform 0.1s ease-out;
+}
+
+.floor-base-3d {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    border: 3px solid var(--floor-color, #3b82f6);
+    border-radius: 8px;
+    transform: translateZ(-10px);
+    box-shadow: 0 0 40px rgba(59, 130, 246, 0.2);
+}
+
+.floor-base-label {
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--floor-color, #3b82f6);
+    white-space: nowrap;
+}
+
+.buildings-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 15px;
+    padding: 20px;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.building-wrapper {
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+/* 3D Building */
+.building-3d {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.3s, filter 0.3s;
+}
+
+.building-3d--highlight {
+    filter: brightness(1.3);
+    transform: translateZ(15px);
+}
+
+.building-face {
+    position: absolute;
+    background: var(--building-color);
+    backface-visibility: visible;
+}
+
+.building-face--front {
+    width: 100%;
+    height: var(--building-height, 50px);
+    bottom: 0;
+    transform-origin: bottom;
+    transform: rotateX(-90deg);
+    background: linear-gradient(180deg, var(--building-color) 0%, color-mix(in srgb, var(--building-color) 60%, black) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.building-face--back {
+    width: 100%;
+    height: var(--building-height, 50px);
+    top: 0;
+    transform-origin: top;
+    transform: rotateX(90deg) rotateY(180deg);
+    background: color-mix(in srgb, var(--building-color) 50%, black);
+}
+
+.building-face--left {
+    width: 100%;
+    height: var(--building-height, 50px);
+    left: 0;
+    transform-origin: left;
+    transform: rotateY(90deg) rotateX(-90deg);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--building-color) 80%, black) 0%, color-mix(in srgb, var(--building-color) 40%, black) 100%);
+}
+
+.building-face--right {
+    width: 100%;
+    height: var(--building-height, 50px);
+    right: 0;
+    transform-origin: right;
+    transform: rotateY(-90deg) rotateX(-90deg);
+    background: linear-gradient(180deg, color-mix(in srgb, var(--building-color) 90%, white) 0%, color-mix(in srgb, var(--building-color) 70%, black) 100%);
+}
+
+.building-face--top {
+    width: 100%;
+    height: 100%;
+    transform: translateZ(var(--building-height, 50px));
+    background: var(--building-top, #f8fafc);
+    border: 2px solid var(--building-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+}
+
+.building-face--bottom {
+    width: 100%;
+    height: 100%;
+    background: color-mix(in srgb, var(--building-color) 30%, black);
+}
+
+.building-label {
+    font-size: 1.2rem;
+}
+
+.building-name {
+    font-size: 0.55rem;
+    font-weight: 700;
+    color: #1e293b;
+    text-align: center;
+    line-height: 1.2;
+}
+
+/* 3D Markers */
+.marker-3d {
+    position: absolute;
+    transform: translateZ(100px);
+    cursor: pointer;
+    z-index: 50;
+}
+
+.marker-pin {
+    width: 12px;
+    height: 12px;
+    background: var(--marker-color, #22c55e);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.2s;
+}
+
+.marker-3d:hover .marker-pin,
+.marker-3d--selected .marker-pin {
+    transform: scale(1.5);
+    box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.3), 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MAP LEGEND
+═══════════════════════════════════════════════════════════════ */
+.map-legend {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.map-legend h4 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #475569;
+    margin: 0 0 8px 0;
+    text-align: center;
+}
+
+.legend-items {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.75rem;
+    color: #475569;
+}
+
+.legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RIGHT SIDEBAR - DETAILS
+═══════════════════════════════════════════════════════════════ */
+.detail-card {
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 10px;
+    padding: 14px;
+}
+
+.detail-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-icon {
+    font-size: 2rem;
+}
+
+.detail-status {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.detail-header h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+}
+
+.detail-header span {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.detail-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+}
+
+.info-row span {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.info-row strong {
+    color: #fff;
+}
+
+.room-equipment-list {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 12px;
+}
+
+.room-equipment-list h5 {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0 0 8px 0;
+}
+
+.mini-equipment {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 4px 0;
+}
+
+.mini-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.no-equipment {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+}
+
+.detail-empty {
+    text-align: center;
+    padding: 30px 10px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.detail-empty svg {
+    margin-bottom: 12px;
+    opacity: 0.5;
+}
+
+.detail-empty p {
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Action Buttons */
+.action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 8px;
+}
+
+.action-btn--primary {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.action-btn--primary:hover {
+    background: #2563eb;
+}
+
+.action-btn--secondary {
+    background: rgba(34, 197, 94, 0.15);
+    color: #22c55e;
+    border: 1px solid rgba(34, 197, 94, 0.3);
+}
+
+.action-btn--secondary:hover {
+    background: rgba(34, 197, 94, 0.25);
+}
+
+/* Quick Navigation */
+.quick-nav {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
+
+.quick-nav button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    padding: 12px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.03);
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quick-nav button:hover {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: #3b82f6;
+    color: #fff;
+}
+
+.quick-nav button svg {
+    color: #3b82f6;
+}
+
+/* Hospital Info */
+.hospital-info {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.hospital-info .info-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.hospital-info .info-item svg {
+    color: #3b82f6;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   RESPONSIVE
+═══════════════════════════════════════════════════════════════ */
+@media (max-width: 1400px) {
+    .hospital-sidebar {
+        width: 260px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hospital-main {
+        flex-direction: column;
+    }
+    
+    .hospital-sidebar {
+        width: 100%;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .hospital-sidebar .sidebar-section {
+        flex: 1;
+        min-width: 250px;
+    }
+    
+    .hospital-map-area {
+        min-height: 500px;
+    }
+    
+    .room-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .hospital-page {
+        padding-top: 60px;
+    }
+    
+    .hospital-topbar {
+        flex-wrap: wrap;
+        gap: 10px;
+        padding: 10px 16px;
+    }
+    
+    .topbar-left {
+        order: 2;
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .topbar-center {
+        order: 1;
+    }
+    
+    .topbar-right {
+        order: 3;
+    }
+    
+    .floor-selector {
+        gap: 6px;
+    }
+    
+    .floor-btn {
+        padding: 8px 12px;
+    }
+    
+    .floor-name {
+        display: none;
+    }
+    
+    .controls-3d {
+        top: auto;
+        bottom: 80px;
+        right: 10px;
+        min-width: 160px;
+    }
+    
+    .scene-3d {
+        width: 320px;
+        height: 200px;
+    }
+    
+    .buildings-container {
+        gap: 8px;
+        padding: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    .room-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .view-toggle, .mode-toggle {
+        flex-wrap: wrap;
+    }
+    
+    .toggle-btn, .mode-btn {
+        font-size: 0.7rem;
+        padding: 6px 10px;
+    }
+}
