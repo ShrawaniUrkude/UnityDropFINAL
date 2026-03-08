@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
+import { gsap, ScrollTrigger } from '../hooks/useGsap';
 import './Donate.css';
 
 const donationAmounts = [500, 1000, 2000, 5000, 10000, 25000];
@@ -17,6 +18,45 @@ export default function Donate() {
         e.preventDefault();
         setSubmitted(true);
     };
+
+    const heroRef = useRef(null);
+    const formRef = useRef(null);
+    const sidebarRef = useRef(null);
+
+    useEffect(() => {
+        const ctx = gsap.context(() => {
+            // Hero entrance
+            const heroEl = heroRef.current;
+            if (heroEl) {
+                gsap.fromTo(heroEl.querySelectorAll('.section-label, .page-header__title, .page-header__subtitle'),
+                    { y: 40, opacity: 0 },
+                    { y: 0, opacity: 1, duration: 0.8, stagger: 0.15, ease: 'power3.out', delay: 0.2 }
+                );
+            }
+
+            // Form card slide in from left
+            const formEl = formRef.current;
+            if (formEl) {
+                gsap.fromTo(formEl,
+                    { x: -50, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
+                      scrollTrigger: { trigger: formEl, start: 'top 85%' } }
+                );
+            }
+
+            // Sidebar slide in from right
+            const sidebarEl = sidebarRef.current;
+            if (sidebarEl) {
+                gsap.fromTo(sidebarEl.children,
+                    { x: 50, opacity: 0 },
+                    { x: 0, opacity: 1, duration: 0.7, stagger: 0.15, ease: 'power3.out',
+                      scrollTrigger: { trigger: sidebarEl, start: 'top 85%' } }
+                );
+            }
+        });
+
+        return () => ctx.revert();
+    }, []);
 
     if (submitted) {
         return (
@@ -46,7 +86,7 @@ export default function Donate() {
 
     return (
         <main className="donate-page">
-            <section className="page-header">
+            <section className="page-header" ref={heroRef}>
                 <div className="page-header__bg-pattern" />
                 <div className="container">
                     <span className="section-label">Give</span>
@@ -60,7 +100,7 @@ export default function Donate() {
             <div className="container donate-body">
                 <div className="donate-layout">
                     {/* Form */}
-                    <div className="donate-form-wrap card">
+                    <div className="donate-form-wrap card" ref={formRef}>
                         {/* Steps */}
                         <div className="donate-steps">
                             {[1, 2, 3].map(s => (
@@ -195,7 +235,7 @@ export default function Donate() {
                     </div>
 
                     {/* Sidebar */}
-                    <div className="donate-sidebar">
+                    <div className="donate-sidebar" ref={sidebarRef}>
                         <div className="donate-trust card">
                             <h4>Why Donate Here?</h4>
                             <div className="donate-trust__items">

@@ -145,3 +145,690 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* ──── NGO SECTION TITLE ──── */
+.ngo-section-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--gray-800, #222);
+    margin-bottom: 24px;
+}
+
+/* ──── DONORS SECTION ──── */
+.ngo-donors-section {
+    padding: 48px 0 80px;
+    background: var(--off-white, #f7f9fc);
+}
+
+/* ──── SUMMARY CARDS ──── */
+.ngo-donor-summary {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+}
+
+.ngo-donor-summary__card {
+    background: var(--white, #fff);
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    border-left: 4px solid transparent;
+}
+
+.ngo-donor-summary__card--total {
+    border-left-color: var(--primary, #1a3a6b);
+}
+
+.ngo-donor-summary__card--pending {
+    border-left-color: #f59e0b;
+}
+
+.ngo-donor-summary__card--approved {
+    border-left-color: var(--accent, #4caf87);
+}
+
+.ngo-donor-summary__card--rejected {
+    border-left-color: #ef4444;
+}
+
+.ngo-donor-summary__value {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--gray-800, #222);
+}
+
+.ngo-donor-summary__label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--gray-400, #999);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ──── FILTER TABS ──── */
+.ngo-donor-filters {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 24px;
+}
+
+.ngo-donor-filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: 2px solid var(--border, #e0e0e0);
+    background: var(--white, #fff);
+    color: var(--gray-600, #555);
+    transition: all 0.2s ease;
+}
+
+.ngo-donor-filter-btn:hover {
+    border-color: var(--primary, #1a3a6b);
+    color: var(--primary, #1a3a6b);
+}
+
+.ngo-donor-filter-btn.active {
+    background: var(--primary, #1a3a6b);
+    border-color: var(--primary, #1a3a6b);
+    color: #fff;
+}
+
+.ngo-donor-filter-count {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.ngo-donor-filter-btn:not(.active) .ngo-donor-filter-count {
+    background: var(--gray-50, #f5f5f5);
+    color: var(--gray-500, #777);
+}
+
+/* ──── EMPTY STATE ──── */
+.ngo-donor-empty {
+    text-align: center;
+    padding: 60px 20px;
+    background: var(--white, #fff);
+    border-radius: 16px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+.ngo-donor-empty__icon {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+}
+
+.ngo-donor-empty h3 {
+    font-size: 1.2rem;
+    color: var(--gray-700, #333);
+    margin-bottom: 8px;
+}
+
+.ngo-donor-empty p {
+    font-size: 0.92rem;
+    color: var(--gray-400, #999);
+}
+
+/* ──── DONOR LIST ──── */
+.ngo-donor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ngo-donor-row {
+    background: var(--white, #fff);
+    border-radius: 14px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: box-shadow 0.25s ease;
+}
+
+.ngo-donor-row:hover {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.ngo-donor-row.expanded {
+    box-shadow: 0 6px 28px rgba(0, 0, 0, 0.12);
+}
+
+/* ──── ROW MAIN ──── */
+.ngo-donor-row__main {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+}
+
+.ngo-donor-row__main:hover {
+    background: rgba(0, 0, 0, 0.015);
+}
+
+.ngo-donor-row__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary, #1a3a6b), var(--primary-light, #2a5298));
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.ngo-donor-row__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ngo-donor-row__name {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--gray-800, #222);
+}
+
+.ngo-donor-row__meta {
+    font-size: 0.78rem;
+    color: var(--gray-400, #999);
+}
+
+.ngo-donor-row__organs {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.ngo-donor-row__organ-tag {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    background: rgba(76, 175, 135, 0.08);
+    color: var(--accent-dark, #379c73);
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.ngo-donor-row__organ-more {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 4px 8px;
+    background: var(--gray-50, #f5f5f5);
+    color: var(--gray-500, #777);
+    border-radius: 999px;
+}
+
+.ngo-donor-row__status {
+    font-size: 0.78rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 999px;
+    white-space: nowrap;
+}
+
+.ngo-donor-row__status--pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+}
+
+.ngo-donor-row__status--approved {
+    background: rgba(76, 175, 135, 0.1);
+    color: var(--accent-dark, #379c73);
+}
+
+.ngo-donor-row__status--rejected {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.ngo-donor-row__expand {
+    font-size: 0.75rem;
+    color: var(--gray-400, #999);
+    flex-shrink: 0;
+}
+
+/* ──── EXPANDED DETAILS ──── */
+.ngo-donor-row__details {
+    padding: 0 20px 20px;
+    border-top: 1px solid var(--border, #eee);
+    animation: slideDown 0.25s ease;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ngo-donor-details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+    padding: 20px 0;
+}
+
+.ngo-donor-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.ngo-donor-detail__label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gray-400, #999);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ngo-donor-detail__value {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--gray-700, #333);
+    word-break: break-word;
+}
+
+/* ──── ACTION BUTTONS ──── */
+.ngo-donor-actions {
+    display: flex;
+    gap: 10px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border, #eee);
+    flex-wrap: wrap;
+}
+
+.ngo-donor-action-btn {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ngo-donor-action-btn--approve {
+    background: var(--accent, #4caf87);
+    color: #fff;
+}
+
+.ngo-donor-action-btn--approve:hover {
+    background: var(--accent-dark, #379c73);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(76, 175, 135, 0.3);
+}
+
+.ngo-donor-action-btn--reject {
+    background: #ef4444;
+    color: #fff;
+}
+
+.ngo-donor-action-btn--reject:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+}
+
+.ngo-donor-action-btn--pending {
+    background: var(--gray-50, #f5f5f5);
+    color: var(--gray-600, #555);
+    border: 1px solid var(--border, #e0e0e0);
+}
+
+.ngo-donor-action-btn--pending:hover {
+    background: var(--gray-100, #eee);
+}
+
+/* ──── RESPONSIVE ──── */
+@media (max-width: 768px) {
+    .ngo-donor-summary {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ngo-donor-row__main {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .ngo-donor-row__organs {
+        width: 100%;
+        order: 4;
+    }
+
+    .ngo-donor-details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ngo-donor-actions {
+        flex-direction: column;
+    }
+
+    .ngo-donor-action-btn {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .ngo-donor-summary {
+        grid-template-columns: 1fr;
+    }
+
+    .ngo-donor-filters {
+        flex-direction: column;
+    }
+
+    .ngo-donor-filter-btn {
+        justify-content: center;
+    }
+}
+
+/* ──── APPROVAL FORM ──── */
+.ngo-approval-form {
+    margin-top: 16px;
+    padding: 20px;
+    background: rgba(76, 175, 135, 0.04);
+    border: 1.5px solid rgba(76, 175, 135, 0.15);
+    border-radius: 14px;
+    animation: slideDown 0.25s ease;
+}
+
+.ngo-approval-form h4 {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--gray-800, #222);
+    margin-bottom: 16px;
+}
+
+.ngo-approval-form__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    margin-bottom: 16px;
+}
+
+.ngo-approval-form__field {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.ngo-approval-form__field--full {
+    grid-column: 1 / -1;
+}
+
+.ngo-approval-form__field label {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--gray-600, #555);
+}
+
+.ngo-approval-form__field input,
+.ngo-approval-form__field textarea {
+    padding: 10px 14px;
+    border: 1.5px solid var(--border, #e0e0e0);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s ease;
+}
+
+.ngo-approval-form__field input:focus,
+.ngo-approval-form__field textarea:focus {
+    border-color: var(--accent, #4caf87);
+    box-shadow: 0 0 0 3px rgba(76, 175, 135, 0.1);
+}
+
+.ngo-approval-form__field textarea {
+    resize: vertical;
+    min-height: 70px;
+}
+
+.ngo-approval-form__actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+.ngo-approval-form__actions button {
+    padding: 10px 22px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ngo-approval-form__actions button:first-child {
+    background: var(--accent, #4caf87);
+    color: #fff;
+}
+
+.ngo-approval-form__actions button:first-child:hover {
+    background: var(--accent-dark, #379c73);
+}
+
+.ngo-approval-form__actions button:last-child {
+    background: var(--gray-100, #f3f3f3);
+    color: var(--gray-600, #555);
+}
+
+/* ──── APPROVAL INFO (for already-approved donors) ──── */
+.ngo-approval-info {
+    margin-top: 16px;
+    padding: 16px;
+    background: rgba(76, 175, 135, 0.05);
+    border: 1px solid rgba(76, 175, 135, 0.15);
+    border-radius: 12px;
+}
+
+.ngo-approval-info h4 {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--accent-dark, #379c73);
+    margin-bottom: 12px;
+}
+
+.ngo-approval-info__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.ngo-approval-info__grid > div {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ngo-approval-info__grid span {
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--gray-400, #999);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.ngo-approval-info__grid strong {
+    font-size: 0.85rem;
+    color: var(--gray-700, #333);
+}
+
+@media (max-width: 640px) {
+    .ngo-approval-form__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ngo-approval-info__grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ──── NGO TRACKING PANEL ──── */
+.ngo-tracking-panel {
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(135deg, rgba(26, 58, 107, 0.03), rgba(76, 175, 135, 0.04));
+    border: 1.5px solid rgba(26, 58, 107, 0.1);
+    border-radius: 14px;
+}
+
+.ngo-tracking-panel__title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--gray-800, #222);
+    margin-bottom: 16px;
+}
+
+.ngo-tracking-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.ngo-tracking-stage {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    background: var(--white, #fff);
+    border: 1px solid var(--border, #eee);
+    transition: all 0.2s ease;
+}
+
+.ngo-tracking-stage--done {
+    background: rgba(76, 175, 135, 0.06);
+    border-color: rgba(76, 175, 135, 0.2);
+}
+
+.ngo-tracking-stage--next {
+    background: rgba(59, 130, 246, 0.06);
+    border-color: rgba(59, 130, 246, 0.25);
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.08);
+}
+
+.ngo-tracking-stage__icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.ngo-tracking-stage__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ngo-tracking-stage__info strong {
+    font-size: 0.85rem;
+    color: var(--gray-700, #333);
+}
+
+.ngo-tracking-stage__time {
+    font-size: 0.72rem;
+    color: var(--accent-dark, #379c73);
+    font-weight: 600;
+}
+
+.ngo-tracking-stage__note {
+    font-size: 0.75rem;
+    color: var(--gray-500, #777);
+    font-style: italic;
+}
+
+.ngo-tracking-stage__status {
+    font-size: 1rem;
+    flex-shrink: 0;
+}
+
+.ngo-tracking-update {
+    padding: 14px;
+    background: var(--white, #fff);
+    border: 1.5px dashed rgba(59, 130, 246, 0.3);
+    border-radius: 12px;
+}
+
+.ngo-tracking-update strong {
+    font-size: 0.85rem;
+    color: var(--gray-700, #333);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.ngo-tracking-update__row {
+    display: flex;
+    gap: 10px;
+}
+
+.ngo-tracking-update__input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1.5px solid var(--border, #e0e0e0);
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-family: inherit;
+    outline: none;
+}
+
+.ngo-tracking-update__input:focus {
+    border-color: var(--primary, #1a3a6b);
+    box-shadow: 0 0 0 3px rgba(26, 58, 107, 0.08);
+}
+
+.ngo-tracking-update__btn {
+    padding: 10px 20px;
+    background: var(--accent, #4caf87);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+}
+
+.ngo-tracking-update__btn:hover {
+    background: var(--accent-dark, #379c73);
+    transform: translateY(-1px);
+}
+
+.ngo-tracking-complete {
+    padding: 14px;
+    background: rgba(76, 175, 135, 0.08);
+    border: 1px solid rgba(76, 175, 135, 0.2);
+    border-radius: 12px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: var(--accent-dark, #379c73);
+    text-align: center;
+}
+
+@media (max-width: 640px) {
+    .ngo-tracking-update__row {
+        flex-direction: column;
+    }
+}

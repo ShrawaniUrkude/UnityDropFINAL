@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { useCallback } from 'react';
 import './CampaignCard.css';
 
 const formatCurrency = (n) =>
@@ -16,10 +17,24 @@ export default function CampaignCard({ campaign, delay = 0 }) {
     const pct = Math.min(Math.round((raised / goal) * 100), 100);
     const urgent = daysLeft <= 7;
 
+    const onTiltMove = useCallback((e) => {
+        const el = e.currentTarget;
+        const rect = el.getBoundingClientRect();
+        const x = ((e.clientX - rect.left) / rect.width - 0.5) * 8;
+        const y = ((e.clientY - rect.top) / rect.height - 0.5) * -8;
+        el.style.transform = `perspective(800px) rotateY(${x}deg) rotateX(${y}deg) translateY(-4px)`;
+    }, []);
+
+    const onTiltLeave = useCallback((e) => {
+        e.currentTarget.style.transform = 'perspective(800px) rotateY(0) rotateX(0) translateY(0)';
+    }, []);
+
     return (
         <div
             className="campaign-card card animate-fadeInUp"
             style={{ animationDelay: `${delay}ms` }}
+            onMouseMove={onTiltMove}
+            onMouseLeave={onTiltLeave}
         >
             {/* Image */}
             <div className="campaign-card__img-wrap">

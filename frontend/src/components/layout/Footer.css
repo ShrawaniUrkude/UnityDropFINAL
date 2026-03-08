@@ -1,7 +1,25 @@
+/* ═══════════════════════════════════════════════════════════
+   FOOTER — Enhanced with gradient + GSAP-ready
+═══════════════════════════════════════════════════════════ */
 .footer {
-    background: var(--gray-900);
+    background: linear-gradient(180deg, #0e1e35 0%, var(--gray-900) 40%, #0a1628 100%);
     color: var(--gray-300);
     font-size: 0.9rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Animated gradient divider */
+.footer__gradient-divider {
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent), var(--primary-light), var(--accent-light), var(--primary));
+    background-size: 300% 100%;
+    animation: gradient-slide 4s linear infinite;
+}
+
+@keyframes gradient-slide {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
 }
 
 .footer__top {
@@ -12,6 +30,10 @@
     display: grid;
     grid-template-columns: 2fr 1fr 1fr 1fr 1.6fr;
     gap: 40px;
+}
+
+.footer__brand {
+    will-change: transform, opacity;
 }
 
 .footer__brand p {
@@ -26,21 +48,38 @@
     font-size: 1.4rem;
     font-weight: 800;
     color: var(--white);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.footer__logo-icon {
+    font-size: 1.5rem;
+    display: inline-block;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
 }
 
 .footer__logo span {
-    color: var(--primary);
+    background: linear-gradient(135deg, var(--primary-light), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
 }
 
 .footer__social {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     margin-top: 20px;
 }
 
 .footer__social-link {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     border-radius: var(--radius-full);
     display: flex;
     align-items: center;
@@ -50,14 +89,20 @@
     background: rgba(255, 255, 255, 0.06);
     color: var(--gray-300);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: all var(--transition-fast);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
 }
 
 .footer__social-link:hover {
     background: var(--primary);
     color: var(--white);
     border-color: var(--primary);
-    transform: translateY(-2px);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 6px 20px rgba(26, 58, 107, 0.4);
+}
+
+.footer__col {
+    will-change: transform, opacity;
 }
 
 .footer__col-title {
@@ -67,6 +112,19 @@
     text-transform: uppercase;
     color: var(--white);
     margin-bottom: 16px;
+    position: relative;
+    display: inline-block;
+}
+
+.footer__col-title::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 20px;
+    height: 2px;
+    border-radius: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
 }
 
 .footer__col ul li {
@@ -75,11 +133,13 @@
 
 .footer__col ul li a {
     color: var(--gray-400);
-    transition: color var(--transition-fast);
+    transition: all 0.2s;
+    position: relative;
 }
 
 .footer__col ul li a:hover {
-    color: var(--primary);
+    color: var(--accent-light);
+    padding-left: 6px;
 }
 
 .footer__newsletter p {
@@ -98,6 +158,7 @@
     background: rgba(255, 255, 255, 0.06);
     border-color: rgba(255, 255, 255, 0.1);
     color: var(--white);
+    transition: all 0.3s;
 }
 
 .footer__newsletter-form .form-control::placeholder {
@@ -105,12 +166,14 @@
 }
 
 .footer__newsletter-form .form-control:focus {
-    border-color: var(--primary);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(76, 175, 135, 0.15);
 }
 
 .footer__bottom {
     border-top: 1px solid rgba(255, 255, 255, 0.06);
     padding: 20px 0;
+    will-change: transform, opacity;
 }
 
 .footer__bottom-inner {
@@ -134,6 +197,11 @@
 .footer__badges span {
     font-size: 0.78rem;
     color: var(--gray-500);
+    transition: color 0.2s;
+}
+
+.footer__badges span:hover {
+    color: var(--accent-light);
 }
 
 @media (max-width: 1024px) {
