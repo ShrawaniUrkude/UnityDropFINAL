@@ -18,6 +18,10 @@ const initialForm = {
     organs: [],
     donationType: '',
     medicalConditions: '',
+    smoking: '',
+    alcohol: '',
+    chronicDisease: '',
+    previousSurgery: '',
     emergencyName: '',
     emergencyPhone: '',
     consent: false,
@@ -31,6 +35,82 @@ export default function DonorRegistration() {
     const [errors, setErrors] = useState({});
 
     const totalSteps = 4;
+
+    // ──── Cost Estimation Algorithm ────
+    const getAge = () => {
+        if (!form.dob) return 0;
+        const today = new Date();
+        const birth = new Date(form.dob);
+        let age = today.getFullYear() - birth.getFullYear();
+        const m = today.getMonth() - birth.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birth.getDate())) age--;
+        return age;
+    };
+
+    const organBaseCosts = {
+        1: { name: 'Kidney', base: 250000, screening: 15000 },
+        2: { name: 'Liver', base: 500000, screening: 25000 },
+        3: { name: 'Heart', base: 800000, screening: 35000 },
+        4: { name: 'Lungs', base: 600000, screening: 30000 },
+        5: { name: 'Cornea (Eyes)', base: 50000, screening: 8000 },
+        6: { name: 'Bone Marrow', base: 350000, screening: 20000 },
+        7: { name: 'Pancreas', base: 450000, screening: 22000 },
+        8: { name: 'Skin', base: 80000, screening: 10000 },
+    };
+
+    const calculateCostEstimate = () => {
+        if (form.organs.length === 0) return null;
+
+        const age = getAge();
+        let ageFactor = 1.0;
+        if (age < 18) ageFactor = 1.15;
+        else if (age <= 35) ageFactor = 0.9;
+        else if (age <= 50) ageFactor = 1.0;
+        else if (age <= 65) ageFactor = 1.2;
+        else ageFactor = 1.4;
+
+        let habitFactor = 1.0;
+        if (form.smoking === 'regular') habitFactor += 0.2;
+        else if (form.smoking === 'occasional') habitFactor += 0.1;
+        else if (form.smoking === 'quit') habitFactor += 0.05;
+        if (form.alcohol === 'heavy') habitFactor += 0.2;
+        else if (form.alcohol === 'moderate') habitFactor += 0.1;
+        else if (form.alcohol === 'social') habitFactor += 0.03;
+
+        let medicalFactor = 1.0;
+        if (form.chronicDisease === 'heart' || form.chronicDisease === 'liver' || form.chronicDisease === 'kidney') medicalFactor += 0.25;
+        else if (form.chronicDisease === 'diabetes' || form.chronicDisease === 'hypertension') medicalFactor += 0.15;
+        else if (form.chronicDisease === 'other') medicalFactor += 0.1;
+        if (form.previousSurgery === 'organ') medicalFactor += 0.2;
+        else if (form.previousSurgery === 'major') medicalFactor += 0.1;
+        else if (form.previousSurgery === 'minor') medicalFactor += 0.05;
+
+        const organBreakdown = form.organs.map(id => {
+            const info = organBaseCosts[id];
+            if (!info) return null;
+            const procedureCost = Math.round(info.base * ageFactor * habitFactor * medicalFactor);
+            const screeningCost = Math.round(info.screening * medicalFactor);
+            const transportCost = Math.round(info.base * 0.05);
+            const hospitalStay = Math.round(info.base * 0.15 * ageFactor);
+            const total = procedureCost + screeningCost + transportCost + hospitalStay;
+            return { ...info, id, procedureCost, screeningCost, transportCost, hospitalStay, total };
+        }).filter(Boolean);
+
+        const grandTotal = organBreakdown.reduce((sum, o) => sum + o.total, 0);
+        const totalScreening = organBreakdown.reduce((sum, o) => sum + o.screeningCost, 0);
+        const totalProcedure = organBreakdown.reduce((sum, o) => sum + o.procedureCost, 0);
+        const totalTransport = organBreakdown.reduce((sum, o) => sum + o.transportCost, 0);
+        const totalHospital = organBreakdown.reduce((sum, o) => sum + o.hospitalStay, 0);
+
+        let riskLevel = 'Low';
+        const combinedFactor = ageFactor * habitFactor * medicalFactor;
+        if (combinedFactor > 1.6) riskLevel = 'High';
+        else if (combinedFactor > 1.2) riskLevel = 'Moderate';
+
+        return { organBreakdown, grandTotal, totalScreening, totalProcedure, totalTransport, totalHospital, age, ageFactor, habitFactor, medicalFactor, riskLevel };
+    };
+
+    const costEstimate = calculateCostEstimate();
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -373,6 +453,57 @@ export default function DonorRegistration() {
                                     <label>Any Medical Conditions? (Optional)</label>
                                     <textarea name="medicalConditions" value={form.medicalConditions} onChange={handleChange} placeholder="List any medical conditions, surgeries, or medications..." rows={3} />
                                 </div>
+
+                                {/* Screening Questions */}
+                                <div className="donor-screening">
+                                    <h3 className="donor-screening__title">🩺 Health Screening (for Cost Estimation)</h3>
+                                    <p className="donor-screening__desc">These details help us estimate the lowest possible cost for your organ donation procedure.</p>
+                                    <div className="donor-form__grid">
+                                        <div className="donor-form__field">
+                                            <label>Smoking Habit</label>
+                                            <select name="smoking" value={form.smoking} onChange={handleChange}>
+                                                <option value="">Select</option>
+                                                <option value="never">Never Smoked</option>
+                                                <option value="quit">Quit (More than 1 year ago)</option>
+                                                <option value="occasional">Occasional</option>
+                                                <option value="regular">Regular Smoker</option>
+                                            </select>
+                                        </div>
+                                        <div className="donor-form__field">
+                                            <label>Alcohol Consumption</label>
+                                            <select name="alcohol" value={form.alcohol} onChange={handleChange}>
+                                                <option value="">Select</option>
+                                                <option value="never">Never</option>
+                                                <option value="social">Social / Occasional</option>
+                                                <option value="moderate">Moderate (Weekly)</option>
+                                                <option value="heavy">Heavy / Daily</option>
+                                            </select>
+                                        </div>
+                                        <div className="donor-form__field">
+                                            <label>Chronic Disease History</label>
+                                            <select name="chronicDisease" value={form.chronicDisease} onChange={handleChange}>
+                                                <option value="">Select</option>
+                                                <option value="none">None</option>
+                                                <option value="diabetes">Diabetes</option>
+                                                <option value="hypertension">Hypertension</option>
+                                                <option value="heart">Heart Disease</option>
+                                                <option value="liver">Liver Disease</option>
+                                                <option value="kidney">Kidney Disease</option>
+                                                <option value="other">Other</option>
+                                            </select>
+                                        </div>
+                                        <div className="donor-form__field">
+                                            <label>Previous Surgery</label>
+                                            <select name="previousSurgery" value={form.previousSurgery} onChange={handleChange}>
+                                                <option value="">Select</option>
+                                                <option value="none">No Previous Surgery</option>
+                                                <option value="minor">Minor Surgery</option>
+                                                <option value="major">Major Surgery</option>
+                                                <option value="organ">Organ-related Surgery</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         )}
 
@@ -430,6 +561,120 @@ export default function DonorRegistration() {
                                         </div>
                                     </div>
                                 </div>
+
+                                {/* ──── COST DISTRIBUTION ──── */}
+                                {costEstimate && (
+                                    <div className="donor-cost">
+                                        <div className="donor-cost__header">
+                                            <h3 className="donor-cost__title">💰 Estimated Cost Distribution (Lowest Estimate)</h3>
+                                            <p className="donor-cost__subtitle">Auto-calculated based on your age ({costEstimate.age} yrs), habits, and medical history screening</p>
+                                            <div className="donor-cost__risk-wrap">
+                                                <span className="donor-cost__risk-label">Screening Risk Level:</span>
+                                                <span className={`donor-cost__risk-badge donor-cost__risk-badge--${costEstimate.riskLevel.toLowerCase()}`}>
+                                                    {costEstimate.riskLevel === 'Low' ? '🟢' : costEstimate.riskLevel === 'Moderate' ? '🟡' : '🔴'} {costEstimate.riskLevel}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        {/* Per-Organ Breakdown */}
+                                        <div className="donor-cost__organs">
+                                            {costEstimate.organBreakdown.map(organ => (
+                                                <div key={organ.id} className="donor-cost__organ-card">
+                                                    <div className="donor-cost__organ-header">
+                                                        <span className="donor-cost__organ-name">{organDonations.find(o => o.id === organ.id)?.icon} {organ.name}</span>
+                                                        <span className="donor-cost__organ-total">₹{organ.total.toLocaleString('en-IN')}</span>
+                                                    </div>
+                                                    <div className="donor-cost__organ-bars">
+                                                        <div className="donor-cost__bar-item">
+                                                            <div className="donor-cost__bar-label">
+                                                                <span>🩺 Screening</span>
+                                                                <span>₹{organ.screeningCost.toLocaleString('en-IN')}</span>
+                                                            </div>
+                                                            <div className="donor-cost__bar">
+                                                                <div className="donor-cost__bar-fill donor-cost__bar-fill--screening" style={{ width: `${(organ.screeningCost / organ.total) * 100}%` }} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="donor-cost__bar-item">
+                                                            <div className="donor-cost__bar-label">
+                                                                <span>⚕️ Procedure</span>
+                                                                <span>₹{organ.procedureCost.toLocaleString('en-IN')}</span>
+                                                            </div>
+                                                            <div className="donor-cost__bar">
+                                                                <div className="donor-cost__bar-fill donor-cost__bar-fill--procedure" style={{ width: `${(organ.procedureCost / organ.total) * 100}%` }} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="donor-cost__bar-item">
+                                                            <div className="donor-cost__bar-label">
+                                                                <span>🚑 Transport</span>
+                                                                <span>₹{organ.transportCost.toLocaleString('en-IN')}</span>
+                                                            </div>
+                                                            <div className="donor-cost__bar">
+                                                                <div className="donor-cost__bar-fill donor-cost__bar-fill--transport" style={{ width: `${(organ.transportCost / organ.total) * 100}%` }} />
+                                                            </div>
+                                                        </div>
+                                                        <div className="donor-cost__bar-item">
+                                                            <div className="donor-cost__bar-label">
+                                                                <span>🏥 Hospital Stay</span>
+                                                                <span>₹{organ.hospitalStay.toLocaleString('en-IN')}</span>
+                                                            </div>
+                                                            <div className="donor-cost__bar">
+                                                                <div className="donor-cost__bar-fill donor-cost__bar-fill--hospital" style={{ width: `${(organ.hospitalStay / organ.total) * 100}%` }} />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            ))}
+                                        </div>
+
+                                        {/* Summary Totals */}
+                                        <div className="donor-cost__summary">
+                                            <div className="donor-cost__summary-row">
+                                                <span>🩺 Total Screening</span>
+                                                <span>₹{costEstimate.totalScreening.toLocaleString('en-IN')}</span>
+                                            </div>
+                                            <div className="donor-cost__summary-row">
+                                                <span>⚕️ Total Procedure</span>
+                                                <span>₹{costEstimate.totalProcedure.toLocaleString('en-IN')}</span>
+                                            </div>
+                                            <div className="donor-cost__summary-row">
+                                                <span>🚑 Total Transport</span>
+                                                <span>₹{costEstimate.totalTransport.toLocaleString('en-IN')}</span>
+                                            </div>
+                                            <div className="donor-cost__summary-row">
+                                                <span>🏥 Total Hospital Stay</span>
+                                                <span>₹{costEstimate.totalHospital.toLocaleString('en-IN')}</span>
+                                            </div>
+                                            <div className="donor-cost__summary-row donor-cost__summary-row--total">
+                                                <span>💰 Grand Total (Lowest Estimate)</span>
+                                                <span>₹{costEstimate.grandTotal.toLocaleString('en-IN')}</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Factors Applied */}
+                                        <div className="donor-cost__factors">
+                                            <h4>📊 Screening Factors Applied</h4>
+                                            <div className="donor-cost__factors-grid">
+                                                <div className="donor-cost__factor">
+                                                    <span className="donor-cost__factor-label">Age Factor</span>
+                                                    <span className="donor-cost__factor-value">{costEstimate.ageFactor.toFixed(2)}x</span>
+                                                    <span className="donor-cost__factor-note">{costEstimate.age} years old</span>
+                                                </div>
+                                                <div className="donor-cost__factor">
+                                                    <span className="donor-cost__factor-label">Habit Factor</span>
+                                                    <span className="donor-cost__factor-value">{costEstimate.habitFactor.toFixed(2)}x</span>
+                                                    <span className="donor-cost__factor-note">Smoking & Alcohol</span>
+                                                </div>
+                                                <div className="donor-cost__factor">
+                                                    <span className="donor-cost__factor-label">Medical Factor</span>
+                                                    <span className="donor-cost__factor-value">{costEstimate.medicalFactor.toFixed(2)}x</span>
+                                                    <span className="donor-cost__factor-note">History & Surgery</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <p className="donor-cost__disclaimer">⚠️ This is an automated lowest estimate based on your screening data. Actual costs may vary depending on the hospital, city, and specific medical conditions. Many government programs cover organ donation costs.</p>
+                                    </div>
+                                )}
 
                                 {/* Consent */}
                                 <label className={`donor-form__consent ${errors.consent ? 'donor-form__consent--error' : ''}`}>

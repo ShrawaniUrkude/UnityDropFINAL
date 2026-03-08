@@ -9,6 +9,7 @@ export default function DonarDashboard() {
     const [searchPhone, setSearchPhone] = useState('');
     const [foundId, setFoundId] = useState(null);
     const [searched, setSearched] = useState(false);
+    const [expandedTracking, setExpandedTracking] = useState(null);
 
     // Always read fresh data from context so approval updates appear instantly
     const found = foundId ? donors.find(d => d.donorId === foundId) || null : null;
@@ -141,19 +142,108 @@ export default function DonarDashboard() {
                                         📄 View Full Details
                                     </button>
 
-                                    {/* Organ Tracking in Approved Card */}
-                                    {donor.tracking && (
-                                        <div className="donar-tracking-mini">
-                                            <h4 className="donar-tracking-mini__title">🚚 Organ Tracking</h4>
-                                            <div className="donar-tracking-mini__bar">
-                                                <div className="donar-tracking-mini__progress" style={{ width: `${(donor.tracking.stages.filter(s => s.status === 'completed').length / donor.tracking.stages.length) * 100}%` }} />
+                                    {/* Live Organ Tracking on Approved Card */}
+                                    {donor.tracking && (() => {
+                                        const completed = donor.tracking.stages.filter(s => s.status === 'completed');
+                                        const currentStage = completed[completed.length - 1];
+                                        const nextStage = donor.tracking.stages.find(s => s.status === 'pending');
+                                        const allDone = donor.tracking.stages.every(s => s.status === 'completed');
+                                        const progress = (completed.length / donor.tracking.stages.length) * 100;
+                                        const isExpanded = expandedTracking === donor.donorId;
+
+                                        return (
+                                            <div className="donar-live-tracking">
+                                                {/* Current Location Header */}
+                                                <div className="donar-live-tracking__header">
+                                                    <div className="donar-live-tracking__pulse-wrap">
+                                                        <span className={`donar-live-tracking__pulse ${allDone ? 'donar-live-tracking__pulse--done' : ''}`} />
+                                                        <span className="donar-live-tracking__live-label">{allDone ? '✅ Completed' : '🔴 LIVE'}</span>
+                                                    </div>
+                                                    <h4 className="donar-live-tracking__title">
+                                                        {allDone ? '🎉 Transplant Successful!' : '📍 Where is your organ right now?'}
+                                                    </h4>
+                                                </div>
+
+                                                {/* Current Status Box */}
+                                                <div className={`donar-live-tracking__status ${allDone ? 'donar-live-tracking__status--done' : ''}`}>
+                                                    <div className="donar-live-tracking__status-icon">{currentStage?.icon}</div>
+                                                    <div className="donar-live-tracking__status-info">
+                                                        <strong className="donar-live-tracking__stage-name">{currentStage?.name}</strong>
+                                                        {currentStage?.location && (
+                                                            <span className="donar-live-tracking__location">📍 {currentStage.location}</span>
+                                                        )}
+                                                        {currentStage?.timestamp && (
+                                                            <span className="donar-live-tracking__time">
+                                                                🕐 {new Date(currentStage.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                            </span>
+                                                        )}
+                                                        {currentStage?.note && <span className="donar-live-tracking__note">💬 {currentStage.note}</span>}
+                                                    </div>
+                                                </div>
+
+                                                {/* Next Step */}
+                                                {nextStage && (
+                                                    <div className="donar-live-tracking__next">
+                                                        <span className="donar-live-tracking__next-label">⏭ Next Step:</span>
+                                                        <span className="donar-live-tracking__next-name">{nextStage.icon} {nextStage.name}</span>
+                                                    </div>
+                                                )}
+
+                                                {/* Progress Bar */}
+                                                <div className="donar-live-tracking__progress">
+                                                    <div className="donar-live-tracking__progress-bar">
+                                                        <div className="donar-live-tracking__progress-fill" style={{ width: `${progress}%` }} />
+                                                    </div>
+                                                    <span className="donar-live-tracking__progress-text">{completed.length}/{donor.tracking.stages.length} stages</span>
+                                                </div>
+
+                                                {/* Expand/Collapse Button */}
+                                                <button
+                                                    className="donar-live-tracking__expand-btn"
+                                                    onClick={() => setExpandedTracking(isExpanded ? null : donor.donorId)}
+                                                >
+                                                    {isExpanded ? '▲ Hide Full Timeline' : '▼ View Full Tracking Timeline'}
+                                                </button>
+
+                                                {/* Expandable Full Timeline */}
+                                                {isExpanded && (
+                                                    <div className="donar-live-tracking__timeline">
+                                                        {donor.tracking.stages.map((stage, idx) => {
+                                                            const isCompleted = stage.status === 'completed';
+                                                            const isNext = !isCompleted && (idx === 0 || donor.tracking.stages[idx - 1]?.status === 'completed');
+                                                            return (
+                                                                <div key={idx} className={`donar-live-stage ${isCompleted ? 'donar-live-stage--done' : ''} ${isNext ? 'donar-live-stage--active' : ''}`}>
+                                                                    <div className="donar-live-stage__line">
+                                                                        <div className={`donar-live-stage__dot ${isCompleted ? 'donar-live-stage__dot--done' : isNext ? 'donar-live-stage__dot--active' : ''}`}>
+                                                                            {isCompleted ? '✓' : (idx + 1)}
+                                                                        </div>
+                                                                        {idx < donor.tracking.stages.length - 1 && (
+                                                                            <div className={`donar-live-stage__connector ${isCompleted ? 'donar-live-stage__connector--done' : ''}`} />
+                                                                        )}
+                                                                    </div>
+                                                                    <div className="donar-live-stage__content">
+                                                                        <div className="donar-live-stage__header">
+                                                                            <span className="donar-live-stage__icon">{stage.icon}</span>
+                                                                            <strong>{stage.name}</strong>
+                                                                            {isCompleted && <span className="donar-live-stage__badge">✅</span>}
+                                                                            {isNext && <span className="donar-live-stage__badge donar-live-stage__badge--active">⏳ In Progress</span>}
+                                                                        </div>
+                                                                        {stage.location && <span className="donar-live-stage__location">📍 {stage.location}</span>}
+                                                                        {isCompleted && stage.timestamp && (
+                                                                            <span className="donar-live-stage__time">
+                                                                                {new Date(stage.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                                                                            </span>
+                                                                        )}
+                                                                        {stage.note && <p className="donar-live-stage__note">{stage.note}</p>}
+                                                                    </div>
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </div>
+                                                )}
                                             </div>
-                                            <div className="donar-tracking-mini__labels">
-                                                <span>{donor.tracking.stages.filter(s => s.status === 'completed').length} of {donor.tracking.stages.length} stages</span>
-                                                <span>{donor.tracking.stages.every(s => s.status === 'completed') ? '🎉 Complete!' : `Next: ${donor.tracking.stages.find(s => s.status === 'pending')?.name}`}</span>
-                                            </div>
-                                        </div>
-                                    )}
+                                        );
+                                    })()}
                                 </div>
                             ))}
                         </div>
@@ -391,6 +481,7 @@ export default function DonarDashboard() {
                                                                     {new Date(stage.timestamp).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
                                                                 </span>
                                                             )}
+                                                            {stage.location && <span className="donar-tracking-stage__location">📍 {stage.location}</span>}
                                                             {stage.note && <p className="donar-tracking-stage__note">{stage.note}</p>}
                                                         </div>
                                                     </div>

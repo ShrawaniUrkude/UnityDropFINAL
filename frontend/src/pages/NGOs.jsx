@@ -9,6 +9,7 @@ export default function NGOs() {
     const [expandedDonor, setExpandedDonor] = useState(null);
     const [approvingDonor, setApprovingDonor] = useState(null);
     const [trackingNote, setTrackingNote] = useState('');
+    const [trackingLocation, setTrackingLocation] = useState('');
     const [approvalForm, setApprovalForm] = useState({
         donationDate: '',
         donationTime: '',
@@ -320,6 +321,7 @@ export default function NGOs() {
                                                                         {stage.status === 'completed' && stage.timestamp && (
                                                                             <span className="ngo-tracking-stage__time">{new Date(stage.timestamp).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span>
                                                                         )}
+                                                                        {stage.location && <span className="ngo-tracking-stage__location">📍 {stage.location}</span>}
                                                                         {stage.note && <span className="ngo-tracking-stage__note">{stage.note}</span>}
                                                                     </div>
                                                                     <div className="ngo-tracking-stage__status">
@@ -335,6 +337,13 @@ export default function NGOs() {
                                                             <div className="ngo-tracking-update__row">
                                                                 <input
                                                                     type="text"
+                                                                    placeholder="📍 Current location (e.g. City Hospital Lab)..."
+                                                                    value={trackingLocation}
+                                                                    onChange={e => setTrackingLocation(e.target.value)}
+                                                                    className="ngo-tracking-update__input"
+                                                                />
+                                                                <input
+                                                                    type="text"
                                                                     placeholder="Add a note (optional)..."
                                                                     value={trackingNote}
                                                                     onChange={e => setTrackingNote(e.target.value)}
@@ -344,8 +353,9 @@ export default function NGOs() {
                                                                     className="ngo-tracking-update__btn"
                                                                     onClick={() => {
                                                                         const nextIdx = donor.tracking.stages.findIndex(s => s.status === 'pending');
-                                                                        updateTracking(donor.donorId, nextIdx, trackingNote);
+                                                                        updateTracking(donor.donorId, nextIdx, trackingNote, trackingLocation);
                                                                         setTrackingNote('');
+                                                                        setTrackingLocation('');
                                                                     }}
                                                                 >
                                                                     ✅ Mark Complete

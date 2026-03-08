@@ -3466,3 +3466,430 @@
     0%, 100% { box-shadow: none; }
     50% { box-shadow: 0 0 8px rgba(16, 185, 129, 0.3); }
 }
+
+/* ═══════════════════════════════════════════════════════════
+   ORGAN DONATION COST ESTIMATOR SECTION
+   ═══════════════════════════════════════════════════════════ */
+
+.trt-organ-cost-section {
+    padding: 64px 24px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.organ-cost-header-area {
+    margin-bottom: 36px;
+}
+
+/* Form Card */
+.organ-cost-form-card {
+    background: var(--white, #fff);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 4px 24px rgba(26, 58, 107, 0.08);
+    border: 1.5px solid rgba(26, 58, 107, 0.08);
+    margin-bottom: 32px;
+}
+
+.organ-cost-form-title {
+    font-size: 1rem;
+    font-weight: 800;
+    color: var(--gray-800, #222);
+    margin-bottom: 16px;
+    margin-top: 20px;
+}
+
+.organ-cost-form-title:first-child {
+    margin-top: 0;
+}
+
+/* Organ Grid */
+.organ-cost-organ-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
+}
+
+.organ-cost-organ-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    background: var(--gray-50, #f8f9fa);
+    border: 1.5px solid var(--gray-200, #e5e7eb);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gray-700, #333);
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.organ-cost-organ-btn:hover {
+    border-color: var(--primary, #1a3a6b);
+    background: rgba(26, 58, 107, 0.04);
+}
+
+.organ-cost-organ-btn--active {
+    border-color: var(--accent, #4caf87);
+    background: rgba(76, 175, 135, 0.08);
+    color: var(--accent-dark, #379c73);
+}
+
+.organ-cost-organ-icon {
+    font-size: 1.2rem;
+}
+
+.organ-cost-organ-name {
+    flex: 1;
+    font-size: 0.82rem;
+}
+
+.organ-cost-organ-check {
+    font-size: 0.7rem;
+}
+
+/* Form Grid */
+.organ-cost-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px;
+}
+
+.organ-cost-field label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--gray-600, #555);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.organ-cost-field input,
+.organ-cost-field select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid var(--gray-200, #e5e7eb);
+    border-radius: 10px;
+    font-size: 0.88rem;
+    color: var(--gray-800, #222);
+    background: var(--white, #fff);
+    transition: border-color 0.2s;
+}
+
+.organ-cost-field input:focus,
+.organ-cost-field select:focus {
+    outline: none;
+    border-color: var(--primary, #1a3a6b);
+    box-shadow: 0 0 0 3px rgba(26, 58, 107, 0.08);
+}
+
+/* Calculate Button */
+.organ-cost-calc-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    margin-top: 24px;
+    background: linear-gradient(135deg, var(--primary, #1a3a6b), #2563eb);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.organ-cost-calc-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(26, 58, 107, 0.25);
+}
+
+.organ-cost-calc-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+/* Result Section */
+.organ-cost-result {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 20px;
+    padding: 32px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.organ-cost-result::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #2dce89, #f59e0b);
+}
+
+.organ-cost-result__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.organ-cost-result__header h3 {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.organ-cost-result__risk {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.organ-cost-risk-badge {
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.organ-cost-risk-badge--low {
+    background: rgba(45, 206, 137, 0.15);
+    color: #2dce89;
+    border: 1px solid rgba(45, 206, 137, 0.3);
+}
+
+.organ-cost-risk-badge--moderate {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.organ-cost-risk-badge--high {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Summary Cards */
+.organ-cost-summary-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.organ-cost-summary-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 18px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.organ-cost-summary-card--total {
+    background: rgba(45, 206, 137, 0.1);
+    border-color: rgba(45, 206, 137, 0.25);
+    color: #2dce89;
+}
+
+.organ-cost-summary-label {
+    display: block;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.organ-cost-summary-card--total .organ-cost-summary-label {
+    color: rgba(45, 206, 137, 0.7);
+}
+
+.organ-cost-summary-value {
+    display: block;
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #fff;
+}
+
+.organ-cost-summary-card--total .organ-cost-summary-value {
+    color: #2dce89;
+}
+
+/* Factors */
+.organ-cost-factors {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.organ-cost-factor {
+    padding: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.organ-cost-factor__label {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.organ-cost-factor__value {
+    display: block;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: #60a5fa;
+}
+
+.organ-cost-factor__note {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 4px;
+}
+
+/* Per-Organ Cards */
+.organ-cost-organs-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.organ-cost-organ-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 20px;
+}
+
+.organ-cost-organ-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.organ-cost-organ-card__total {
+    color: #2dce89;
+    font-size: 1.05rem;
+}
+
+.organ-cost-organ-card__bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.organ-cost-bar-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.organ-cost-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.55);
+    font-weight: 600;
+}
+
+.organ-cost-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.organ-cost-bar__fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.5s ease;
+}
+
+/* Grand Summary */
+.organ-cost-grand-summary {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.organ-cost-grand-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.organ-cost-grand-row:last-child {
+    border-bottom: none;
+}
+
+.organ-cost-grand-row--total {
+    padding-top: 14px;
+    margin-top: 6px;
+    border-top: 2px solid rgba(45, 206, 137, 0.3);
+    border-bottom: none;
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: #2dce89;
+}
+
+.organ-cost-disclaimer {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.5;
+    padding: 12px 16px;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .organ-cost-summary-cards,
+    .organ-cost-factors {
+        grid-template-columns: 1fr;
+    }
+    .organ-cost-organ-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .organ-cost-form-grid {
+        grid-template-columns: 1fr;
+    }
+    .organ-cost-form-card {
+        padding: 20px;
+    }
+    .organ-cost-result {
+        padding: 20px;
+    }
+}

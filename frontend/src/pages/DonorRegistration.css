@@ -584,3 +584,285 @@
         text-align: center;
     }
 }
+
+/* ──── SCREENING SECTION ──── */
+.donor-screening {
+    margin-top: 28px;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.04), rgba(76, 175, 135, 0.04));
+    border: 1.5px solid rgba(59, 130, 246, 0.15);
+    border-radius: 16px;
+}
+
+.donor-screening__title {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: var(--gray-800, #222);
+    margin-bottom: 4px;
+}
+
+.donor-screening__desc {
+    font-size: 0.85rem;
+    color: var(--gray-500, #777);
+    margin-bottom: 20px;
+}
+
+/* ──── COST DISTRIBUTION ──── */
+.donor-cost {
+    margin-top: 28px;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    border-radius: 20px;
+    padding: 28px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+
+.donor-cost::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #2dce89, #f59e0b);
+}
+
+.donor-cost__header {
+    margin-bottom: 24px;
+}
+
+.donor-cost__title {
+    font-size: 1.15rem;
+    font-weight: 900;
+    color: #fff;
+    margin-bottom: 6px;
+}
+
+.donor-cost__subtitle {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 12px;
+}
+
+.donor-cost__risk-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.donor-cost__risk-label {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 600;
+}
+
+.donor-cost__risk-badge {
+    padding: 4px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 800;
+}
+
+.donor-cost__risk-badge--low {
+    background: rgba(45, 206, 137, 0.15);
+    color: #2dce89;
+    border: 1px solid rgba(45, 206, 137, 0.3);
+}
+
+.donor-cost__risk-badge--moderate {
+    background: rgba(245, 158, 11, 0.15);
+    color: #fbbf24;
+    border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+.donor-cost__risk-badge--high {
+    background: rgba(239, 68, 68, 0.15);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+}
+
+/* Per-Organ Cards */
+.donor-cost__organs {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.donor-cost__organ-card {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    padding: 18px;
+}
+
+.donor-cost__organ-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.donor-cost__organ-name {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #fff;
+}
+
+.donor-cost__organ-total {
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: #2dce89;
+}
+
+.donor-cost__organ-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.donor-cost__bar-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.donor-cost__bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 600;
+}
+
+.donor-cost__bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 999px;
+    overflow: hidden;
+}
+
+.donor-cost__bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.5s ease;
+}
+
+.donor-cost__bar-fill--screening {
+    background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.donor-cost__bar-fill--procedure {
+    background: linear-gradient(90deg, #2dce89, #38e89d);
+}
+
+.donor-cost__bar-fill--transport {
+    background: linear-gradient(90deg, #f59e0b, #fbbf24);
+}
+
+.donor-cost__bar-fill--hospital {
+    background: linear-gradient(90deg, #8b5cf6, #a78bfa);
+}
+
+/* Summary Totals */
+.donor-cost__summary {
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 14px;
+    margin-bottom: 20px;
+}
+
+.donor-cost__summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.65);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.donor-cost__summary-row:last-child {
+    border-bottom: none;
+}
+
+.donor-cost__summary-row--total {
+    padding-top: 14px;
+    margin-top: 6px;
+    border-top: 2px solid rgba(45, 206, 137, 0.3);
+    border-bottom: none;
+    font-size: 1.05rem;
+    font-weight: 900;
+    color: #2dce89;
+}
+
+/* Factors */
+.donor-cost__factors {
+    margin-bottom: 16px;
+}
+
+.donor-cost__factors h4 {
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 12px;
+}
+
+.donor-cost__factors-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.donor-cost__factor {
+    padding: 14px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-align: center;
+}
+
+.donor-cost__factor-label {
+    display: block;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.45);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+}
+
+.donor-cost__factor-value {
+    display: block;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: #60a5fa;
+}
+
+.donor-cost__factor-note {
+    display: block;
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 4px;
+}
+
+.donor-cost__disclaimer {
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.4);
+    line-height: 1.5;
+    padding: 12px 16px;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.15);
+    border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+    .donor-cost__factors-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .donor-cost {
+        padding: 20px;
+    }
+}

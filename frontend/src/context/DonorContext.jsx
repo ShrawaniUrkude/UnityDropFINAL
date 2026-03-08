@@ -45,15 +45,15 @@ export function DonorProvider({ children }) {
                     tracking: status === 'approved' && !d.tracking ? {
                         currentStage: 0,
                         stages: [
-                            { name: 'Donation Approved', icon: '✅', status: 'completed', timestamp: new Date().toISOString(), note: 'Donation approved by NGO partner' },
-                            { name: 'Donor Check-in', icon: '🏥', status: 'pending', timestamp: null, note: '' },
-                            { name: 'Medical Screening', icon: '🩺', status: 'pending', timestamp: null, note: '' },
-                            { name: 'Organ Retrieval', icon: '🫀', status: 'pending', timestamp: null, note: '' },
-                            { name: 'Quality Testing', icon: '🔬', status: 'pending', timestamp: null, note: '' },
-                            { name: 'Organ Packaging', icon: '📦', status: 'pending', timestamp: null, note: '' },
-                            { name: 'In Transit', icon: '🚑', status: 'pending', timestamp: null, note: '' },
-                            { name: 'Delivered to Hospital', icon: '🏨', status: 'pending', timestamp: null, note: '' },
-                            { name: 'Transplant Complete', icon: '🎉', status: 'pending', timestamp: null, note: '' },
+                            { name: 'Donation Approved', icon: '✅', status: 'completed', timestamp: new Date().toISOString(), note: 'Donation approved by NGO partner', location: approvalDetails?.hospitalName || 'NGO Office' },
+                            { name: 'Donor Check-in', icon: '🏥', status: 'pending', timestamp: null, note: '', location: '' },
+                            { name: 'Medical Screening', icon: '🩺', status: 'pending', timestamp: null, note: '', location: '' },
+                            { name: 'Organ Retrieval', icon: '🫀', status: 'pending', timestamp: null, note: '', location: '' },
+                            { name: 'Quality Testing', icon: '🔬', status: 'pending', timestamp: null, note: '', location: '' },
+                            { name: 'Organ Packaging', icon: '📦', status: 'pending', timestamp: null, note: '', location: '' },
+                            { name: 'In Transit', icon: '🚑', status: 'pending', timestamp: null, note: '', location: '' },
+                            { name: 'Delivered to Hospital', icon: '🏨', status: 'pending', timestamp: null, note: '', location: '' },
+                            { name: 'Transplant Complete', icon: '🎉', status: 'pending', timestamp: null, note: '', location: '' },
                         ]
                     } : d.tracking,
                 }
@@ -62,13 +62,13 @@ export function DonorProvider({ children }) {
         );
     };
 
-    const updateTracking = (donorId, stageIndex, note = '') => {
+    const updateTracking = (donorId, stageIndex, note = '', location = '') => {
         setDonors(prev =>
             prev.map(d => {
                 if (d.donorId !== donorId || !d.tracking) return d;
                 const stages = d.tracking.stages.map((s, i) => {
                     if (i < stageIndex) return { ...s, status: 'completed' };
-                    if (i === stageIndex) return { ...s, status: 'completed', timestamp: new Date().toISOString(), note: note || s.note };
+                    if (i === stageIndex) return { ...s, status: 'completed', timestamp: new Date().toISOString(), note: note || s.note, location: location || s.location };
                     return s;
                 });
                 return { ...d, tracking: { currentStage: stageIndex, stages } };

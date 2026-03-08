@@ -758,6 +758,12 @@
     font-style: italic;
 }
 
+.ngo-tracking-stage__location {
+    font-size: 0.75rem;
+    color: var(--primary, #1a3a6b);
+    font-weight: 600;
+}
+
 .ngo-tracking-stage__status {
     font-size: 1rem;
     flex-shrink: 0;

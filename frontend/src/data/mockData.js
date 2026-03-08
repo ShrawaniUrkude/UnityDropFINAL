@@ -316,7 +316,7 @@ export const organDonations = [
     id: 5,
     organ: "Cornea (Eyes)",
     icon: "👁️",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=400&h=300&fit=crop",
+    image: "https://images.unsplash.com/photo-1494869042583-f6c911f04b4c?w=400&h=300&fit=crop",
     description: "Cornea transplants restore vision for people suffering from corneal blindness. It is one of the most successful transplant procedures.",
     waitingPatients: 15000,
     successRate: "97%",
