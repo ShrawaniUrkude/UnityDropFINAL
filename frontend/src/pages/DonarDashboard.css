@@ -1296,6 +1296,889 @@
     color: var(--gray-400, #999);
 }
 
+/* ──── FOOD DONATION SECTION ──── */
+.food-donation-section {
+    padding: 48px 0;
+    background: linear-gradient(135deg, #fff8f0 0%, #fef3e7 100%);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+}
+
+.food-donation-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.food-donation-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: var(--gray-800, #222);
+    margin-bottom: 6px;
+}
+
+.food-donation-subtitle {
+    font-size: 0.92rem;
+    color: var(--gray-500, #777);
+}
+
+.food-donation-add-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.food-donation-add-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+}
+
+/* Food Donation Form */
+.food-donation-form-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
+}
+
+.food-form-title {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--gray-800, #222);
+    margin-bottom: 24px;
+}
+
+.food-form-section {
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border, #eee);
+}
+
+.food-form-section:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
+.food-form-section h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--gray-700, #333);
+    margin-bottom: 16px;
+}
+
+.food-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+}
+
+.food-form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.food-form-field--full {
+    grid-column: 1 / -1;
+}
+
+.food-form-field label {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--gray-600, #555);
+}
+
+.food-form-field input,
+.food-form-field textarea {
+    padding: 12px 16px;
+    border: 1.5px solid var(--border, #e0e0e0);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.food-form-field input:focus,
+.food-form-field textarea:focus {
+    outline: none;
+    border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.food-form-field input.error,
+.food-form-field textarea.error {
+    border-color: #ef4444;
+}
+
+.food-form-error {
+    font-size: 0.78rem;
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* Food Items Grid */
+.food-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+    margin-top: 12px;
+}
+
+.food-item-card {
+    position: relative;
+    padding: 16px;
+    background: #fafafa;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.food-item-card:hover {
+    background: #fff;
+    border-color: rgba(245, 158, 11, 0.3);
+    transform: translateY(-2px);
+}
+
+.food-item-card--selected {
+    background: rgba(245, 158, 11, 0.08);
+    border-color: #f59e0b;
+}
+
+.food-item-icon {
+    display: block;
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.food-item-name {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--gray-700, #333);
+    margin-bottom: 4px;
+}
+
+.food-item-desc {
+    display: block;
+    font-size: 0.72rem;
+    color: var(--gray-400, #999);
+}
+
+.food-item-check {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 22px;
+    height: 22px;
+    background: #f59e0b;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.food-form-submit {
+    width: 100%;
+    margin-top: 24px;
+    padding: 16px 32px;
+    border: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 800;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.food-form-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(245, 158, 11, 0.35);
+}
+
+/* Food Donations List */
+.food-donations-list {
+    margin-top: 24px;
+}
+
+.food-donations-list-title {
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--gray-800, #222);
+    margin-bottom: 16px;
+}
+
+.food-donation-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 24px;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+    border: 1px solid rgba(245, 158, 11, 0.1);
+}
+
+.food-donation-card__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.food-donation-card__id {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.food-donation-id {
+    font-size: 0.85rem;
+    font-weight: 800;
+    color: #f59e0b;
+    font-family: monospace;
+}
+
+.food-donation-date {
+    font-size: 0.75rem;
+    color: var(--gray-400, #999);
+}
+
+.food-donation-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 14px;
+    background: color-mix(in srgb, var(--status-color) 10%, transparent);
+    color: var(--status-color);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.food-donation-status__icon {
+    font-size: 1rem;
+}
+
+/* Food Items Tags */
+.food-donation-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.food-donation-item-tag {
+    padding: 5px 12px;
+    background: rgba(245, 158, 11, 0.08);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #d97706;
+}
+
+.food-donation-quantity {
+    padding: 5px 12px;
+    background: rgba(59, 130, 246, 0.08);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #3b82f6;
+}
+
+/* Donation Details */
+.food-donation-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 12px;
+    padding: 14px;
+    background: #fafafa;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+.food-donation-detail {
+    display: flex;
+    gap: 10px;
+}
+
+.food-donation-detail__icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.food-donation-detail__label {
+    display: block;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--gray-400, #999);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.food-donation-detail strong {
+    font-size: 0.88rem;
+    color: var(--gray-700, #333);
+}
+
+/* Volunteer Section */
+.food-donation-volunteer {
+    padding: 16px;
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 14px;
+    margin-bottom: 16px;
+}
+
+.food-donation-volunteer h4 {
+    font-size: 0.92rem;
+    font-weight: 800;
+    color: var(--gray-700, #333);
+    margin-bottom: 12px;
+}
+
+.volunteer-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    background: #fff;
+    border-radius: 12px;
+    flex-wrap: wrap;
+}
+
+.volunteer-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    font-weight: 800;
+    flex-shrink: 0;
+}
+
+.volunteer-info {
+    flex: 1;
+    min-width: 200px;
+}
+
+.volunteer-name {
+    display: block;
+    font-size: 1rem;
+    color: var(--gray-800, #222);
+    margin-bottom: 4px;
+}
+
+.volunteer-meta {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--gray-500, #777);
+    margin-bottom: 2px;
+}
+
+.volunteer-phone {
+    font-size: 0.82rem;
+    color: var(--gray-600, #555);
+    font-weight: 600;
+}
+
+.volunteer-status {
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.volunteer-status--pending {
+    background: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+}
+
+.volunteer-status--accepted {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+}
+
+.volunteer-status--declined {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.volunteer-status--no_volunteer {
+    background: rgba(107, 114, 128, 0.1);
+    color: #4b5563;
+}
+
+/* Volunteer Actions */
+.volunteer-actions {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(59, 130, 246, 0.2);
+}
+
+.volunteer-actions__label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--gray-500, #777);
+    margin-bottom: 10px;
+}
+
+.volunteer-actions__btns {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.volunteer-action-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.volunteer-action-btn--accept {
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+}
+
+.volunteer-action-btn--accept:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+.volunteer-action-btn--decline {
+    background: #fff;
+    color: #dc2626;
+    border: 2px solid #fecaca;
+}
+
+.volunteer-action-btn--decline:hover {
+    background: #fef2f2;
+    border-color: #fca5a5;
+}
+
+/* Delivery Progress */
+.delivery-progress-actions {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed rgba(16, 185, 129, 0.2);
+}
+
+.delivery-progress__label {
+    display: block;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--gray-500, #777);
+    margin-bottom: 10px;
+}
+
+.delivery-progress__btns {
+    display: flex;
+    gap: 10px;
+}
+
+.delivery-progress-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.delivery-progress-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+}
+
+.delivery-progress-btn--complete {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.delivery-progress-btn--complete:hover {
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.3);
+}
+
+/* Delivery Timeline */
+.food-delivery-timeline {
+    padding: 16px;
+    background: #fafafa;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+
+.food-delivery-timeline h4 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: var(--gray-600, #555);
+    margin-bottom: 14px;
+}
+
+.food-timeline-stages {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.food-timeline-entry {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 10px 0;
+    position: relative;
+}
+
+.food-timeline-entry:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 22px;
+    bottom: 0;
+    width: 2px;
+    background: #e5e7eb;
+}
+
+.food-timeline-dot {
+    width: 12px;
+    height: 12px;
+    background: #10b981;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+.food-timeline-content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.food-timeline-message {
+    font-size: 0.85rem;
+    color: var(--gray-700, #333);
+}
+
+.food-timeline-time {
+    font-size: 0.75rem;
+    color: var(--gray-400, #999);
+    font-weight: 600;
+}
+
+/* Success Banner */
+.food-donation-success {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
+    border: 1px solid rgba(16, 185, 129, 0.2);
+    border-radius: 14px;
+}
+
+.food-donation-success__icon {
+    font-size: 2rem;
+}
+
+.food-donation-success strong {
+    display: block;
+    font-size: 1rem;
+    color: #059669;
+    margin-bottom: 4px;
+}
+
+.food-donation-success p {
+    font-size: 0.85rem;
+    color: #047857;
+    margin: 0;
+}
+
+/* Empty State */
+.food-donation-empty {
+    text-align: center;
+    padding: 48px 20px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.food-donation-empty__icon {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+}
+
+.food-donation-empty h3 {
+    font-size: 1.15rem;
+    color: var(--gray-700, #333);
+    margin-bottom: 8px;
+}
+
+.food-donation-empty p {
+    font-size: 0.9rem;
+    color: var(--gray-500, #777);
+    max-width: 400px;
+    margin: 0 auto 20px;
+}
+
+.food-donation-empty__btn {
+    padding: 14px 28px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-family: inherit;
+}
+
+.food-donation-empty__btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+}
+
+/* ──── ENVIRONMENTAL IMPACT SECTION ──── */
+.env-impact-section {
+    padding: 60px 0;
+    background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 50%, #a7f3d0 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.env-impact-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.env-impact-section::after {
+    content: '';
+    position: absolute;
+    bottom: -30%;
+    left: -10%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(52, 211, 153, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.env-impact-header {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 1;
+}
+
+.env-impact-badge {
+    display: inline-block;
+    padding: 8px 20px;
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #059669;
+    margin-bottom: 16px;
+}
+
+.env-impact-title {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #065f46;
+    margin-bottom: 10px;
+}
+
+.env-impact-subtitle {
+    font-size: 1rem;
+    color: #047857;
+    opacity: 0.85;
+}
+
+/* Stats Grid */
+.env-impact-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 1;
+}
+
+.env-impact-stat {
+    background: #fff;
+    border-radius: 20px;
+    padding: 28px 20px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.1);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.env-impact-stat:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.2);
+}
+
+.env-impact-stat__icon {
+    font-size: 2.5rem;
+    margin-bottom: 12px;
+}
+
+.env-impact-stat__value {
+    font-size: 1.75rem;
+    font-weight: 900;
+    color: #059669;
+    margin-bottom: 6px;
+}
+
+.env-impact-stat__label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #047857;
+    opacity: 0.8;
+}
+
+/* Summary Card */
+.env-impact-summary {
+    display: flex;
+    align-items: flex-start;
+    gap: 24px;
+    background: #fff;
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 8px 40px rgba(16, 185, 129, 0.1);
+    border: 1px solid rgba(16, 185, 129, 0.15);
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+}
+
+.env-impact-summary__icon {
+    font-size: 3.5rem;
+    flex-shrink: 0;
+}
+
+.env-impact-summary__content h3 {
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: #065f46;
+    margin-bottom: 12px;
+}
+
+.env-impact-summary__content p {
+    font-size: 0.95rem;
+    color: #047857;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+.env-impact-summary__content strong {
+    color: #059669;
+}
+
+.env-impact-benefits {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.env-impact-benefits li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #065f46;
+    padding: 10px 14px;
+    background: rgba(16, 185, 129, 0.06);
+    border-radius: 10px;
+    transition: background 0.2s ease;
+}
+
+.env-impact-benefits li:hover {
+    background: rgba(16, 185, 129, 0.1);
+}
+
+.env-impact-benefits li strong {
+    color: #059669;
+}
+
+/* Quote */
+.env-impact-quote {
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+.env-impact-quote blockquote {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: #065f46;
+    line-height: 1.7;
+    max-width: 700px;
+    margin: 0 auto 12px;
+    padding: 0 20px;
+    position: relative;
+}
+
+.env-impact-quote blockquote::before {
+    content: '"';
+    position: absolute;
+    left: 0;
+    top: -10px;
+    font-size: 3rem;
+    color: rgba(16, 185, 129, 0.3);
+    font-family: Georgia, serif;
+}
+
+.env-impact-quote__author {
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #059669;
+}
+
 /* ──── RESPONSIVE ──── */
 @media (max-width: 768px) {
     .donar-search-fields {
@@ -1322,6 +2205,37 @@
     .donar-approved-card__details {
         grid-template-columns: 1fr;
     }
+
+    .food-donation-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .food-items-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .volunteer-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .volunteer-status {
+        align-self: flex-start;
+    }
+
+    .env-impact-summary {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .env-impact-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .env-impact-title {
+        font-size: 1.4rem;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1341,5 +2255,42 @@
     .donar-approved-card__meta {
         flex-direction: column;
         gap: 6px;
+    }
+
+    .food-donation-form-card {
+        padding: 20px 16px;
+    }
+
+    .food-items-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .volunteer-actions__btns {
+        flex-direction: column;
+    }
+
+    .volunteer-action-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .env-impact-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .env-impact-stat {
+        padding: 20px 16px;
+    }
+
+    .env-impact-stat__value {
+        font-size: 1.5rem;
+    }
+
+    .env-impact-summary {
+        padding: 20px;
+    }
+
+    .env-impact-quote blockquote {
+        font-size: 1rem;
     }
 }

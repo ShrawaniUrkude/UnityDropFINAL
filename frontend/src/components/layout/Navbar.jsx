@@ -10,6 +10,7 @@ const navLinks = [
     { to: '/hospital', label: 'Hospital' },
     { to: '/dashboard', label: 'Treatment' },
     { to: '/donar-dashboard', label: 'My Dashboard' },
+    { to: '/food-donation', label: 'Food Donation' },
     { to: '/about', label: 'About' },
 ];
 
