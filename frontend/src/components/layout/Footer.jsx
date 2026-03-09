@@ -63,7 +63,6 @@ export default function Footer() {
                     {/* Brand */}
                     <div className="footer__brand" ref={brandRef}>
                         <div className="footer__logo">
-                            <span className="footer__logo-icon">💧</span>
                             Unity<span>Drop</span>
                         </div>
                         <p>Connecting compassion with action. A trusted platform where donors, NGOs, volunteers, and beneficiaries come together to create real change.</p>

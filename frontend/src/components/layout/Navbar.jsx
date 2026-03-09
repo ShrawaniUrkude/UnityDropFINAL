@@ -109,7 +109,6 @@ export default function Navbar() {
 
                 {/* Logo */}
                 <Link to="/" className="navbar__logo" ref={logoRef}>
-                    <span className="navbar__logo-icon">💧</span>
                     <span className="navbar__logo-text">
                         Unity<span className="navbar__logo-accent">Drop</span>
                     </span>
