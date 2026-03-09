@@ -14,6 +14,7 @@ import {
     Award, GraduationCap, Star, Briefcase, MessageCircle
 } from 'lucide-react';
 import './Hospital.css';
+import BleAssetTracking from '../components/BleAssetTracking';
 
 // ═══════════════════════════════════════════════════════════════
 // HOSPITAL DATA STRUCTURE
@@ -3441,6 +3442,9 @@ export default function Hospital() {
                             </div>
                         </div>
                     </div>
+
+                    {/* ═══ BLE ASSET TRACKING SECTION ═══ */}
+                    <BleAssetTracking />
                 </div>
             </div>
         </div>

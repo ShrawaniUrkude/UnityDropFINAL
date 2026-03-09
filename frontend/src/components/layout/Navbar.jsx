@@ -8,6 +8,7 @@ const navLinks = [
     { to: '/campaigns', label: 'Donar' },
     { to: '/ngos', label: 'NGOs' },
     { to: '/hospital', label: 'Hospital' },
+    { to: '/asset-tracking', label: 'Asset Tracking' },
     { to: '/dashboard', label: 'Treatment' },
     { to: '/donar-dashboard', label: 'My Dashboard' },
     { to: '/food-donation', label: 'Food Donation' },
