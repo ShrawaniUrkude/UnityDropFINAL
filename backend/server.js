@@ -50,7 +50,6 @@ connectDB();
 // ROUTES
 // ═══════════════════════════════════════════════════════════════
 
-const donorRoutes = require('./routes/donor.routes');
 const ngoRoutes = require('./routes/ngo.routes');
 const foodDonationRoutes = require('./routes/foodDonation.routes');
 const donationRoutes = require('./routes/donation.routes');
@@ -58,7 +57,6 @@ const authRoutes = require('./routes/auth.routes');
 const equipmentRoutes = require('./routes/equipment.routes');
 const historyRoutes = require('./routes/history.routes');
 
-app.use('/api/donors', donorRoutes);
 app.use('/api/ngos', ngoRoutes);
 app.use('/api/food-donations', foodDonationRoutes);
 app.use('/api/donations', donationRoutes);
@@ -83,7 +81,6 @@ app.get('/', (req, res) => {
         description: 'Backend API for UnityDrop - Life-saving donations platform',
         endpoints: {
             health: '/api/health',
-            donors: '/api/donors',
             ngos: '/api/ngos',
             foodDonations: '/api/food-donations',
             donations: '/api/donations',

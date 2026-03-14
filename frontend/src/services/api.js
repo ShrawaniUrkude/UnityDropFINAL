@@ -43,42 +43,6 @@ const fetchAPI = async (endpoint, options = {}) => {
 };
 
 // ═══════════════════════════════════════════════════════════════
-// DONOR API
-// ═══════════════════════════════════════════════════════════════
-
-export const donorAPI = {
-    // Register new donor
-    register: (donorData) => 
-        fetchAPI('/donors', { method: 'POST', body: donorData }),
-    
-    // Get all donors
-    getAll: (params = {}) => {
-        const query = new URLSearchParams(params).toString();
-        return fetchAPI(`/donors${query ? `?${query}` : ''}`);
-    },
-    
-    // Get donor by ID/email/phone
-    getById: (id) => 
-        fetchAPI(`/donors/${id}`),
-    
-    // Search donor by email or phone
-    search: (searchData) => 
-        fetchAPI('/donors/search', { method: 'POST', body: searchData }),
-    
-    // Update donor status
-    updateStatus: (id, statusData) => 
-        fetchAPI(`/donors/${id}/status`, { method: 'PUT', body: statusData }),
-    
-    // Add tracking update
-    addTracking: (id, trackingData) => 
-        fetchAPI(`/donors/${id}/tracking`, { method: 'POST', body: trackingData }),
-    
-    // Get statistics
-    getStats: () => 
-        fetchAPI('/donors/stats'),
-};
-
-// ═══════════════════════════════════════════════════════════════
 // FOOD DONATION API
 // ═══════════════════════════════════════════════════════════════
 
@@ -132,26 +96,6 @@ export const donationAPI = {
     // Get statistics
     getStats: () => 
         fetchAPI('/donations/stats'),
-};
-
-// ═══════════════════════════════════════════════════════════════
-// NGO API
-// ═══════════════════════════════════════════════════════════════
-
-export const ngoAPI = {
-    // Get all NGOs
-    getAll: (params = {}) => {
-        const query = new URLSearchParams(params).toString();
-        return fetchAPI(`/ngos${query ? `?${query}` : ''}`);
-    },
-    
-    // Get NGO by ID
-    getById: (id) => 
-        fetchAPI(`/ngos/${id}`),
-    
-    // Get statistics
-    getStats: () => 
-        fetchAPI('/ngos/stats'),
 };
 
 // ═══════════════════════════════════════════════════════════════
@@ -227,10 +171,8 @@ export const historyAPI = {
 };
 
 export default {
-    donor: donorAPI,
     foodDonation: foodDonationAPI,
     donation: donationAPI,
-    ngo: ngoAPI,
     auth: authAPI,
     equipment: equipmentAPI,
     history: historyAPI,

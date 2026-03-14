@@ -5,12 +5,9 @@ import './Navbar.css';
 
 const navLinks = [
     { to: '/', label: 'Home' },
-    { to: '/campaigns', label: 'Donar' },
-    { to: '/ngos', label: 'NGOs' },
     { to: '/hospital', label: 'Hospital' },
     { to: '/asset-tracking', label: 'Asset Tracking' },
     { to: '/dashboard', label: 'Treatment' },
-    { to: '/donar-dashboard', label: 'My Dashboard' },
     { to: '/food-donation', label: 'Food Donation' },
     { to: '/about', label: 'About' },
 ];
@@ -159,7 +156,7 @@ export default function Navbar() {
                         </div>
                     )}
 
-                    <Link to="/donar-dashboard" className="btn btn-primary btn-sm navbar__donate-btn" ref={donateRef}>
+                    <Link to="/donate" className="btn btn-primary btn-sm navbar__donate-btn" ref={donateRef}>
                         <span className="navbar__donate-sparkle">✦</span>
                         Donate Now
                     </Link>
@@ -189,7 +186,7 @@ export default function Navbar() {
                         {label}
                     </NavLink>
                 ))}
-                <Link to="/donar-dashboard" className="btn btn-primary" style={{ margin: '8px 0 0' }}>
+                <Link to="/donate" className="btn btn-primary" style={{ margin: '8px 0 0' }}>
                     Donate Now
                 </Link>
             </div>

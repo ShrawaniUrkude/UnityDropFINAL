@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { gsap, ScrollTrigger } from '../hooks/useGsap';
+import { jsPDF } from 'jspdf';
 import { 
     Search, RotateCcw, ArrowUp, Circle, Hand, MapPin, Compass, 
     User, Users, Box, Map as MapIcon, ChevronDown, Filter,
@@ -7,10 +8,11 @@ import {
     Pill, Package, Activity, Scan, Phone, Clock, CheckCircle,
     AlertTriangle, Wrench, Eye, Navigation, Building2, Layers,
     UserCircle, Calendar, FileText, Route, Target, X, ChevronRight,
-    Timer, Hourglass, Zap, ShieldAlert, ListOrdered, ArrowRightLeft,
+    Timer, Hourglass, Zap, ShieldAlert, ListOrdered, ArrowRightLeft, Droplet,
     HeartHandshake, MapPinned, ClipboardList, Send,
     Car, Siren, AlertCircle, ShieldCheck, PhoneCall, MapPinCheck,
     Ambulance, Bell, BellRing, Mail, MessageSquare, Smartphone, Radio, Signal, ThumbsUp, BadgeCheck, Share2, RefreshCw, Truck,
+    QrCode, Download,
     Award, GraduationCap, Star, Briefcase, MessageCircle
 } from 'lucide-react';
 import './Hospital.css';
@@ -467,6 +469,17 @@ const conditionToSpecialty = {
     'Diabetes': 'general', 'Endocrine': 'general',
 };
 
+const emergencyBloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
+
+const createInitialEmergencyProfile = () => ({
+    patientName: '',
+    bloodGroup: '',
+    allergies: '',
+    chronicDiseases: '',
+    medications: '',
+    emergencyContacts: [{ name: '', relation: '', phone: '' }],
+});
+
 // ═══════════════════════════════════════════════════════════════
 // COMPONENTS
 // ═══════════════════════════════════════════════════════════════
@@ -919,6 +932,11 @@ export default function Hospital() {
     const [ambEmergencyNote, setAmbEmergencyNote] = useState('');
     const ambulanceSectionRef = useRef(null);
 
+    // Emergency report + QR state
+    const [emergencyProfile, setEmergencyProfile] = useState(createInitialEmergencyProfile);
+    const [emergencyReports, setEmergencyReports] = useState([]);
+    const [activeEmergencyReportId, setActiveEmergencyReportId] = useState(null);
+
     // Treatment & Doctor Recommendation state
     const [treatmentCondition, setTreatmentCondition] = useState('');
     const [treatmentPatientName, setTreatmentPatientName] = useState('');
@@ -972,6 +990,133 @@ export default function Hospital() {
         setAmbAlertLog([]);
         setAmbEmergencyNote('');
     };
+
+    const updateEmergencyContact = (index, field, value) => {
+        setEmergencyProfile(prev => ({
+            ...prev,
+            emergencyContacts: prev.emergencyContacts.map((contact, contactIndex) => (
+                contactIndex === index ? { ...contact, [field]: value } : contact
+            )),
+        }));
+    };
+
+    const addEmergencyContact = () => {
+        setEmergencyProfile(prev => ({
+            ...prev,
+            emergencyContacts: [...prev.emergencyContacts, { name: '', relation: '', phone: '' }],
+        }));
+    };
+
+    const removeEmergencyContact = (index) => {
+        setEmergencyProfile(prev => {
+            if (prev.emergencyContacts.length === 1) return prev;
+            return {
+                ...prev,
+                emergencyContacts: prev.emergencyContacts.filter((_, contactIndex) => contactIndex !== index),
+            };
+        });
+    };
+
+    const createEmergencyReport = () => {
+        const cleanedContacts = emergencyProfile.emergencyContacts
+            .map(contact => ({
+                name: contact.name.trim(),
+                relation: contact.relation.trim(),
+                phone: contact.phone.trim(),
+            }))
+            .filter(contact => contact.name && contact.phone);
+
+        if (!emergencyProfile.patientName.trim() || !emergencyProfile.bloodGroup || cleanedContacts.length === 0) {
+            return;
+        }
+
+        const report = {
+            id: `EMR-${Date.now()}`,
+            generatedAt: new Date().toLocaleString(),
+            patientName: emergencyProfile.patientName.trim(),
+            bloodGroup: emergencyProfile.bloodGroup,
+            allergies: emergencyProfile.allergies.trim() || 'None reported',
+            chronicDiseases: emergencyProfile.chronicDiseases.trim() || 'None reported',
+            medications: emergencyProfile.medications.trim() || 'None reported',
+            emergencyContacts: cleanedContacts,
+        };
+
+        setEmergencyReports(prev => [report, ...prev].slice(0, 12));
+        setActiveEmergencyReportId(report.id);
+        setEmergencyProfile(createInitialEmergencyProfile());
+    };
+
+    const downloadEmergencyReport = (report) => {
+        const doc = new jsPDF({ unit: 'mm', format: 'a4' });
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const margin = 16;
+        const contentWidth = pageWidth - margin * 2;
+        const lineHeight = 6;
+        let cursorY = 20;
+
+        const ensureSpace = (requiredHeight = lineHeight) => {
+            if (cursorY + requiredHeight > 285) {
+                doc.addPage();
+                cursorY = 20;
+            }
+        };
+
+        const addText = (label, value) => {
+            const wrapped = doc.splitTextToSize(`${label}: ${value}`, contentWidth);
+            ensureSpace(wrapped.length * lineHeight);
+            doc.text(wrapped, margin, cursorY);
+            cursorY += wrapped.length * lineHeight;
+        };
+
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(16);
+        doc.text('Emergency Medical Report', margin, cursorY);
+        cursorY += 10;
+
+        doc.setFont('helvetica', 'normal');
+        doc.setFontSize(11);
+        addText('Report ID', report.id);
+        addText('Generated At', report.generatedAt);
+        cursorY += 2;
+        addText('Patient Name', report.patientName);
+        addText('Blood Group', report.bloodGroup);
+        addText('Allergies', report.allergies);
+        addText('Chronic Diseases', report.chronicDiseases);
+        addText('Medications', report.medications);
+
+        cursorY += 4;
+        ensureSpace();
+        doc.setFont('helvetica', 'bold');
+        doc.text('Emergency Contacts', margin, cursorY);
+        cursorY += 7;
+        doc.setFont('helvetica', 'normal');
+
+        report.emergencyContacts.forEach((contact, index) => {
+            const contactText = `${index + 1}. ${contact.name} (${contact.relation || 'Relation not specified'}) - ${contact.phone}`;
+            const wrapped = doc.splitTextToSize(contactText, contentWidth);
+            ensureSpace(wrapped.length * lineHeight);
+            doc.text(wrapped, margin, cursorY);
+            cursorY += wrapped.length * lineHeight;
+        });
+
+        doc.save(`${report.id}.pdf`);
+    };
+
+    const activeEmergencyReport = emergencyReports.find(report => report.id === activeEmergencyReportId) || emergencyReports[0] || null;
+    const emergencyQrPayload = activeEmergencyReport
+        ? JSON.stringify({
+            id: activeEmergencyReport.id,
+            patientName: activeEmergencyReport.patientName,
+            bloodGroup: activeEmergencyReport.bloodGroup,
+            allergies: activeEmergencyReport.allergies,
+            chronicDiseases: activeEmergencyReport.chronicDiseases,
+            medications: activeEmergencyReport.medications,
+            emergencyContacts: activeEmergencyReport.emergencyContacts,
+        })
+        : '';
+    const emergencyQrUrl = activeEmergencyReport
+        ? `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(emergencyQrPayload)}`
+        : '';
 
     // Check if hospital can treat the condition and recommend doctors
     const checkTreatmentAvailability = () => {
@@ -2621,163 +2766,6 @@ export default function Hospital() {
                         </div>
                     </div>
 
-                    {/* ═══ VOLUNTEER ASSIST SECTION (below resource conflicts) ═══ */}
-                    <div className="volunteer-assist-section" ref={assistSectionRef}>
-                        <div className="va-header">
-                            <h3><HeartHandshake size={20} /> For Those Who Can't Use the Website</h3>
-                            <p className="va-subtitle">Register a patient who needs help navigating the system. Select a volunteer from this hospital to assist them.</p>
-                        </div>
-
-                        <div className="va-body">
-                            {/* Form */}
-                            <div className="va-form-card">
-                                <h4><ClipboardList size={16} /> Patient Information</h4>
-                                <div className="va-form">
-                                    <div className="va-form-group">
-                                        <label><User size={14} /> Full Name</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Enter patient's full name"
-                                            value={assistForm.name}
-                                            onChange={e => setAssistForm(prev => ({ ...prev, name: e.target.value }))}
-                                            disabled={volunteerOptions.length > 0}
-                                        />
-                                    </div>
-                                    <div className="va-form-group">
-                                        <label><MapPinned size={14} /> Address</label>
-                                        <input
-                                            type="text"
-                                            className="form-control"
-                                            placeholder="Full address"
-                                            value={assistForm.address}
-                                            onChange={e => setAssistForm(prev => ({ ...prev, address: e.target.value }))}
-                                            disabled={volunteerOptions.length > 0}
-                                        />
-                                    </div>
-                                    <div className="va-form-row">
-                                        <div className="va-form-group">
-                                            <label><Phone size={14} /> Phone Number</label>
-                                            <input
-                                                type="tel"
-                                                className="form-control"
-                                                placeholder="+91-XXXXX-XXXXX"
-                                                value={assistForm.phone}
-                                                onChange={e => setAssistForm(prev => ({ ...prev, phone: e.target.value }))}
-                                                disabled={volunteerOptions.length > 0}
-                                            />
-                                        </div>
-                                        <div className="va-form-group">
-                                            <label><Activity size={14} /> Disease / Condition</label>
-                                            <input
-                                                type="text"
-                                                className="form-control"
-                                                placeholder="e.g. Diabetes, Fracture"
-                                                value={assistForm.disease}
-                                                onChange={e => setAssistForm(prev => ({ ...prev, disease: e.target.value }))}
-                                                disabled={volunteerOptions.length > 0}
-                                            />
-                                        </div>
-                                    </div>
-
-                                    {volunteerOptions.length === 0 ? (
-                                        <button
-                                            className="va-submit-btn"
-                                            onClick={showVolunteerOptions}
-                                            disabled={!assistForm.name.trim() || !assistForm.phone.trim() || !assistForm.disease.trim() || !assistForm.address.trim()}
-                                        >
-                                            <Search size={16} />
-                                            Find Volunteers
-                                        </button>
-                                    ) : (
-                                        <div className="va-selection-panel">
-                                            <div className="va-selection-header">
-                                                <h5><Users size={16} /> Select a Volunteer from City General Hospital</h5>
-                                                <button className="va-cancel-btn" onClick={cancelVolunteerSelection}><X size={14} /> Cancel</button>
-                                            </div>
-                                            <div className="va-options-list">
-                                                {volunteerOptions.map(vol => (
-                                                    <div
-                                                        key={vol.id}
-                                                        className={`va-option-card ${selectedVolunteer?.id === vol.id ? 'va-option-card--selected' : ''}`}
-                                                        onClick={() => setSelectedVolunteer(vol)}
-                                                    >
-                                                        <div className="va-option-check">
-                                                            {selectedVolunteer?.id === vol.id ? <CheckCircle size={18} /> : <Circle size={18} />}
-                                                        </div>
-                                                        <span className="va-vol-avatar">{vol.avatar}</span>
-                                                        <div className="va-vol-info">
-                                                            <strong>{vol.name}</strong>
-                                                            <span>{vol.specialization}</span>
-                                                        </div>
-                                                        <div className="va-vol-contact">
-                                                            <span><Phone size={11} /> {vol.phone}</span>
-                                                        </div>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                            <button
-                                                className="va-confirm-btn"
-                                                onClick={confirmVolunteerSelection}
-                                                disabled={!selectedVolunteer}
-                                            >
-                                                <CheckCircle size={16} />
-                                                Confirm Selection
-                                            </button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
-
-                            {/* Submissions */}
-                            <div className="va-submissions">
-                                <h4><Users size={16} /> Registered Patients & Selected Volunteer ({assistSubmissions.length})</h4>
-                                {assistSubmissions.length === 0 ? (
-                                    <div className="va-empty">
-                                        <HeartHandshake size={36} />
-                                        <p>No patients registered yet.</p>
-                                        <span>Fill the form and select a volunteer to assist a patient.</span>
-                                    </div>
-                                ) : (
-                                    <div className="va-submissions-list">
-                                        {assistSubmissions.map(sub => (
-                                            <div key={sub.id} className="va-submission-card">
-                                                <div className="va-submission-card__header">
-                                                    <div className="va-patient-info">
-                                                        <div className="va-patient-avatar"><UserCircle size={28} /></div>
-                                                        <div>
-                                                            <h5>{sub.patientName}</h5>
-                                                            <span className="va-disease-badge">{sub.disease}</span>
-                                                        </div>
-                                                    </div>
-                                                    <span className="va-timestamp"><Clock size={12} /> {sub.submittedAt}</span>
-                                                </div>
-                                                <div className="va-patient-details">
-                                                    <span><MapPinned size={12} /> {sub.address}</span>
-                                                    <span><Phone size={12} /> {sub.phone}</span>
-                                                    <span><Activity size={12} /> {sub.disease}</span>
-                                                </div>
-                                                <div className="va-volunteers-grid">
-                                                    <span className="va-volunteers-label">Selected Volunteer:</span>
-                                                    <div className="va-volunteer-card va-volunteer-card--selected">
-                                                        <span className="va-vol-avatar">{sub.volunteer.avatar}</span>
-                                                        <div className="va-vol-info">
-                                                            <strong>{sub.volunteer.name}</strong>
-                                                            <span>{sub.volunteer.specialization}</span>
-                                                        </div>
-                                                        <div className="va-vol-contact">
-                                                            <span><Phone size={11} /> {sub.volunteer.phone}</span>
-                                                        </div>
-                                                        <span className="va-selected-badge"><CheckCircle size={12} /> Assigned</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
-                    </div>
 
                     {/* ═══ ACCIDENT VICTIM RESCUE SECTION ═══ */}
                     <div className="accident-rescue-section" ref={accidentSectionRef}>
@@ -3220,227 +3208,182 @@ export default function Hospital() {
                         )}
                     </div>
 
-                    {/* ═══ TREATMENT & DOCTOR RECOMMENDATION SECTION ═══ */}
-                    <div className="treatment-section" ref={treatmentSectionRef}>
-                        <div className="trt-header">
-                            <h3><Stethoscope size={20} /> Treatment & Doctor Recommendation</h3>
-                            <p className="trt-subtitle">Enter the patient's condition to check if our hospital can help. If treatable, we recommend 4 specialist doctors with their qualifications, experience, and patient reviews.</p>
+                    {/* ═══ EMERGENCY REPORT + QR SECTION ═══ */}
+                    <div className="emr-section">
+                        <div className="emr-header">
+                            <h3><QrCode size={20} /> Emergency Report & QR</h3>
+                            <p className="emr-subtitle">Patient registers core emergency medical information. Generate a quick report and QR that responders can scan in urgent situations.</p>
                         </div>
 
-                        <div className="trt-body">
-                            {/* Form */}
-                            <div className="trt-form-card">
-                                <h4><ClipboardList size={16} /> Patient & Condition Details</h4>
-                                <div className="trt-form">
-                                    <div className="trt-form-group">
+                        <div className="emr-body">
+                            <div className="emr-form-card">
+                                <h4><FileText size={16} /> Register Emergency Medical Data</h4>
+                                <div className="emr-form-grid">
+                                    <div className="emr-form-group">
                                         <label><User size={14} /> Patient Name</label>
                                         <input
                                             type="text"
                                             className="form-control"
-                                            placeholder="Enter patient's full name"
-                                            value={treatmentPatientName}
-                                            onChange={e => setTreatmentPatientName(e.target.value)}
-                                            disabled={recommendedDoctors.length > 0}
+                                            placeholder="Enter patient full name"
+                                            value={emergencyProfile.patientName}
+                                            onChange={e => setEmergencyProfile(prev => ({ ...prev, patientName: e.target.value }))}
                                         />
                                     </div>
-                                    <div className="trt-form-row">
-                                        <div className="trt-form-group">
-                                            <label><Calendar size={14} /> Age</label>
-                                            <input
-                                                type="number"
-                                                className="form-control"
-                                                placeholder="Age"
-                                                min="0"
-                                                max="120"
-                                                value={treatmentPatientAge}
-                                                onChange={e => setTreatmentPatientAge(e.target.value)}
-                                                disabled={recommendedDoctors.length > 0}
-                                            />
-                                        </div>
-                                        <div className="trt-form-group">
-                                            <label><Activity size={14} /> Condition / Disease</label>
-                                            <select
-                                                className="form-control"
-                                                value={treatmentCondition}
-                                                onChange={e => setTreatmentCondition(e.target.value)}
-                                                disabled={recommendedDoctors.length > 0}
-                                            >
-                                                <option value="">Select condition</option>
-                                                {treatmentConditions.map(c => (
-                                                    <option key={c} value={c}>{c}</option>
-                                                ))}
-                                            </select>
-                                        </div>
+
+                                    <div className="emr-form-group">
+                                        <label><Droplet size={14} /> Blood Group</label>
+                                        <select
+                                            className="form-control"
+                                            value={emergencyProfile.bloodGroup}
+                                            onChange={e => setEmergencyProfile(prev => ({ ...prev, bloodGroup: e.target.value }))}
+                                        >
+                                            <option value="">Select blood group</option>
+                                            {emergencyBloodGroups.map(group => (
+                                                <option key={group} value={group}>{group}</option>
+                                            ))}
+                                        </select>
                                     </div>
-                                    <div className="trt-form-group">
-                                        <label><FileText size={14} /> Additional Description (Optional)</label>
+
+                                    <div className="emr-form-group">
+                                        <label><ShieldAlert size={14} /> Allergies</label>
                                         <textarea
                                             className="form-control"
-                                            rows="3"
-                                            placeholder="Describe symptoms, history, or any additional details..."
-                                            value={treatmentDescription}
-                                            onChange={e => setTreatmentDescription(e.target.value)}
-                                            disabled={recommendedDoctors.length > 0}
+                                            rows="2"
+                                            placeholder="e.g. Penicillin, peanuts"
+                                            value={emergencyProfile.allergies}
+                                            onChange={e => setEmergencyProfile(prev => ({ ...prev, allergies: e.target.value }))}
                                         />
                                     </div>
 
-                                    {recommendedDoctors.length === 0 && canTreat === null ? (
-                                        <button
-                                            className="trt-check-btn"
-                                            onClick={checkTreatmentAvailability}
-                                            disabled={!treatmentCondition || !treatmentPatientName.trim() || !treatmentPatientAge.trim()}
-                                        >
-                                            <Search size={16} />
-                                            Check Treatment Availability
-                                        </button>
-                                    ) : canTreat === false ? (
-                                        <div className="trt-unavailable">
-                                            <AlertTriangle size={18} />
-                                            <div>
-                                                <strong>Treatment Not Available</strong>
-                                                <p>Unfortunately, our hospital does not have specialists for this condition. We recommend transferring to a specialized facility.</p>
-                                            </div>
-                                            <button className="trt-reset-btn" onClick={resetTreatmentForm}>
-                                                <RefreshCw size={14} /> Try Another Condition
+                                    <div className="emr-form-group">
+                                        <label><Heart size={14} /> Chronic Diseases</label>
+                                        <textarea
+                                            className="form-control"
+                                            rows="2"
+                                            placeholder="e.g. Diabetes, hypertension"
+                                            value={emergencyProfile.chronicDiseases}
+                                            onChange={e => setEmergencyProfile(prev => ({ ...prev, chronicDiseases: e.target.value }))}
+                                        />
+                                    </div>
+
+                                    <div className="emr-form-group emr-form-group--full">
+                                        <label><Pill size={14} /> Current Medications</label>
+                                        <textarea
+                                            className="form-control"
+                                            rows="2"
+                                            placeholder="List medicines and dosage"
+                                            value={emergencyProfile.medications}
+                                            onChange={e => setEmergencyProfile(prev => ({ ...prev, medications: e.target.value }))}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="emr-contacts-wrap">
+                                    <div className="emr-contacts-head">
+                                        <h5><PhoneCall size={14} /> Emergency Contacts</h5>
+                                        <button className="emr-add-contact-btn" onClick={addEmergencyContact} type="button">+ Add Contact</button>
+                                    </div>
+
+                                    {emergencyProfile.emergencyContacts.map((contact, index) => (
+                                        <div key={`contact-${index}`} className="emr-contact-row">
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Name"
+                                                value={contact.name}
+                                                onChange={e => updateEmergencyContact(index, 'name', e.target.value)}
+                                            />
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                placeholder="Relation"
+                                                value={contact.relation}
+                                                onChange={e => updateEmergencyContact(index, 'relation', e.target.value)}
+                                            />
+                                            <input
+                                                type="tel"
+                                                className="form-control"
+                                                placeholder="Phone"
+                                                value={contact.phone}
+                                                onChange={e => updateEmergencyContact(index, 'phone', e.target.value)}
+                                            />
+                                            <button
+                                                className="emr-remove-contact-btn"
+                                                onClick={() => removeEmergencyContact(index)}
+                                                type="button"
+                                                disabled={emergencyProfile.emergencyContacts.length === 1}
+                                            >
+                                                <X size={13} />
                                             </button>
                                         </div>
-                                    ) : null}
+                                    ))}
                                 </div>
+
+                                <button
+                                    className="emr-generate-btn"
+                                    onClick={createEmergencyReport}
+                                    disabled={
+                                        !emergencyProfile.patientName.trim() ||
+                                        !emergencyProfile.bloodGroup ||
+                                        !emergencyProfile.emergencyContacts.some(contact => contact.name.trim() && contact.phone.trim())
+                                    }
+                                    type="button"
+                                >
+                                    <QrCode size={15} /> Generate Report + QR
+                                </button>
                             </div>
 
-                            {/* Doctor Recommendations */}
-                            <div className="trt-results">
-                                <h4><Award size={16} /> Recommended Specialist Doctors ({recommendedDoctors.length})</h4>
-                                {recommendedDoctors.length === 0 ? (
-                                    <div className="trt-empty">
-                                        <Stethoscope size={36} />
-                                        <p>No recommendations yet.</p>
-                                        <span>Enter a patient condition to find specialist doctors available at our hospital.</span>
+                            <div className="emr-preview-card">
+                                <h4><QrCode size={16} /> Report Preview</h4>
+                                {!activeEmergencyReport ? (
+                                    <div className="emr-empty">
+                                        <QrCode size={36} />
+                                        <p>No report generated yet.</p>
+                                        <span>Fill out the form and click Generate Report + QR.</span>
                                     </div>
                                 ) : (
                                     <>
-                                        <div className="trt-can-treat-banner">
-                                            <CheckCircle size={18} />
-                                            <div>
-                                                <strong>Yes, Our Hospital Can Treat This!</strong>
-                                                <span>We have {recommendedDoctors.length} specialist doctors available for <strong>{treatmentCondition}</strong>. Select a doctor below.</span>
-                                            </div>
+                                        <div className="emr-meta">
+                                            <span><strong>Report ID:</strong> {activeEmergencyReport.id}</span>
+                                            <span><strong>Generated:</strong> {activeEmergencyReport.generatedAt}</span>
                                         </div>
-                                        <div className="trt-doctors-list">
-                                            {recommendedDoctors.map(doc => (
-                                                <div
-                                                    key={doc.id}
-                                                    className={`trt-doctor-card ${selectedTreatmentDoctor?.id === doc.id ? 'trt-doctor-card--selected' : ''} ${expandedDoctor === doc.id ? 'trt-doctor-card--expanded' : ''}`}
-                                                >
-                                                    <div className="trt-doctor-main" onClick={() => setSelectedTreatmentDoctor(doc)}>
-                                                        <div className="trt-doc-select">
-                                                            {selectedTreatmentDoctor?.id === doc.id ? <CheckCircle size={20} /> : <Circle size={20} />}
-                                                        </div>
-                                                        <span className="trt-doc-avatar">{doc.avatar}</span>
-                                                        <div className="trt-doc-info">
-                                                            <strong>{doc.name}</strong>
-                                                            <span className="trt-doc-spec">{doc.specialization}</span>
-                                                            <div className="trt-doc-meta">
-                                                                <span className="trt-doc-exp"><Briefcase size={12} /> {doc.experience}</span>
-                                                                <span className="trt-doc-rating">
-                                                                    <Star size={12} /> {doc.rating} ({doc.totalReviews} reviews)
-                                                                </span>
-                                                                <span className={`trt-doc-avail trt-doc-avail--${doc.availability.toLowerCase().replace(' ', '-')}`}>
-                                                                    {doc.availability}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div className="trt-doc-education">
-                                                        <GraduationCap size={13} />
-                                                        <span>{doc.education}</span>
-                                                    </div>
-
-                                                    <button
-                                                        className="trt-expand-btn"
-                                                        onClick={(e) => { e.stopPropagation(); setExpandedDoctor(expandedDoctor === doc.id ? null : doc.id); }}
-                                                    >
-                                                        <MessageCircle size={14} />
-                                                        {expandedDoctor === doc.id ? 'Hide Reviews' : `View Patient Reviews (${doc.reviews.length})`}
-                                                        <ChevronDown size={14} className={expandedDoctor === doc.id ? 'trt-chevron-up' : ''} />
-                                                    </button>
-
-                                                    {expandedDoctor === doc.id && (
-                                                        <div className="trt-reviews">
-                                                            {doc.reviews.map((review, idx) => (
-                                                                <div key={idx} className="trt-review-item">
-                                                                    <div className="trt-review-header">
-                                                                        <span className="trt-reviewer-name"><UserCircle size={14} /> {review.name}</span>
-                                                                        <div className="trt-review-stars">
-                                                                            {Array.from({ length: review.rating }, (_, i) => (
-                                                                                <Star key={i} size={11} className="trt-star-filled" />
-                                                                            ))}
-                                                                            {Array.from({ length: 5 - review.rating }, (_, i) => (
-                                                                                <Star key={`e-${i}`} size={11} className="trt-star-empty" />
-                                                                            ))}
-                                                                        </div>
-                                                                    </div>
-                                                                    <p className="trt-review-comment">"{review.comment}"</p>
-                                                                </div>
-                                                            ))}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            ))}
+                                        <div className="emr-summary">
+                                            <p><strong>Patient:</strong> {activeEmergencyReport.patientName}</p>
+                                            <p><strong>Blood Group:</strong> {activeEmergencyReport.bloodGroup}</p>
+                                            <p><strong>Allergies:</strong> {activeEmergencyReport.allergies}</p>
+                                            <p><strong>Chronic Diseases:</strong> {activeEmergencyReport.chronicDiseases}</p>
+                                            <p><strong>Medications:</strong> {activeEmergencyReport.medications}</p>
                                         </div>
 
-                                        <div className="trt-action-bar">
-                                            <button
-                                                className="trt-confirm-btn"
-                                                onClick={confirmTreatmentDoctor}
-                                                disabled={!selectedTreatmentDoctor}
-                                            >
-                                                <CheckCircle size={16} />
-                                                Confirm Doctor & Start Treatment
-                                            </button>
-                                            <button className="trt-cancel-btn" onClick={resetTreatmentForm}>
-                                                <X size={14} /> Cancel
-                                            </button>
+                                        <div className="emr-qr-box">
+                                            <img src={emergencyQrUrl} alt="Emergency report QR code" />
                                         </div>
+
+                                        <button className="emr-download-btn" onClick={() => downloadEmergencyReport(activeEmergencyReport)} type="button">
+                                            <Download size={14} /> Download Report
+                                        </button>
                                     </>
-                                )}
-
-                                {/* Treatment History */}
-                                {treatmentSubmissions.length > 0 && (
-                                    <div className="trt-history">
-                                        <h5><ClipboardList size={14} /> Treatment Assignments ({treatmentSubmissions.length})</h5>
-                                        <div className="trt-history-list">
-                                            {treatmentSubmissions.map(sub => (
-                                                <div key={sub.id} className="trt-history-card">
-                                                    <div className="trt-history-top">
-                                                        <div className="trt-history-patient">
-                                                            <User size={14} />
-                                                            <div>
-                                                                <strong>{sub.patientName}</strong>
-                                                                <span>Age: {sub.patientAge} &bull; {sub.condition}</span>
-                                                            </div>
-                                                        </div>
-                                                        <span className="trt-history-time"><Clock size={12} /> {sub.submittedAt}</span>
-                                                    </div>
-                                                    <div className="trt-history-doctor">
-                                                        <span className="trt-history-label">Assigned Doctor:</span>
-                                                        <div className="trt-history-doc-info">
-                                                            <span className="trt-doc-avatar">{sub.doctor.avatar}</span>
-                                                            <div>
-                                                                <strong>{sub.doctor.name}</strong>
-                                                                <span>{sub.doctor.specialization}</span>
-                                                            </div>
-                                                            <span className="trt-history-badge"><CheckCircle size={12} /> Assigned</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
                                 )}
                             </div>
                         </div>
+
+                        {emergencyReports.length > 0 && (
+                            <div className="emr-reports-list">
+                                <h5><ClipboardList size={14} /> Recent Reports ({emergencyReports.length})</h5>
+                                {emergencyReports.map(report => (
+                                    <div key={report.id} className={`emr-report-item ${activeEmergencyReport?.id === report.id ? 'emr-report-item--active' : ''}`}>
+                                        <div>
+                                            <strong>{report.patientName}</strong>
+                                            <span>{report.id} • {report.generatedAt}</span>
+                                        </div>
+                                        <div className="emr-report-actions">
+                                            <button onClick={() => setActiveEmergencyReportId(report.id)} type="button">View QR</button>
+                                            <button onClick={() => downloadEmergencyReport(report)} type="button">Download</button>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
                     {/* ═══ BLE ASSET TRACKING SECTION ═══ */}

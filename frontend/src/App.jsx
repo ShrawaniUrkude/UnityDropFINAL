@@ -4,18 +4,12 @@ import { gsap } from './hooks/useGsap';
 import Navbar from './components/layout/Navbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
-import Campaigns from './pages/Campaigns';
-import NGOs from './pages/NGOs';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
 import Donate from './pages/Donate';
 import Hospital from './pages/Hospital';
-import OrganDetail from './pages/OrganDetail';
-import DonorRegistration from './pages/DonorRegistration';
-import DonarDashboard from './pages/DonarDashboard';
 import FoodDonation from './pages/FoodDonation';
 import AssetTracking from './pages/AssetTracking';
-import { DonorProvider } from './context/DonorContext';
 
 /* Scroll to top + page transition on navigation */
 function ScrollToTop() {
@@ -125,12 +119,7 @@ function AppInner() {
       <PageTransition>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/campaigns" element={<Campaigns />} />
-          <Route path="/campaigns/:id" element={<OrganDetail />} />
-          <Route path="/register-donor" element={<DonorRegistration />} />
-          <Route path="/donar-dashboard" element={<DonarDashboard />} />
           <Route path="/food-donation" element={<FoodDonation />} />
-          <Route path="/ngos" element={<NGOs />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/about" element={<About />} />
           <Route path="/hospital" element={<Hospital />} />
@@ -167,9 +156,7 @@ function NotFound() {
 export default function App() {
   return (
     <BrowserRouter>
-      <DonorProvider>
-        <AppInner />
-      </DonorProvider>
+      <AppInner />
     </BrowserRouter>
   );
 }

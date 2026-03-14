@@ -269,8 +269,8 @@ export default function Home() {
                             <Link to="/donate" className="btn btn-primary btn-lg">
                                 Start Donating
                             </Link>
-                            <Link to="/campaigns" className="btn btn-ghost btn-lg">
-                                Explore Campaigns
+                            <Link to="/hospital" className="btn btn-ghost btn-lg">
+                                Explore Hospitals
                             </Link>
                         </div>
 
