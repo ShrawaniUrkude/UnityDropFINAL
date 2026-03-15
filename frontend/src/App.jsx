@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { gsap } from './hooks/useGsap';
 import Navbar from './components/layout/Navbar';
+import PatientNavbar from './components/layout/PatientNavbar';
 import Footer from './components/layout/Footer';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
@@ -110,12 +111,15 @@ function PageTransition({ children }) {
 }
 
 function AppInner() {
+  const { pathname } = useLocation();
+  const showPatientNavbar = pathname.startsWith('/hospital') || pathname.startsWith('/dashboard');
+
   return (
     <>
       <ScrollToTop />
       <ScrollProgress />
       <CursorGlow />
-      <Navbar />
+      {showPatientNavbar ? <PatientNavbar /> : <Navbar />}
       <PageTransition>
         <Routes>
           <Route path="/" element={<Home />} />

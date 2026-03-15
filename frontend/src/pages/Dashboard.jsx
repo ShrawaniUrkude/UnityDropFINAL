@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import { gsap, ScrollTrigger } from '../hooks/useGsap';
-import { jsPDF } from 'jspdf';
 import {
     Search, User, Users, Activity, Phone, Clock, CheckCircle,
     AlertTriangle, Stethoscope, FileText, X, ChevronDown,
@@ -9,8 +8,7 @@ import {
     Heart, Brain, Bone, Pill, Baby, Eye, Syringe, Shield,
     Globe, MapPin, Video, Send, ArrowLeftRight, Copy,
     ShoppingCart, IndianRupee, TrendingDown, Package, Store, BadgeCheck,
-    BarChart3, Wallet, Percent, Info, ArrowDown, Layers, Landmark,
-    QrCode, Download, Droplet, ShieldAlert, PhoneCall
+    BarChart3, Wallet, Percent, Info, ArrowDown, Layers, Landmark
 } from 'lucide-react';
 import './Dashboard.css';
 
@@ -182,17 +180,6 @@ const conditionToSpecialty = {
     'General Surgery': 'general', 'Appendicitis': 'general', 'Hernia': 'general',
     'Diabetes': 'general', 'Endocrine': 'general',
 };
-
-const emergencyBloodGroups = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
-
-const createInitialEmergencyProfile = () => ({
-    patientName: '',
-    bloodGroup: '',
-    allergies: '',
-    chronicDiseases: '',
-    medications: '',
-    emergencyContacts: [{ name: '', relation: '', phone: '' }],
-});
 
 // Specialty category info for the specialty grid
 const specialtyCategories = [
@@ -704,11 +691,6 @@ export default function Dashboard() {
     const [selectedTreatmentDoctor, setSelectedTreatmentDoctor] = useState(null);
     const [activeSpecialty, setActiveSpecialty] = useState(null);
 
-    // Emergency report + QR states
-    const [emergencyProfile, setEmergencyProfile] = useState(createInitialEmergencyProfile);
-    const [emergencyReports, setEmergencyReports] = useState([]);
-    const [activeEmergencyReportId, setActiveEmergencyReportId] = useState(null);
-
     // Appointment states
     const [appointments, setAppointments] = useState([]);
     const [apptDoctor, setApptDoctor] = useState(null);
@@ -792,117 +774,6 @@ export default function Dashboard() {
         setCanTreat(null);
         setSelectedTreatmentDoctor(null);
         setExpandedDoctor(null);
-    };
-
-    const updateEmergencyContact = (index, field, value) => {
-        setEmergencyProfile(prev => ({
-            ...prev,
-            emergencyContacts: prev.emergencyContacts.map((contact, contactIndex) => (
-                contactIndex === index ? { ...contact, [field]: value } : contact
-            )),
-        }));
-    };
-
-    const addEmergencyContact = () => {
-        setEmergencyProfile(prev => ({
-            ...prev,
-            emergencyContacts: [...prev.emergencyContacts, { name: '', relation: '', phone: '' }],
-        }));
-    };
-
-    const removeEmergencyContact = (index) => {
-        setEmergencyProfile(prev => {
-            if (prev.emergencyContacts.length === 1) return prev;
-            return {
-                ...prev,
-                emergencyContacts: prev.emergencyContacts.filter((_, contactIndex) => contactIndex !== index),
-            };
-        });
-    };
-
-    const createEmergencyReport = () => {
-        const cleanedContacts = emergencyProfile.emergencyContacts
-            .map(contact => ({
-                name: contact.name.trim(),
-                relation: contact.relation.trim(),
-                phone: contact.phone.trim(),
-            }))
-            .filter(contact => contact.name && contact.phone);
-
-        if (!emergencyProfile.patientName.trim() || !emergencyProfile.bloodGroup || cleanedContacts.length === 0) {
-            return;
-        }
-
-        const report = {
-            id: `EMR-${Date.now()}`,
-            generatedAt: new Date().toLocaleString(),
-            patientName: emergencyProfile.patientName.trim(),
-            bloodGroup: emergencyProfile.bloodGroup,
-            allergies: emergencyProfile.allergies.trim() || 'None reported',
-            chronicDiseases: emergencyProfile.chronicDiseases.trim() || 'None reported',
-            medications: emergencyProfile.medications.trim() || 'None reported',
-            emergencyContacts: cleanedContacts,
-        };
-
-        setEmergencyReports(prev => [report, ...prev].slice(0, 12));
-        setActiveEmergencyReportId(report.id);
-        setEmergencyProfile(createInitialEmergencyProfile());
-    };
-
-    const downloadEmergencyReport = (report) => {
-        const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-        const pageWidth = doc.internal.pageSize.getWidth();
-        const margin = 16;
-        const contentWidth = pageWidth - margin * 2;
-        const lineHeight = 6;
-        let cursorY = 20;
-
-        const ensureSpace = (requiredHeight = lineHeight) => {
-            if (cursorY + requiredHeight > 285) {
-                doc.addPage();
-                cursorY = 20;
-            }
-        };
-
-        const addText = (label, value) => {
-            const wrapped = doc.splitTextToSize(`${label}: ${value}`, contentWidth);
-            ensureSpace(wrapped.length * lineHeight);
-            doc.text(wrapped, margin, cursorY);
-            cursorY += wrapped.length * lineHeight;
-        };
-
-        doc.setFont('helvetica', 'bold');
-        doc.setFontSize(16);
-        doc.text('Emergency Medical Report', margin, cursorY);
-        cursorY += 10;
-
-        doc.setFont('helvetica', 'normal');
-        doc.setFontSize(11);
-        addText('Report ID', report.id);
-        addText('Generated At', report.generatedAt);
-        cursorY += 2;
-        addText('Patient Name', report.patientName);
-        addText('Blood Group', report.bloodGroup);
-        addText('Allergies', report.allergies);
-        addText('Chronic Diseases', report.chronicDiseases);
-        addText('Medications', report.medications);
-
-        cursorY += 4;
-        ensureSpace();
-        doc.setFont('helvetica', 'bold');
-        doc.text('Emergency Contacts', margin, cursorY);
-        cursorY += 7;
-        doc.setFont('helvetica', 'normal');
-
-        report.emergencyContacts.forEach((contact, index) => {
-            const contactText = `${index + 1}. ${contact.name} (${contact.relation || 'Relation not specified'}) - ${contact.phone}`;
-            const wrapped = doc.splitTextToSize(contactText, contentWidth);
-            ensureSpace(wrapped.length * lineHeight);
-            doc.text(wrapped, margin, cursorY);
-            cursorY += wrapped.length * lineHeight;
-        });
-
-        doc.save(`${report.id}.pdf`);
     };
 
     // Book appointment with assigned doctor
@@ -1144,21 +1015,6 @@ export default function Dashboard() {
 
     const totalDoctors = Object.values(specialistDoctors).reduce((sum, arr) => sum + arr.length, 0);
     const totalReviews = Object.values(specialistDoctors).flat().reduce((sum, d) => sum + d.totalReviews, 0);
-    const activeEmergencyReport = emergencyReports.find(report => report.id === activeEmergencyReportId) || emergencyReports[0] || null;
-    const emergencyQrPayload = activeEmergencyReport
-        ? JSON.stringify({
-            id: activeEmergencyReport.id,
-            patientName: activeEmergencyReport.patientName,
-            bloodGroup: activeEmergencyReport.bloodGroup,
-            allergies: activeEmergencyReport.allergies,
-            chronicDiseases: activeEmergencyReport.chronicDiseases,
-            medications: activeEmergencyReport.medications,
-            emergencyContacts: activeEmergencyReport.emergencyContacts,
-        })
-        : '';
-    const emergencyQrUrl = activeEmergencyReport
-        ? `https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=${encodeURIComponent(emergencyQrPayload)}`
-        : '';
 
     return (
         <main className="dashboard-page treatment-page">
@@ -1196,183 +1052,6 @@ export default function Dashboard() {
                         </div>
                     </div>
                 </div>
-            </section>
-
-            <section className="emr-section">
-                <div className="emr-header">
-                    <h3><QrCode size={20} /> Emergency Report & QR</h3>
-                    <p className="emr-subtitle">Patient registers core emergency medical information. Generate a quick report and QR that responders can scan in urgent situations.</p>
-                </div>
-
-                <div className="emr-body">
-                    <div className="emr-form-card">
-                        <h4><FileText size={16} /> Register Emergency Medical Data</h4>
-                        <div className="emr-form-grid">
-                            <div className="emr-form-group">
-                                <label><User size={14} /> Patient Name</label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Enter patient full name"
-                                    value={emergencyProfile.patientName}
-                                    onChange={e => setEmergencyProfile(prev => ({ ...prev, patientName: e.target.value }))}
-                                />
-                            </div>
-
-                            <div className="emr-form-group">
-                                <label><Droplet size={14} /> Blood Group</label>
-                                <select
-                                    className="form-control"
-                                    value={emergencyProfile.bloodGroup}
-                                    onChange={e => setEmergencyProfile(prev => ({ ...prev, bloodGroup: e.target.value }))}
-                                >
-                                    <option value="">Select blood group</option>
-                                    {emergencyBloodGroups.map(group => (
-                                        <option key={group} value={group}>{group}</option>
-                                    ))}
-                                </select>
-                            </div>
-
-                            <div className="emr-form-group">
-                                <label><ShieldAlert size={14} /> Allergies</label>
-                                <textarea
-                                    className="form-control"
-                                    rows="2"
-                                    placeholder="e.g. Penicillin, peanuts"
-                                    value={emergencyProfile.allergies}
-                                    onChange={e => setEmergencyProfile(prev => ({ ...prev, allergies: e.target.value }))}
-                                />
-                            </div>
-
-                            <div className="emr-form-group">
-                                <label><Heart size={14} /> Chronic Diseases</label>
-                                <textarea
-                                    className="form-control"
-                                    rows="2"
-                                    placeholder="e.g. Diabetes, hypertension"
-                                    value={emergencyProfile.chronicDiseases}
-                                    onChange={e => setEmergencyProfile(prev => ({ ...prev, chronicDiseases: e.target.value }))}
-                                />
-                            </div>
-
-                            <div className="emr-form-group emr-form-group--full">
-                                <label><Pill size={14} /> Current Medications</label>
-                                <textarea
-                                    className="form-control"
-                                    rows="2"
-                                    placeholder="List medicines and dosage"
-                                    value={emergencyProfile.medications}
-                                    onChange={e => setEmergencyProfile(prev => ({ ...prev, medications: e.target.value }))}
-                                />
-                            </div>
-                        </div>
-
-                        <div className="emr-contacts-wrap">
-                            <div className="emr-contacts-head">
-                                <h5><PhoneCall size={14} /> Emergency Contacts</h5>
-                                <button className="emr-add-contact-btn" onClick={addEmergencyContact} type="button">+ Add Contact</button>
-                            </div>
-
-                            {emergencyProfile.emergencyContacts.map((contact, index) => (
-                                <div key={`contact-${index}`} className="emr-contact-row">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Name"
-                                        value={contact.name}
-                                        onChange={e => updateEmergencyContact(index, 'name', e.target.value)}
-                                    />
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Relation"
-                                        value={contact.relation}
-                                        onChange={e => updateEmergencyContact(index, 'relation', e.target.value)}
-                                    />
-                                    <input
-                                        type="tel"
-                                        className="form-control"
-                                        placeholder="Phone"
-                                        value={contact.phone}
-                                        onChange={e => updateEmergencyContact(index, 'phone', e.target.value)}
-                                    />
-                                    <button
-                                        className="emr-remove-contact-btn"
-                                        onClick={() => removeEmergencyContact(index)}
-                                        type="button"
-                                        disabled={emergencyProfile.emergencyContacts.length === 1}
-                                    >
-                                        <X size={13} />
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-
-                        <button
-                            className="emr-generate-btn"
-                            onClick={createEmergencyReport}
-                            disabled={
-                                !emergencyProfile.patientName.trim() ||
-                                !emergencyProfile.bloodGroup ||
-                                !emergencyProfile.emergencyContacts.some(contact => contact.name.trim() && contact.phone.trim())
-                            }
-                            type="button"
-                        >
-                            <QrCode size={15} /> Generate Report + QR
-                        </button>
-                    </div>
-
-                    <div className="emr-preview-card">
-                        <h4><QrCode size={16} /> Report Preview</h4>
-                        {!activeEmergencyReport ? (
-                            <div className="emr-empty">
-                                <QrCode size={36} />
-                                <p>No report generated yet.</p>
-                                <span>Fill out the form and click Generate Report + QR.</span>
-                            </div>
-                        ) : (
-                            <>
-                                <div className="emr-meta">
-                                    <span><strong>Report ID:</strong> {activeEmergencyReport.id}</span>
-                                    <span><strong>Generated:</strong> {activeEmergencyReport.generatedAt}</span>
-                                </div>
-                                <div className="emr-summary">
-                                    <p><strong>Patient:</strong> {activeEmergencyReport.patientName}</p>
-                                    <p><strong>Blood Group:</strong> {activeEmergencyReport.bloodGroup}</p>
-                                    <p><strong>Allergies:</strong> {activeEmergencyReport.allergies}</p>
-                                    <p><strong>Chronic Diseases:</strong> {activeEmergencyReport.chronicDiseases}</p>
-                                    <p><strong>Medications:</strong> {activeEmergencyReport.medications}</p>
-                                </div>
-
-                                <div className="emr-qr-box">
-                                    <img src={emergencyQrUrl} alt="Emergency report QR code" />
-                                </div>
-
-                                <button className="emr-download-btn" onClick={() => downloadEmergencyReport(activeEmergencyReport)} type="button">
-                                    <Download size={14} /> Download Report
-                                </button>
-                            </>
-                        )}
-                    </div>
-                </div>
-
-                {emergencyReports.length > 0 && (
-                    <div className="emr-reports-list">
-                        <h5><ClipboardList size={14} /> Recent Reports ({emergencyReports.length})</h5>
-                        {emergencyReports.map(report => (
-                            <div key={report.id} className={`emr-report-item ${activeEmergencyReport?.id === report.id ? 'emr-report-item--active' : ''}`}>
-                                <div>
-                                    <strong>{report.patientName}</strong>
-                                    <span>{report.id} • {report.generatedAt}</span>
-                                </div>
-                                <div className="emr-report-actions">
-                                    <button onClick={() => setActiveEmergencyReportId(report.id)} type="button">View QR</button>
-                                    <button onClick={() => downloadEmergencyReport(report)} type="button">Download</button>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
             </section>
 
             {/* ═══ SPECIALTIES BROWSE ═══ */}
