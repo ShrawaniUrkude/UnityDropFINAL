@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+﻿import { useState, useRef, useEffect } from 'react';
 import { gsap, ScrollTrigger } from '../hooks/useGsap';
 import {
     Search, User, Users, Activity, Phone, Clock, CheckCircle,
@@ -7,14 +7,14 @@ import {
     Award, GraduationCap, Star, Briefcase, MessageCircle,
     Heart, Brain, Bone, Pill, Baby, Eye, Syringe, Shield,
     Globe, MapPin, Video, Send, ArrowLeftRight, Copy,
-    ShoppingCart, IndianRupee, TrendingDown, Package, Store, BadgeCheck,
+    IndianRupee, TrendingDown, Package,
     BarChart3, Wallet, Percent, Info, ArrowDown, Layers, Landmark
 } from 'lucide-react';
 import './Dashboard.css';
 
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TREATMENT CONDITIONS & SPECIALIST DOCTORS
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const treatmentConditions = [
     'Cardiac Emergency', 'Heart Attack', 'Chest Pain',
@@ -33,132 +33,132 @@ const treatmentConditions = [
 
 const specialistDoctors = {
     cardiac: [
-        { id: 'DOC-C1', name: 'Dr. Manish Kapoor', specialization: 'Interventional Cardiology', experience: '22 years', education: 'MBBS, MD (Cardiology) - AIIMS Delhi, DM (Cardiology) - PGIMER Chandigarh', avatar: '👨‍⚕️', rating: 4.9, totalReviews: 312, availability: 'Available', reviews: [
+        { id: 'DOC-C1', name: 'Dr. Manish Kapoor', specialization: 'Interventional Cardiology', experience: '22 years', education: 'MBBS, MD (Cardiology) - AIIMS Delhi, DM (Cardiology) - PGIMER Chandigarh', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.9, totalReviews: 312, availability: 'Available', reviews: [
             { name: 'Rajesh S.', rating: 5, comment: 'Dr. Kapoor saved my life during a massive heart attack. His quick decision-making and expertise are unmatched.' },
             { name: 'Meena P.', rating: 5, comment: 'After my bypass surgery, I recovered faster than expected. The doctor personally checked on me every day.' },
             { name: 'Vikram T.', rating: 4, comment: 'Very knowledgeable and patient. Explained every detail of my angioplasty procedure thoroughly.' },
         ]},
-        { id: 'DOC-C2', name: 'Dr. Sunita Verma', specialization: 'Cardiac Electrophysiology', experience: '18 years', education: 'MBBS - Grant Medical College, MD (Medicine) - KEM Hospital, DM (Cardiology) - Sion Hospital', avatar: '👩‍⚕️', rating: 4.8, totalReviews: 248, availability: 'Available', reviews: [
+        { id: 'DOC-C2', name: 'Dr. Sunita Verma', specialization: 'Cardiac Electrophysiology', experience: '18 years', education: 'MBBS - Grant Medical College, MD (Medicine) - KEM Hospital, DM (Cardiology) - Sion Hospital', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.8, totalReviews: 248, availability: 'Available', reviews: [
             { name: 'Arun K.', rating: 5, comment: 'Dr. Verma is incredibly thorough. She identified my arrhythmia when other doctors missed it.' },
             { name: 'Priya D.', rating: 5, comment: 'Compassionate and skilled. My mother had a pacemaker implanted and is doing wonderful.' },
             { name: 'Deepak M.', rating: 4, comment: 'Good doctor, takes time to answer all questions. Wait time can be long though.' },
         ]},
-        { id: 'DOC-C3', name: 'Dr. Arvind Shah', specialization: 'Pediatric Cardiology', experience: '15 years', education: 'MBBS, DCH - BJ Medical College, MD (Pediatrics), DM (Cardiology) - AIIMS', avatar: '👨‍⚕️', rating: 4.7, totalReviews: 186, availability: 'Available', reviews: [
+        { id: 'DOC-C3', name: 'Dr. Arvind Shah', specialization: 'Pediatric Cardiology', experience: '15 years', education: 'MBBS, DCH - BJ Medical College, MD (Pediatrics), DM (Cardiology) - AIIMS', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.7, totalReviews: 186, availability: 'Available', reviews: [
             { name: 'Sneha L.', rating: 5, comment: 'My child was born with a heart defect. Dr. Shah performed the surgery flawlessly. Forever grateful.' },
             { name: 'Rahul B.', rating: 5, comment: 'He has a wonderful way with children. My son was not scared at all during checkups.' },
             { name: 'Kavita N.', rating: 4, comment: 'Very experienced in congenital heart conditions. Highly recommend for pediatric cases.' },
         ]},
-        { id: 'DOC-C4', name: 'Dr. Lakshmi Rao', specialization: 'Heart Failure & Transplant', experience: '20 years', education: 'MBBS - Osmania Medical College, MD (Internal Medicine), DM (Cardiology) - NIMHANS', avatar: '👩‍⚕️', rating: 4.9, totalReviews: 274, availability: 'On Call', reviews: [
+        { id: 'DOC-C4', name: 'Dr. Lakshmi Rao', specialization: 'Heart Failure & Transplant', experience: '20 years', education: 'MBBS - Osmania Medical College, MD (Internal Medicine), DM (Cardiology) - NIMHANS', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.9, totalReviews: 274, availability: 'On Call', reviews: [
             { name: 'Gopal R.', rating: 5, comment: 'Dr. Rao managed my father\'s advanced heart failure brilliantly. Her treatment plan gave him years of quality life.' },
             { name: 'Suman D.', rating: 5, comment: 'The best cardiologist I have ever consulted. Very empathetic and explains everything clearly.' },
             { name: 'Harish M.', rating: 5, comment: 'World-class expertise right here. She coordinated my heart transplant evaluation seamlessly.' },
         ]},
     ],
     orthopedic: [
-        { id: 'DOC-O1', name: 'Dr. Rohit Jain', specialization: 'Joint Replacement Surgery', experience: '19 years', education: 'MBBS - Maulana Azad Medical College, MS (Ortho) - Safdarjung Hospital, Fellowship - Royal College UK', avatar: '👨‍⚕️', rating: 4.8, totalReviews: 295, availability: 'Available', reviews: [
+        { id: 'DOC-O1', name: 'Dr. Rohit Jain', specialization: 'Joint Replacement Surgery', experience: '19 years', education: 'MBBS - Maulana Azad Medical College, MS (Ortho) - Safdarjung Hospital, Fellowship - Royal College UK', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.8, totalReviews: 295, availability: 'Available', reviews: [
             { name: 'Ramesh T.', rating: 5, comment: 'Had a total knee replacement. I am walking pain-free after years of suffering. Thank you Dr. Jain!' },
             { name: 'Pushpa A.', rating: 5, comment: 'Both my hips were replaced by Dr. Jain. Excellent surgical skills and aftercare.' },
             { name: 'Dinesh C.', rating: 4, comment: 'Professional and experienced. The physiotherapy plan was very well designed.' },
         ]},
-        { id: 'DOC-O2', name: 'Dr. Priya Menon', specialization: 'Spine Surgery', experience: '16 years', education: 'MBBS, MS (Ortho) - CMC Vellore, Fellowship in Spine Surgery - Munich Germany', avatar: '👩‍⚕️', rating: 4.7, totalReviews: 203, availability: 'Available', reviews: [
+        { id: 'DOC-O2', name: 'Dr. Priya Menon', specialization: 'Spine Surgery', experience: '16 years', education: 'MBBS, MS (Ortho) - CMC Vellore, Fellowship in Spine Surgery - Munich Germany', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.7, totalReviews: 203, availability: 'Available', reviews: [
             { name: 'Suresh Y.', rating: 5, comment: 'My herniated disc surgery was a success. Back to normal life within weeks.' },
             { name: 'Anita G.', rating: 5, comment: 'Dr. Menon is extremely skilled in minimally invasive spine surgery. Minimal scarring and fast recovery.' },
             { name: 'Prakash S.', rating: 4, comment: 'Good surgeon. Explained the risks clearly and managed my expectations well.' },
         ]},
-        { id: 'DOC-O3', name: 'Dr. Sanjay Kulkarni', specialization: 'Sports Medicine & Trauma', experience: '14 years', education: 'MBBS - Grant Medical, MS (Ortho), DNB Orthopaedics, Arthroscopy Fellowship - Singapore', avatar: '👨‍⚕️', rating: 4.6, totalReviews: 178, availability: 'Available', reviews: [
+        { id: 'DOC-O3', name: 'Dr. Sanjay Kulkarni', specialization: 'Sports Medicine & Trauma', experience: '14 years', education: 'MBBS - Grant Medical, MS (Ortho), DNB Orthopaedics, Arthroscopy Fellowship - Singapore', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.6, totalReviews: 178, availability: 'Available', reviews: [
             { name: 'Karan M.', rating: 5, comment: 'Fixed my ACL tear perfectly. I was back on the football field in 6 months!' },
             { name: 'Neha K.', rating: 4, comment: 'Very good with sports injuries. He understands athlete concerns well.' },
             { name: 'Vijay P.', rating: 5, comment: 'Dr. Kulkarni treated my compound fracture after an accident. Excellent trauma surgeon.' },
         ]},
-        { id: 'DOC-O4', name: 'Dr. Nandini Desai', specialization: 'Pediatric Orthopedics', experience: '12 years', education: 'MBBS, MS (Ortho) - Seth GS Medical College, Fellowship in Pediatric Ortho - Toronto', avatar: '👩‍⚕️', rating: 4.8, totalReviews: 156, availability: 'Available', reviews: [
+        { id: 'DOC-O4', name: 'Dr. Nandini Desai', specialization: 'Pediatric Orthopedics', experience: '12 years', education: 'MBBS, MS (Ortho) - Seth GS Medical College, Fellowship in Pediatric Ortho - Toronto', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.8, totalReviews: 156, availability: 'Available', reviews: [
             { name: 'Sneha R.', rating: 5, comment: 'My daughter had clubfoot. Dr. Desai corrected it beautifully. She walks normally now!' },
             { name: 'Amit P.', rating: 5, comment: 'Great with kids. My son had a broken arm and Dr. Desai made him feel comfortable throughout.' },
             { name: 'Rekha S.', rating: 4, comment: 'Very patient and caring. Explains treatment options clearly to parents.' },
         ]},
     ],
     neurological: [
-        { id: 'DOC-N1', name: 'Dr. Ashwin Bhat', specialization: 'Neurosurgery', experience: '24 years', education: 'MBBS - JIPMER, MS (General Surgery), MCh (Neurosurgery) - NIMHANS Bangalore', avatar: '👨‍⚕️', rating: 4.9, totalReviews: 340, availability: 'Available', reviews: [
+        { id: 'DOC-N1', name: 'Dr. Ashwin Bhat', specialization: 'Neurosurgery', experience: '24 years', education: 'MBBS - JIPMER, MS (General Surgery), MCh (Neurosurgery) - NIMHANS Bangalore', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.9, totalReviews: 340, availability: 'Available', reviews: [
             { name: 'Kamala D.', rating: 5, comment: 'Dr. Bhat operated on my brain tumor. He is truly a genius surgeon. I owe him my life.' },
             { name: 'Rajan V.', rating: 5, comment: 'After my stroke, Dr. Bhat\'s quick intervention prevented permanent damage.' },
             { name: 'Sunita B.', rating: 5, comment: '24 years of experience shows. Confident, precise, and compassionate.' },
         ]},
-        { id: 'DOC-N2', name: 'Dr. Kavitha Nair', specialization: 'Stroke & Cerebrovascular', experience: '17 years', education: 'MBBS, MD (Medicine), DM (Neurology) - AIIMS Delhi, Fellowship - Johns Hopkins USA', avatar: '👩‍⚕️', rating: 4.8, totalReviews: 221, availability: 'Available', reviews: [
+        { id: 'DOC-N2', name: 'Dr. Kavitha Nair', specialization: 'Stroke & Cerebrovascular', experience: '17 years', education: 'MBBS, MD (Medicine), DM (Neurology) - AIIMS Delhi, Fellowship - Johns Hopkins USA', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.8, totalReviews: 221, availability: 'Available', reviews: [
             { name: 'Deepika N.', rating: 5, comment: 'Dr. Nair diagnosed my TIA instantly and started treatment within minutes. Prevented a major stroke.' },
             { name: 'Mohan K.', rating: 5, comment: 'Best neurologist in the city. Very thorough in her examination.' },
             { name: 'Priya S.', rating: 4, comment: 'Highly knowledgeable. She took time to explain my MRI results in detail.' },
         ]},
-        { id: 'DOC-N3', name: 'Dr. Rajiv Thakur', specialization: 'Epilepsy & Movement Disorders', experience: '13 years', education: 'MBBS - KMC Manipal, MD (Medicine), DM (Neurology) - PGIMER, EEG Fellowship - London', avatar: '👨‍⚕️', rating: 4.7, totalReviews: 167, availability: 'Available', reviews: [
+        { id: 'DOC-N3', name: 'Dr. Rajiv Thakur', specialization: 'Epilepsy & Movement Disorders', experience: '13 years', education: 'MBBS - KMC Manipal, MD (Medicine), DM (Neurology) - PGIMER, EEG Fellowship - London', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.7, totalReviews: 167, availability: 'Available', reviews: [
             { name: 'Ananya M.', rating: 5, comment: 'My epilepsy is finally under control after years of struggle. Dr. Thakur found the right medication.' },
             { name: 'Sunil G.', rating: 4, comment: 'Patient and understanding. Never rushes through appointments.' },
             { name: 'Leela R.', rating: 5, comment: 'Dr. Thakur treated my Parkinson\'s tremors effectively. Significant improvement in daily life.' },
         ]},
-        { id: 'DOC-N4', name: 'Dr. Meera Iyer', specialization: 'Neuro-Oncology', experience: '15 years', education: 'MBBS, MD (Pathology), DM (Neuro-Oncology) - Tata Memorial, Fellowship - MD Anderson USA', avatar: '👩‍⚕️', rating: 4.8, totalReviews: 198, availability: 'On Call', reviews: [
+        { id: 'DOC-N4', name: 'Dr. Meera Iyer', specialization: 'Neuro-Oncology', experience: '15 years', education: 'MBBS, MD (Pathology), DM (Neuro-Oncology) - Tata Memorial, Fellowship - MD Anderson USA', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.8, totalReviews: 198, availability: 'On Call', reviews: [
             { name: 'Harish L.', rating: 5, comment: 'Dr. Iyer managed my glioma treatment with exceptional care. She coordinated surgery, chemo and radiation seamlessly.' },
             { name: 'Geeta P.', rating: 5, comment: 'Very empathetic doctor. Held my hand through the entire cancer journey.' },
             { name: 'Vikram J.', rating: 4, comment: 'Excellent expertise in brain tumors. Clear communication about prognosis and treatment options.' },
         ]},
     ],
     oncology: [
-        { id: 'DOC-ON1', name: 'Dr. Raghav Sinha', specialization: 'Surgical Oncology', experience: '21 years', education: 'MBBS - AIIMS, MS (General Surgery), MCh (Surgical Oncology) - Tata Memorial Hospital', avatar: '👨‍⚕️', rating: 4.9, totalReviews: 356, availability: 'Available', reviews: [
+        { id: 'DOC-ON1', name: 'Dr. Raghav Sinha', specialization: 'Surgical Oncology', experience: '21 years', education: 'MBBS - AIIMS, MS (General Surgery), MCh (Surgical Oncology) - Tata Memorial Hospital', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.9, totalReviews: 356, availability: 'Available', reviews: [
             { name: 'Suresh M.', rating: 5, comment: 'Dr. Sinha removed my colon tumor with precision. Clean margins and no recurrence in 3 years.' },
             { name: 'Rekha B.', rating: 5, comment: 'A true expert in cancer surgery. He made a terrifying diagnosis feel manageable.' },
             { name: 'Anil K.', rating: 5, comment: 'My breast cancer surgery was successful. His post-operative care was excellent.' },
         ]},
-        { id: 'DOC-ON2', name: 'Dr. Anita Sharma', specialization: 'Medical Oncology', experience: '16 years', education: 'MBBS, MD (Medicine), DM (Medical Oncology) - AIIMS, Research Fellow - Mayo Clinic USA', avatar: '👩‍⚕️', rating: 4.8, totalReviews: 289, availability: 'Available', reviews: [
+        { id: 'DOC-ON2', name: 'Dr. Anita Sharma', specialization: 'Medical Oncology', experience: '16 years', education: 'MBBS, MD (Medicine), DM (Medical Oncology) - AIIMS, Research Fellow - Mayo Clinic USA', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.8, totalReviews: 289, availability: 'Available', reviews: [
             { name: 'Pooja T.', rating: 5, comment: 'Dr. Sharma designed a chemotherapy regimen that was effective with manageable side effects.' },
             { name: 'Ramesh G.', rating: 5, comment: 'She reviews every detail of blood work and scans. Nothing escapes her attention.' },
             { name: 'Kavita D.', rating: 4, comment: 'Very supportive through the entire treatment course. Always available for questions.' },
         ]},
-        { id: 'DOC-ON3', name: 'Dr. Vijay Patwardhan', specialization: 'Radiation Oncology', experience: '18 years', education: 'MBBS - BJ Medical College, MD (Radiotherapy) - Tata Memorial, Fellowship - Royal Marsden UK', avatar: '👨‍⚕️', rating: 4.7, totalReviews: 234, availability: 'Available', reviews: [
+        { id: 'DOC-ON3', name: 'Dr. Vijay Patwardhan', specialization: 'Radiation Oncology', experience: '18 years', education: 'MBBS - BJ Medical College, MD (Radiotherapy) - Tata Memorial, Fellowship - Royal Marsden UK', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.7, totalReviews: 234, availability: 'Available', reviews: [
             { name: 'Deepak S.', rating: 5, comment: 'The radiation therapy was precisely targeted. Minimal side effects and good tumor response.' },
             { name: 'Nandini R.', rating: 4, comment: 'Dr. Patwardhan explains the radiation process very clearly. No surprises during treatment.' },
             { name: 'Sunil V.', rating: 5, comment: 'My lung cancer responded well to his radiation plan. Grateful for his expertise.' },
         ]},
-        { id: 'DOC-ON4', name: 'Dr. Swati Kulkarni', specialization: 'Hematology-Oncology', experience: '14 years', education: 'MBBS, MD (Pathology), DM (Hematology) - CMC Vellore, Bone Marrow Transplant Fellowship', avatar: '👩‍⚕️', rating: 4.8, totalReviews: 178, availability: 'Available', reviews: [
+        { id: 'DOC-ON4', name: 'Dr. Swati Kulkarni', specialization: 'Hematology-Oncology', experience: '14 years', education: 'MBBS, MD (Pathology), DM (Hematology) - CMC Vellore, Bone Marrow Transplant Fellowship', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.8, totalReviews: 178, availability: 'Available', reviews: [
             { name: 'Manish P.', rating: 5, comment: 'Dr. Kulkarni successfully treated my lymphoma. Her knowledge of blood cancers is exceptional.' },
             { name: 'Anita J.', rating: 5, comment: 'She managed my son\'s leukemia treatment with utmost care. We are cancer-free now!' },
             { name: 'Rajiv M.', rating: 4, comment: 'Thorough and systematic approach. Keeps up with latest research and treatments.' },
         ]},
     ],
     respiratory: [
-        { id: 'DOC-R1', name: 'Dr. Vikash Mehta', specialization: 'Pulmonology & Critical Care', experience: '20 years', education: 'MBBS - MAMC Delhi, MD (Pulmonary Medicine), Fellowship in Critical Care - Cleveland Clinic', avatar: '👨‍⚕️', rating: 4.9, totalReviews: 287, availability: 'Available', reviews: [
+        { id: 'DOC-R1', name: 'Dr. Vikash Mehta', specialization: 'Pulmonology & Critical Care', experience: '20 years', education: 'MBBS - MAMC Delhi, MD (Pulmonary Medicine), Fellowship in Critical Care - Cleveland Clinic', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.9, totalReviews: 287, availability: 'Available', reviews: [
             { name: 'Arun P.', rating: 5, comment: 'Dr. Mehta saved me from respiratory failure. His ventilator management expertise is unparalleled.' },
             { name: 'Savita J.', rating: 5, comment: 'Treated my severe pneumonia. I was in ICU for a week and he visited me twice daily.' },
             { name: 'Gopal S.', rating: 4, comment: 'Very experienced in lung diseases. My COPD is well controlled under his care.' },
         ]},
-        { id: 'DOC-R2', name: 'Dr. Neelam Tiwari', specialization: 'Interventional Pulmonology', experience: '15 years', education: 'MBBS, MD (TB & Chest), Fellowship in Interventional Pulmonology - Mount Sinai USA', avatar: '👩‍⚕️', rating: 4.7, totalReviews: 198, availability: 'Available', reviews: [
+        { id: 'DOC-R2', name: 'Dr. Neelam Tiwari', specialization: 'Interventional Pulmonology', experience: '15 years', education: 'MBBS, MD (TB & Chest), Fellowship in Interventional Pulmonology - Mount Sinai USA', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.7, totalReviews: 198, availability: 'Available', reviews: [
             { name: 'Ramesh Y.', rating: 5, comment: 'Dr. Tiwari performed a bronchoscopy that diagnosed my lung condition accurately.' },
             { name: 'Prerna K.', rating: 4, comment: 'Expert in complex lung procedures. She made the biopsy process smooth and painless.' },
             { name: 'Sanjay D.', rating: 5, comment: 'Excellent interventional skills. Stent placement went perfectly.' },
         ]},
-        { id: 'DOC-R3', name: 'Dr. Amit Deshmukh', specialization: 'Allergy & Asthma', experience: '12 years', education: 'MBBS - Pune Medical College, MD (Pulmonary Medicine), Allergy Fellowship - National Jewish Health', avatar: '👨‍⚕️', rating: 4.6, totalReviews: 234, availability: 'Available', reviews: [
+        { id: 'DOC-R3', name: 'Dr. Amit Deshmukh', specialization: 'Allergy & Asthma', experience: '12 years', education: 'MBBS - Pune Medical College, MD (Pulmonary Medicine), Allergy Fellowship - National Jewish Health', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.6, totalReviews: 234, availability: 'Available', reviews: [
             { name: 'Neha R.', rating: 5, comment: 'My severe asthma is finally under control. Dr. Deshmukh found the right combination of medicines.' },
             { name: 'Vivek M.', rating: 4, comment: 'Good allergist. Identified my triggers through comprehensive testing.' },
             { name: 'Swapna B.', rating: 5, comment: 'My daughter\'s wheezing episodes reduced dramatically after his treatment.' },
         ]},
-        { id: 'DOC-R4', name: 'Dr. Roshni Pillai', specialization: 'Sleep Medicine', experience: '10 years', education: 'MBBS, MD (Medicine), Fellowship in Sleep Medicine - Stanford University', avatar: '👩‍⚕️', rating: 4.7, totalReviews: 145, availability: 'Available', reviews: [
+        { id: 'DOC-R4', name: 'Dr. Roshni Pillai', specialization: 'Sleep Medicine', experience: '10 years', education: 'MBBS, MD (Medicine), Fellowship in Sleep Medicine - Stanford University', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.7, totalReviews: 145, availability: 'Available', reviews: [
             { name: 'Harish K.', rating: 5, comment: 'Diagnosed my sleep apnea and the CPAP therapy changed my life. No more daytime drowsiness.' },
             { name: 'Meena S.', rating: 5, comment: 'Dr. Pillai is thorough with sleep studies. She found the root cause of my insomnia.' },
             { name: 'Ajay T.', rating: 4, comment: 'Very patient and caring. Good follow-up after starting therapy.' },
         ]},
     ],
     general: [
-        { id: 'DOC-G1', name: 'Dr. Arvind Mehta', specialization: 'General & Laparoscopic Surgery', experience: '23 years', education: 'MBBS - GMC Mumbai, MS (General Surgery) - KEM Hospital, FAIS, Fellowship in MIS', avatar: '👨‍⚕️', rating: 4.8, totalReviews: 412, availability: 'Available', reviews: [
+        { id: 'DOC-G1', name: 'Dr. Arvind Mehta', specialization: 'General & Laparoscopic Surgery', experience: '23 years', education: 'MBBS - GMC Mumbai, MS (General Surgery) - KEM Hospital, FAIS, Fellowship in MIS', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.8, totalReviews: 412, availability: 'Available', reviews: [
             { name: 'Dinesh C.', rating: 5, comment: 'My appendectomy was done laparoscopically. Tiny scars and I was home in 2 days!' },
             { name: 'Savita J.', rating: 5, comment: 'Dr. Mehta did my gallbladder surgery. Very experienced and confident surgeon.' },
             { name: 'Gopal S.', rating: 4, comment: 'Skilled surgeon with a calm demeanor. Explained everything before and after surgery.' },
         ]},
-        { id: 'DOC-G2', name: 'Dr. Pooja Bhatt', specialization: 'Obstetrics & Gynecology', experience: '17 years', education: 'MBBS, MS (OB-GYN) - LTMMC Mumbai, Fellowship in High-Risk Pregnancy', avatar: '👩‍⚕️', rating: 4.9, totalReviews: 378, availability: 'Available', reviews: [
+        { id: 'DOC-G2', name: 'Dr. Pooja Bhatt', specialization: 'Obstetrics & Gynecology', experience: '17 years', education: 'MBBS, MS (OB-GYN) - LTMMC Mumbai, Fellowship in High-Risk Pregnancy', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.9, totalReviews: 378, availability: 'Available', reviews: [
             { name: 'Ananya D.', rating: 5, comment: 'Dr. Bhatt delivered my baby through a complicated pregnancy. She was calm and reassuring throughout.' },
             { name: 'Neha K.', rating: 5, comment: 'Best gynecologist! My C-section recovery was smooth thanks to her surgical precision.' },
             { name: 'Ritu V.', rating: 5, comment: 'Very caring and attentive. She managed my high-risk pregnancy expertly.' },
         ]},
-        { id: 'DOC-G3', name: 'Dr. Sneha Pillai', specialization: 'Pediatrics & Neonatology', experience: '14 years', education: 'MBBS, MD (Pediatrics) - AIIMS, DM (Neonatology) - PGIMER, Fellowship - Great Ormond Street UK', avatar: '👩‍⚕️', rating: 4.8, totalReviews: 267, availability: 'Available', reviews: [
+        { id: 'DOC-G3', name: 'Dr. Sneha Pillai', specialization: 'Pediatrics & Neonatology', experience: '14 years', education: 'MBBS, MD (Pediatrics) - AIIMS, DM (Neonatology) - PGIMER, Fellowship - Great Ormond Street UK', avatar: 'ðŸ‘©â€âš•ï¸', rating: 4.8, totalReviews: 267, availability: 'Available', reviews: [
             { name: 'Kavita M.', rating: 5, comment: 'Dr. Pillai saved my premature baby in NICU. Her dedication is beyond words.' },
             { name: 'Rahul B.', rating: 5, comment: 'My son had pneumonia and she treated it effectively. Very gentle with children.' },
             { name: 'Priya G.', rating: 4, comment: 'Excellent pediatrician. Always available for emergencies, even at odd hours.' },
         ]},
-        { id: 'DOC-G4', name: 'Dr. Rajesh Kumar', specialization: 'Internal Medicine & Diabetology', experience: '19 years', education: 'MBBS - KGMU Lucknow, MD (Medicine) - PGI Chandigarh, Fellowship in Diabetology', avatar: '👨‍⚕️', rating: 4.7, totalReviews: 345, availability: 'Available', reviews: [
+        { id: 'DOC-G4', name: 'Dr. Rajesh Kumar', specialization: 'Internal Medicine & Diabetology', experience: '19 years', education: 'MBBS - KGMU Lucknow, MD (Medicine) - PGI Chandigarh, Fellowship in Diabetology', avatar: 'ðŸ‘¨â€âš•ï¸', rating: 4.7, totalReviews: 345, availability: 'Available', reviews: [
             { name: 'Ramesh T.', rating: 5, comment: 'Dr. Kumar manages my diabetes expertly. HbA1c went from 11 to 6.5 in 6 months!' },
             { name: 'Pushpa A.', rating: 4, comment: 'Very thorough in his approach. Does complete metabolic workup.' },
             { name: 'Sunita B.', rating: 5, comment: 'He takes holistic approach to medicine. Addressed my diabetes, BP and thyroid together.' },
@@ -191,21 +191,9 @@ const specialtyCategories = [
     { key: 'general', label: 'General', icon: Stethoscope, color: '#10b981', desc: 'Surgery, OB-GYN, pediatrics' },
 ];
 
-// ═══════════════════════════════════════════════════════════════
-// MEDICINE DATABASE WITH PHARMACY PRICE COMPARISON
-// ═══════════════════════════════════════════════════════════════
-
-const nearbyPharmacies = [
-    { id: 'PH1', name: 'MedPlus Pharmacy', distance: '0.3 km', rating: 4.5, verified: true },
-    { id: 'PH2', name: 'Apollo Pharmacy', distance: '0.8 km', rating: 4.7, verified: true },
-    { id: 'PH3', name: 'Netmeds Store', distance: '1.2 km', rating: 4.3, verified: true },
-    { id: 'PH4', name: 'Wellness Forever', distance: '1.5 km', rating: 4.4, verified: true },
-    { id: 'PH5', name: 'Jan Aushadhi Kendra', distance: '2.0 km', rating: 4.6, verified: true },
-];
-
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 // TREATMENT COST DATABASE - Per Specialty
-// ═══════════════════════════════════════════════════════════════
+// â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 
 const treatmentCosts = {
     cardiac: {
@@ -331,9 +319,9 @@ const treatmentCosts = {
 
 const govtSchemes = [
     {
-        name: 'Ayushman Bharat — PMJAY',
+        name: 'Ayushman Bharat â€” PMJAY',
         fullName: 'Pradhan Mantri Jan Arogya Yojana',
-        icon: '🏥',
+        icon: 'ðŸ¥',
         coverage: 500000,
         type: 'Central Government',
         description: 'India\'s largest government health insurance scheme providing free treatment at empanelled hospitals for over 12 crore poor and vulnerable families (approx 55 crore beneficiaries).',
@@ -343,7 +331,7 @@ const govtSchemes = [
             'Covers 1,929 medical procedures including surgery, medical & day-care treatments',
             'Pre & post hospitalization expenses covered (3 days pre, 15 days post)',
             'No restriction on family size, age, or gender',
-            'Transport allowance of ₹50/KM up to ₹1,000',
+            'Transport allowance of â‚¹50/KM up to â‚¹1,000',
             'All pre-existing diseases covered from Day 1',
         ],
         documents: ['Aadhaar Card', 'Ration Card / SECC listed proof', 'Family ID / RSBY Card (if any)', 'Mobile Number'],
@@ -351,7 +339,7 @@ const govtSchemes = [
             'Visit mera.pmjay.gov.in and check eligibility with mobile number or Aadhaar',
             'Visit nearest Common Service Center (CSC) or empanelled hospital Ayushman Mitra',
             'Complete e-KYC with Aadhaar verification',
-            'Receive Ayushman card (e-card) instantly — no cost for card creation',
+            'Receive Ayushman card (e-card) instantly â€” no cost for card creation',
         ],
         helpline: '14555 (Toll-free)',
         website: 'https://pmjay.gov.in',
@@ -360,7 +348,7 @@ const govtSchemes = [
     {
         name: 'CGHS',
         fullName: 'Central Government Health Scheme',
-        icon: '🏛️',
+        icon: 'ðŸ›ï¸',
         coverage: 0,
         type: 'Central Government',
         description: 'Comprehensive healthcare for central government employees, pensioners and their dependents. Covers OPD, hospitalization, investigations and medicines.',
@@ -386,13 +374,13 @@ const govtSchemes = [
     {
         name: 'ESIC',
         fullName: 'Employees\' State Insurance Corporation',
-        icon: '👷',
+        icon: 'ðŸ‘·',
         coverage: 0,
         type: 'Central Government',
-        description: 'Social security scheme for workers in the organized sector earning up to ₹21,000/month. Provides comprehensive medical care for insured workers and their families.',
-        eligibility: 'Workers earning ≤ ₹21,000/month in factories with 10+ employees (20+ in some states)',
+        description: 'Social security scheme for workers in the organized sector earning up to â‚¹21,000/month. Provides comprehensive medical care for insured workers and their families.',
+        eligibility: 'Workers earning â‰¤ â‚¹21,000/month in factories with 10+ employees (20+ in some states)',
         benefits: [
-            'Full medical care for insured person and family — no cost limit',
+            'Full medical care for insured person and family â€” no cost limit',
             'Sickness benefit: 70% of wages for up to 91 days',
             'Maternity benefit: Full wages for 26 weeks',
             'Disablement benefit: 90% of wages (permanent disability)',
@@ -412,24 +400,24 @@ const govtSchemes = [
     {
         name: 'Rashtriya Arogya Nidhi',
         fullName: 'Rashtriya Arogya Nidhi (RAN)',
-        icon: '🩺',
+        icon: 'ðŸ©º',
         coverage: 500000,
         type: 'Central Government',
         description: 'Financial assistance to BPL patients suffering from major life-threatening diseases for treatment at government super-specialty hospitals/institutes.',
         eligibility: 'BPL patients with life-threatening diseases (heart, kidney, liver, cancer) treated at govt hospitals',
         benefits: [
-            'One-time financial assistance up to ₹5 Lakh',
+            'One-time financial assistance up to â‚¹5 Lakh',
             'Covers heart surgery, kidney transplant, cancer treatment, liver diseases',
             'Assistance given directly to the hospital (not patient)',
             'Can be club with other government scheme benefits',
             'Covers treatment at all government super-specialty hospitals like AIIMS, PGI',
         ],
-        documents: ['BPL Certificate / Income Certificate (< ₹1 Lakh/year)', 'Medical report from treating government hospital', 'Estimate of treatment cost from hospital', 'Aadhaar Card', 'Bank account details'],
+        documents: ['BPL Certificate / Income Certificate (< â‚¹1 Lakh/year)', 'Medical report from treating government hospital', 'Estimate of treatment cost from hospital', 'Aadhaar Card', 'Bank account details'],
         howToApply: [
             'Request treating hospital (govt) to forward application to Health Ministry',
             'Hospital Medical Superintendent submits case to RAN committee',
             'RAN Standing Committee reviews case and approves funding',
-            'Funds released directly to hospital — typical processing: 2-4 weeks',
+            'Funds released directly to hospital â€” typical processing: 2-4 weeks',
         ],
         helpline: '011-23062666',
         website: 'https://mohfw.gov.in',
@@ -437,13 +425,13 @@ const govtSchemes = [
     {
         name: 'HMDG',
         fullName: 'Health Minister\'s Discretionary Grant',
-        icon: '🏥',
+        icon: 'ðŸ¥',
         coverage: 200000,
         type: 'Central Government',
         description: 'Discretionary grant by Union Health Minister for financial assistance to poor patients for treatment at government hospitals in India.',
-        eligibility: 'Poor patients needing treatment at government hospitals, income < ₹1.25 Lakh/year',
+        eligibility: 'Poor patients needing treatment at government hospitals, income < â‚¹1.25 Lakh/year',
         benefits: [
-            'Financial assistance up to ₹2 Lakh for treatment',
+            'Financial assistance up to â‚¹2 Lakh for treatment',
             'Covers all types of major treatments and surgeries',
             'Can be used at any central government hospital',
             'Faster processing compared to RAN (discretionary approval)',
@@ -461,17 +449,17 @@ const govtSchemes = [
     {
         name: 'Jan Aushadhi Yojana',
         fullName: 'Pradhan Mantri Bhartiya Janaushadhi Pariyojana (PMBJP)',
-        icon: '💊',
+        icon: 'ðŸ’Š',
         coverage: 0,
         type: 'Central Government',
         description: 'Government initiative providing quality generic medicines at 50-90% cheaper than branded equivalents through Jan Aushadhi Kendras across India.',
-        eligibility: 'All citizens — no income or identity requirement, walk in and purchase',
+        eligibility: 'All citizens â€” no income or identity requirement, walk in and purchase',
         benefits: [
             'Over 1,900+ medicines and 290+ surgical items available',
             'Medicines are 50-90% cheaper than branded equivalents',
-            'Strict quality testing — same efficacy as branded medicines (WHO-GMP certified)',
+            'Strict quality testing â€” same efficacy as branded medicines (WHO-GMP certified)',
             'Available across 10,000+ Jan Aushadhi Kendras in all districts',
-            'Jan Aushadhi Suvidha sanitary napkins at ₹1 each',
+            'Jan Aushadhi Suvidha sanitary napkins at â‚¹1 each',
             'No prescription needed for OTC medicines',
         ],
         documents: ['Doctor\'s prescription (for prescription medicines)', 'No ID required'],
@@ -487,20 +475,20 @@ const govtSchemes = [
     {
         name: 'PM National Relief Fund',
         fullName: 'Prime Minister\'s National Relief Fund',
-        icon: '🇮🇳',
+        icon: 'ðŸ‡®ðŸ‡³',
         coverage: 0,
         type: 'Central Government',
         description: 'Fund for providing immediate relief to families affected by natural calamities and for medical treatment of patients from economically weaker sections.',
         eligibility: 'Citizens needing financial help for medical treatment (cancer, heart, kidney, acid attack)',
         benefits: [
-            'Financial assistance based on case severity — no fixed limit',
+            'Financial assistance based on case severity â€” no fixed limit',
             'Covers treatment at recognized hospitals (both govt & private)',
             'Special provisions for cancer, heart disease and kidney ailments',
             'Can cover treatment at renowned private hospitals like Tata Memorial, etc.',
         ],
         documents: ['Request letter to PM Office', 'Medical report from doctor/hospital', 'Income certificate', 'Aadhaar Card', 'Hospital treatment estimate'],
         howToApply: [
-            'Write to: PM\'s National Relief Fund, PMO, South Block, New Delhi — 110011',
+            'Write to: PM\'s National Relief Fund, PMO, South Block, New Delhi â€” 110011',
             'Or apply online at pmnrf.gov.in with all medical documents',
             'Include detailed medical reports and estimated treatment cost',
             'Response typically within 2-6 weeks based on case urgency',
@@ -511,18 +499,18 @@ const govtSchemes = [
     {
         name: 'Aarogyasri / State Schemes',
         fullName: 'State Government Health Insurance Schemes',
-        icon: '🏘️',
+        icon: 'ðŸ˜ï¸',
         coverage: 200000,
         type: 'State Government',
         description: 'Various state-run health insurance schemes (Aarogyasri in Telangana/AP, MJPJAY in Maharashtra, Jyotibaphule in Maharashtra, CM Comprehensive in TN, etc.)',
-        eligibility: 'State residents below income threshold — varies by state (typically ≤ ₹5 Lakh annual income)',
+        eligibility: 'State residents below income threshold â€” varies by state (typically â‰¤ â‚¹5 Lakh annual income)',
         benefits: [
             'Free/cashless treatment for listed surgeries and therapies at network hospitals',
-            'Coverage varies: ₹1.5L to ₹5L depending on state and scheme',
+            'Coverage varies: â‚¹1.5L to â‚¹5L depending on state and scheme',
             'Pre-existing diseases usually covered',
             'Includes heart surgeries, joint replacements, cancer treatment, dialysis',
             'Some states cover follow-up medicines for 10 days post-discharge',
-            'Transport allowance in some states (₹200-₹1,000)',
+            'Transport allowance in some states (â‚¹200-â‚¹1,000)',
         ],
         documents: ['White Ration Card / income certificate', 'Aadhaar Card', 'State-issued health card', 'Residence proof (voter ID / electricity bill)'],
         howToApply: [
@@ -531,13 +519,13 @@ const govtSchemes = [
             'Provide Aadhaar + ration card for eligibility check',
             'E-health card issued on the spot if eligible (in most states)',
         ],
-        helpline: '104 (health helpline — most states)',
+        helpline: '104 (health helpline â€” most states)',
         website: 'Check your state health department website',
     },
     {
         name: 'NGOs & Charitable Trusts',
         fullName: 'Non-governmental Financial Aid',
-        icon: '🤝',
+        icon: 'ðŸ¤',
         coverage: 0,
         type: 'Private / Non-Profit',
         description: 'Several NGOs and charitable trusts provide free or subsidized treatment, medicines, and financial aid for families who cannot afford healthcare.',
@@ -548,7 +536,7 @@ const govtSchemes = [
             'Crowdfunding support through platforms like Ketto, Milaap, ImpactGuru',
             'Dedicated cancer care NGOs (Indian Cancer Society, CanKids)',
             'Free dialysis NGOs (NephroPlus Foundation, Tanker Foundation)',
-            'Corporate CSR funds for healthcare — apply through hospital social worker',
+            'Corporate CSR funds for healthcare â€” apply through hospital social worker',
         ],
         documents: ['Income proof / BPL certificate', 'Medical records & diagnosis', 'Hospital estimate letter', 'Aadhaar Card & photos'],
         howToApply: [
@@ -602,10 +590,10 @@ const medicineDatabase = {
 };
 
 const languages = [
-    { key: 'english', label: 'English', flag: '🇬🇧' },
-    { key: 'hindi', label: 'हिन्दी (Hindi)', flag: '🇮🇳' },
-    { key: 'telugu', label: 'తెలుగు (Telugu)', flag: '🇮🇳' },
-    { key: 'marathi', label: 'मराठी (Marathi)', flag: '🇮🇳' },
+    { key: 'english', label: 'English', flag: 'ðŸ‡¬ðŸ‡§' },
+    { key: 'hindi', label: 'à¤¹à¤¿à¤¨à¥à¤¦à¥€ (Hindi)', flag: 'ðŸ‡®ðŸ‡³' },
+    { key: 'telugu', label: 'à°¤à±†à°²à±à°—à± (Telugu)', flag: 'ðŸ‡®ðŸ‡³' },
+    { key: 'marathi', label: 'à¤®à¤°à¤¾à¤ à¥€ (Marathi)', flag: 'ðŸ‡®ðŸ‡³' },
 ];
 
 const timeSlots = [
@@ -619,62 +607,62 @@ const medicalPhrases = [
     {
         category: 'Greetings & Introduction',
         phrases: [
-            { english: 'Hello, how are you feeling today?', hindi: 'नमस्ते, आज आप कैसा महसूस कर रहे हैं?', telugu: 'నమస్కారం, మీరు ఈరోజు ఎలా అనుభవిస్తున్నారు?', marathi: 'नमस्कार, आज तुम्हाला कसे वाटत आहे?' },
-            { english: 'My name is the doctor assigned to you', hindi: 'मेरा नाम डॉक्टर है जो आपको सौंपा गया है', telugu: 'నా పేరు మీకు కేటాయించిన డాక్టర్', marathi: 'माझे नाव तुम्हाला नियुक्त केलेले डॉक्टर आहे' },
-            { english: 'Please sit down and relax', hindi: 'कृपया बैठ जाइए और आराम करिए', telugu: 'దయచేసి కూర్చోండి మరియు విశ్రాంతి తీసుకోండి', marathi: 'कृपया बसा आणि आराम करा' },
+            { english: 'Hello, how are you feeling today?', hindi: 'à¤¨à¤®à¤¸à¥à¤¤à¥‡, à¤†à¤œ à¤†à¤ª à¤•à¥ˆà¤¸à¤¾ à¤®à¤¹à¤¸à¥‚à¤¸ à¤•à¤° à¤°à¤¹à¥‡ à¤¹à¥ˆà¤‚?', telugu: 'à°¨à°®à°¸à±à°•à°¾à°°à°‚, à°®à±€à°°à± à°ˆà°°à±‹à°œà± à°Žà°²à°¾ à°…à°¨à±à°­à°µà°¿à°¸à±à°¤à±à°¨à±à°¨à°¾à°°à±?', marathi: 'à¤¨à¤®à¤¸à¥à¤•à¤¾à¤°, à¤†à¤œ à¤¤à¥à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤•à¤¸à¥‡ à¤µà¤¾à¤Ÿà¤¤ à¤†à¤¹à¥‡?' },
+            { english: 'My name is the doctor assigned to you', hindi: 'à¤®à¥‡à¤°à¤¾ à¤¨à¤¾à¤® à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤¹à¥ˆ à¤œà¥‹ à¤†à¤ªà¤•à¥‹ à¤¸à¥Œà¤‚à¤ªà¤¾ à¤—à¤¯à¤¾ à¤¹à¥ˆ', telugu: 'à°¨à°¾ à°ªà±‡à°°à± à°®à±€à°•à± à°•à±‡à°Ÿà°¾à°¯à°¿à°‚à°šà°¿à°¨ à°¡à°¾à°•à±à°Ÿà°°à±', marathi: 'à¤®à¤¾à¤à¥‡ à¤¨à¤¾à¤µ à¤¤à¥à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤¨à¤¿à¤¯à¥à¤•à¥à¤¤ à¤•à¥‡à¤²à¥‡à¤²à¥‡ à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤†à¤¹à¥‡' },
+            { english: 'Please sit down and relax', hindi: 'à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¬à¥ˆà¤  à¤œà¤¾à¤‡à¤ à¤”à¤° à¤†à¤°à¤¾à¤® à¤•à¤°à¤¿à¤', telugu: 'à°¦à°¯à°šà±‡à°¸à°¿ à°•à±‚à°°à±à°šà±‹à°‚à°¡à°¿ à°®à°°à°¿à°¯à± à°µà°¿à°¶à±à°°à°¾à°‚à°¤à°¿ à°¤à±€à°¸à±à°•à±‹à°‚à°¡à°¿', marathi: 'à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¬à¤¸à¤¾ à¤†à¤£à¤¿ à¤†à¤°à¤¾à¤® à¤•à¤°à¤¾' },
         ]
     },
     {
         category: 'Symptoms & Pain',
         phrases: [
-            { english: 'Where does it hurt?', hindi: 'दर्द कहाँ हो रहा है?', telugu: 'నొప్పి ఎక్కడ ఉంది?', marathi: 'कुठे दुखत आहे?' },
-            { english: 'How long have you had this pain?', hindi: 'यह दर्द कब से है?', telugu: 'ఈ నొప్పి ఎంతకాలంగా ఉంది?', marathi: 'हा त्रास कधीपासून आहे?' },
-            { english: 'I have a headache', hindi: 'मेरे सिर में दर्द है', telugu: 'నాకు తలనొప్పి ఉంది', marathi: 'मला डोकेदुखी आहे' },
-            { english: 'I have chest pain', hindi: 'मुझे सीने में दर्द है', telugu: 'నాకు ఛాతీ నొప్పి ఉంది', marathi: 'मला छातीत दुखत आहे' },
-            { english: 'I feel dizzy', hindi: 'मुझे चक्कर आ रहे हैं', telugu: 'నాకు తల తిరుగుతోంది', marathi: 'मला चक्कर येत आहे' },
-            { english: 'I have difficulty breathing', hindi: 'मुझे सांस लेने में तकलीफ है', telugu: 'నాకు శ్వాస తీసుకోవడం కష్టంగా ఉంది', marathi: 'मला श्वास घेण्यास त्रास होत आहे' },
-            { english: 'I have a fever', hindi: 'मुझे बुखार है', telugu: 'నాకు జ్వరం ఉంది', marathi: 'मला ताप आहे' },
-            { english: 'Rate your pain from 1 to 10', hindi: '1 से 10 के बीच अपने दर्द को बताइए', telugu: '1 నుండి 10 వరకు మీ నొప్పిని చెప్పండి', marathi: '1 ते 10 मध्ये तुमची वेदना सांगा' },
+            { english: 'Where does it hurt?', hindi: 'à¤¦à¤°à¥à¤¦ à¤•à¤¹à¤¾à¤ à¤¹à¥‹ à¤°à¤¹à¤¾ à¤¹à¥ˆ?', telugu: 'à°¨à±Šà°ªà±à°ªà°¿ à°Žà°•à±à°•à°¡ à°‰à°‚à°¦à°¿?', marathi: 'à¤•à¥à¤ à¥‡ à¤¦à¥à¤–à¤¤ à¤†à¤¹à¥‡?' },
+            { english: 'How long have you had this pain?', hindi: 'à¤¯à¤¹ à¤¦à¤°à¥à¤¦ à¤•à¤¬ à¤¸à¥‡ à¤¹à¥ˆ?', telugu: 'à°ˆ à°¨à±Šà°ªà±à°ªà°¿ à°Žà°‚à°¤à°•à°¾à°²à°‚à°—à°¾ à°‰à°‚à°¦à°¿?', marathi: 'à¤¹à¤¾ à¤¤à¥à¤°à¤¾à¤¸ à¤•à¤§à¥€à¤ªà¤¾à¤¸à¥‚à¤¨ à¤†à¤¹à¥‡?' },
+            { english: 'I have a headache', hindi: 'à¤®à¥‡à¤°à¥‡ à¤¸à¤¿à¤° à¤®à¥‡à¤‚ à¤¦à¤°à¥à¤¦ à¤¹à¥ˆ', telugu: 'à°¨à°¾à°•à± à°¤à°²à°¨à±Šà°ªà±à°ªà°¿ à°‰à°‚à°¦à°¿', marathi: 'à¤®à¤²à¤¾ à¤¡à¥‹à¤•à¥‡à¤¦à¥à¤–à¥€ à¤†à¤¹à¥‡' },
+            { english: 'I have chest pain', hindi: 'à¤®à¥à¤à¥‡ à¤¸à¥€à¤¨à¥‡ à¤®à¥‡à¤‚ à¤¦à¤°à¥à¤¦ à¤¹à¥ˆ', telugu: 'à°¨à°¾à°•à± à°›à°¾à°¤à±€ à°¨à±Šà°ªà±à°ªà°¿ à°‰à°‚à°¦à°¿', marathi: 'à¤®à¤²à¤¾ à¤›à¤¾à¤¤à¥€à¤¤ à¤¦à¥à¤–à¤¤ à¤†à¤¹à¥‡' },
+            { english: 'I feel dizzy', hindi: 'à¤®à¥à¤à¥‡ à¤šà¤•à¥à¤•à¤° à¤† à¤°à¤¹à¥‡ à¤¹à¥ˆà¤‚', telugu: 'à°¨à°¾à°•à± à°¤à°² à°¤à°¿à°°à±à°—à±à°¤à±‹à°‚à°¦à°¿', marathi: 'à¤®à¤²à¤¾ à¤šà¤•à¥à¤•à¤° à¤¯à¥‡à¤¤ à¤†à¤¹à¥‡' },
+            { english: 'I have difficulty breathing', hindi: 'à¤®à¥à¤à¥‡ à¤¸à¤¾à¤‚à¤¸ à¤²à¥‡à¤¨à¥‡ à¤®à¥‡à¤‚ à¤¤à¤•à¤²à¥€à¤« à¤¹à¥ˆ', telugu: 'à°¨à°¾à°•à± à°¶à±à°µà°¾à°¸ à°¤à±€à°¸à±à°•à±‹à°µà°¡à°‚ à°•à°·à±à°Ÿà°‚à°—à°¾ à°‰à°‚à°¦à°¿', marathi: 'à¤®à¤²à¤¾ à¤¶à¥à¤µà¤¾à¤¸ à¤˜à¥‡à¤£à¥à¤¯à¤¾à¤¸ à¤¤à¥à¤°à¤¾à¤¸ à¤¹à¥‹à¤¤ à¤†à¤¹à¥‡' },
+            { english: 'I have a fever', hindi: 'à¤®à¥à¤à¥‡ à¤¬à¥à¤–à¤¾à¤° à¤¹à¥ˆ', telugu: 'à°¨à°¾à°•à± à°œà±à°µà°°à°‚ à°‰à°‚à°¦à°¿', marathi: 'à¤®à¤²à¤¾ à¤¤à¤¾à¤ª à¤†à¤¹à¥‡' },
+            { english: 'Rate your pain from 1 to 10', hindi: '1 à¤¸à¥‡ 10 à¤•à¥‡ à¤¬à¥€à¤š à¤…à¤ªà¤¨à¥‡ à¤¦à¤°à¥à¤¦ à¤•à¥‹ à¤¬à¤¤à¤¾à¤‡à¤', telugu: '1 à°¨à±à°‚à°¡à°¿ 10 à°µà°°à°•à± à°®à±€ à°¨à±Šà°ªà±à°ªà°¿à°¨à°¿ à°šà±†à°ªà±à°ªà°‚à°¡à°¿', marathi: '1 à¤¤à¥‡ 10 à¤®à¤§à¥à¤¯à¥‡ à¤¤à¥à¤®à¤šà¥€ à¤µà¥‡à¤¦à¤¨à¤¾ à¤¸à¤¾à¤‚à¤—à¤¾' },
         ]
     },
     {
         category: 'Medical History',
         phrases: [
-            { english: 'Are you allergic to any medicine?', hindi: 'क्या आपको किसी दवा से एलर्जी है?', telugu: 'మీకు ఏదైనా మందుకు అలెర్జీ ఉందా?', marathi: 'तुम्हाला कोणत्या औषधाची ऍलर्जी आहे का?' },
-            { english: 'Do you have diabetes?', hindi: 'क्या आपको मधुमेह है?', telugu: 'మీకు మధుమేహం ఉందా?', marathi: 'तुम्हाला मधुमेह आहे का?' },
-            { english: 'Do you have high blood pressure?', hindi: 'क्या आपको उच्च रक्तचाप है?', telugu: 'మీకు అధిక రక్తపోటు ఉందా?', marathi: 'तुम्हाला उच्च रक्तदाब आहे का?' },
-            { english: 'Have you had any surgery before?', hindi: 'क्या आपकी पहले कोई सर्जरी हो चुकी है?', telugu: 'మీకు ముందు ఏదైనా శస్త్రచికిత్స జరిగిందా?', marathi: 'तुमची आधी कोणती शस्त्रक्रिया झाली आहे का?' },
-            { english: 'Are you taking any medication currently?', hindi: 'क्या आप वर्तमान में कोई दवा ले रहे हैं?', telugu: 'మీరు ప్రస్తుతం ఏదైనా మందు తీసుకుంటున్నారా?', marathi: 'तुम्ही सध्या कोणते औषध घेत आहात का?' },
+            { english: 'Are you allergic to any medicine?', hindi: 'à¤•à¥à¤¯à¤¾ à¤†à¤ªà¤•à¥‹ à¤•à¤¿à¤¸à¥€ à¤¦à¤µà¤¾ à¤¸à¥‡ à¤à¤²à¤°à¥à¤œà¥€ à¤¹à¥ˆ?', telugu: 'à°®à±€à°•à± à°à°¦à±ˆà°¨à°¾ à°®à°‚à°¦à±à°•à± à°…à°²à±†à°°à±à°œà±€ à°‰à°‚à°¦à°¾?', marathi: 'à¤¤à¥à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤•à¥‹à¤£à¤¤à¥à¤¯à¤¾ à¤”à¤·à¤§à¤¾à¤šà¥€ à¤à¤²à¤°à¥à¤œà¥€ à¤†à¤¹à¥‡ à¤•à¤¾?' },
+            { english: 'Do you have diabetes?', hindi: 'à¤•à¥à¤¯à¤¾ à¤†à¤ªà¤•à¥‹ à¤®à¤§à¥à¤®à¥‡à¤¹ à¤¹à¥ˆ?', telugu: 'à°®à±€à°•à± à°®à°§à±à°®à±‡à°¹à°‚ à°‰à°‚à°¦à°¾?', marathi: 'à¤¤à¥à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤®à¤§à¥à¤®à¥‡à¤¹ à¤†à¤¹à¥‡ à¤•à¤¾?' },
+            { english: 'Do you have high blood pressure?', hindi: 'à¤•à¥à¤¯à¤¾ à¤†à¤ªà¤•à¥‹ à¤‰à¤šà¥à¤š à¤°à¤•à¥à¤¤à¤šà¤¾à¤ª à¤¹à¥ˆ?', telugu: 'à°®à±€à°•à± à°…à°§à°¿à°• à°°à°•à±à°¤à°ªà±‹à°Ÿà± à°‰à°‚à°¦à°¾?', marathi: 'à¤¤à¥à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤‰à¤šà¥à¤š à¤°à¤•à¥à¤¤à¤¦à¤¾à¤¬ à¤†à¤¹à¥‡ à¤•à¤¾?' },
+            { english: 'Have you had any surgery before?', hindi: 'à¤•à¥à¤¯à¤¾ à¤†à¤ªà¤•à¥€ à¤ªà¤¹à¤²à¥‡ à¤•à¥‹à¤ˆ à¤¸à¤°à¥à¤œà¤°à¥€ à¤¹à¥‹ à¤šà¥à¤•à¥€ à¤¹à¥ˆ?', telugu: 'à°®à±€à°•à± à°®à±à°‚à°¦à± à°à°¦à±ˆà°¨à°¾ à°¶à°¸à±à°¤à±à°°à°šà°¿à°•à°¿à°¤à±à°¸ à°œà°°à°¿à°—à°¿à°‚à°¦à°¾?', marathi: 'à¤¤à¥à¤®à¤šà¥€ à¤†à¤§à¥€ à¤•à¥‹à¤£à¤¤à¥€ à¤¶à¤¸à¥à¤¤à¥à¤°à¤•à¥à¤°à¤¿à¤¯à¤¾ à¤à¤¾à¤²à¥€ à¤†à¤¹à¥‡ à¤•à¤¾?' },
+            { english: 'Are you taking any medication currently?', hindi: 'à¤•à¥à¤¯à¤¾ à¤†à¤ª à¤µà¤°à¥à¤¤à¤®à¤¾à¤¨ à¤®à¥‡à¤‚ à¤•à¥‹à¤ˆ à¤¦à¤µà¤¾ à¤²à¥‡ à¤°à¤¹à¥‡ à¤¹à¥ˆà¤‚?', telugu: 'à°®à±€à°°à± à°ªà±à°°à°¸à±à°¤à±à°¤à°‚ à°à°¦à±ˆà°¨à°¾ à°®à°‚à°¦à± à°¤à±€à°¸à±à°•à±à°‚à°Ÿà±à°¨à±à°¨à°¾à°°à°¾?', marathi: 'à¤¤à¥à¤®à¥à¤¹à¥€ à¤¸à¤§à¥à¤¯à¤¾ à¤•à¥‹à¤£à¤¤à¥‡ à¤”à¤·à¤§ à¤˜à¥‡à¤¤ à¤†à¤¹à¤¾à¤¤ à¤•à¤¾?' },
         ]
     },
     {
         category: 'Treatment & Instructions',
         phrases: [
-            { english: 'You need to take this medicine', hindi: 'आपको यह दवा लेनी होगी', telugu: 'మీరు ఈ మందు తీసుకోవాలి', marathi: 'तुम्हाला हे औषध घ्यावे लागेल' },
-            { english: 'Take this medicine twice a day', hindi: 'यह दवा दिन में दो बार लें', telugu: 'ఈ మందు రోజుకు రెండుసార్లు తీసుకోండి', marathi: 'हे औषध दिवसातून दोनदा घ्या' },
-            { english: 'Take medicine after food', hindi: 'खाना खाने के बाद दवा लें', telugu: 'భోజనం తర్వాత మందు తీసుకోండి', marathi: 'जेवणानंतर औषध घ्या' },
-            { english: 'We need to do some tests', hindi: 'हमें कुछ जांच करनी होगी', telugu: 'మేము కొన్ని పరీక్షలు చేయాలి', marathi: 'आम्हाला काही चाचण्या कराव्या लागतील' },
-            { english: 'You need to be admitted to the hospital', hindi: 'आपको अस्पताल में भर्ती होना होगा', telugu: 'మీరు ఆసుపత్రిలో చేరాలి', marathi: 'तुम्हाला रुग्णालयात दाखल व्हावे लागेल' },
-            { english: 'The surgery was successful', hindi: 'ऑपरेशन सफल रहा', telugu: 'శస్త్రచికిత్స విజయవంతమైంది', marathi: 'शस्त्रक्रिया यशस्वी झाली' },
+            { english: 'You need to take this medicine', hindi: 'à¤†à¤ªà¤•à¥‹ à¤¯à¤¹ à¤¦à¤µà¤¾ à¤²à¥‡à¤¨à¥€ à¤¹à¥‹à¤—à¥€', telugu: 'à°®à±€à°°à± à°ˆ à°®à°‚à°¦à± à°¤à±€à°¸à±à°•à±‹à°µà°¾à°²à°¿', marathi: 'à¤¤à¥à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤¹à¥‡ à¤”à¤·à¤§ à¤˜à¥à¤¯à¤¾à¤µà¥‡ à¤²à¤¾à¤—à¥‡à¤²' },
+            { english: 'Take this medicine twice a day', hindi: 'à¤¯à¤¹ à¤¦à¤µà¤¾ à¤¦à¤¿à¤¨ à¤®à¥‡à¤‚ à¤¦à¥‹ à¤¬à¤¾à¤° à¤²à¥‡à¤‚', telugu: 'à°ˆ à°®à°‚à°¦à± à°°à±‹à°œà±à°•à± à°°à±†à°‚à°¡à±à°¸à°¾à°°à±à°²à± à°¤à±€à°¸à±à°•à±‹à°‚à°¡à°¿', marathi: 'à¤¹à¥‡ à¤”à¤·à¤§ à¤¦à¤¿à¤µà¤¸à¤¾à¤¤à¥‚à¤¨ à¤¦à¥‹à¤¨à¤¦à¤¾ à¤˜à¥à¤¯à¤¾' },
+            { english: 'Take medicine after food', hindi: 'à¤–à¤¾à¤¨à¤¾ à¤–à¤¾à¤¨à¥‡ à¤•à¥‡ à¤¬à¤¾à¤¦ à¤¦à¤µà¤¾ à¤²à¥‡à¤‚', telugu: 'à°­à±‹à°œà°¨à°‚ à°¤à°°à±à°µà°¾à°¤ à°®à°‚à°¦à± à°¤à±€à°¸à±à°•à±‹à°‚à°¡à°¿', marathi: 'à¤œà¥‡à¤µà¤£à¤¾à¤¨à¤‚à¤¤à¤° à¤”à¤·à¤§ à¤˜à¥à¤¯à¤¾' },
+            { english: 'We need to do some tests', hindi: 'à¤¹à¤®à¥‡à¤‚ à¤•à¥à¤› à¤œà¤¾à¤‚à¤š à¤•à¤°à¤¨à¥€ à¤¹à¥‹à¤—à¥€', telugu: 'à°®à±‡à°®à± à°•à±Šà°¨à±à°¨à°¿ à°ªà°°à±€à°•à±à°·à°²à± à°šà±‡à°¯à°¾à°²à°¿', marathi: 'à¤†à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤•à¤¾à¤¹à¥€ à¤šà¤¾à¤šà¤£à¥à¤¯à¤¾ à¤•à¤°à¤¾à¤µà¥à¤¯à¤¾ à¤²à¤¾à¤—à¤¤à¥€à¤²' },
+            { english: 'You need to be admitted to the hospital', hindi: 'à¤†à¤ªà¤•à¥‹ à¤…à¤¸à¥à¤ªà¤¤à¤¾à¤² à¤®à¥‡à¤‚ à¤­à¤°à¥à¤¤à¥€ à¤¹à¥‹à¤¨à¤¾ à¤¹à¥‹à¤—à¤¾', telugu: 'à°®à±€à°°à± à°†à°¸à±à°ªà°¤à±à°°à°¿à°²à±‹ à°šà±‡à°°à°¾à°²à°¿', marathi: 'à¤¤à¥à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤°à¥à¤—à¥à¤£à¤¾à¤²à¤¯à¤¾à¤¤ à¤¦à¤¾à¤–à¤² à¤µà¥à¤¹à¤¾à¤µà¥‡ à¤²à¤¾à¤—à¥‡à¤²' },
+            { english: 'The surgery was successful', hindi: 'à¤‘à¤ªà¤°à¥‡à¤¶à¤¨ à¤¸à¤«à¤² à¤°à¤¹à¤¾', telugu: 'à°¶à°¸à±à°¤à±à°°à°šà°¿à°•à°¿à°¤à±à°¸ à°µà°¿à°œà°¯à°µà°‚à°¤à°®à±ˆà°‚à°¦à°¿', marathi: 'à¤¶à¤¸à¥à¤¤à¥à¤°à¤•à¥à¤°à¤¿à¤¯à¤¾ à¤¯à¤¶à¤¸à¥à¤µà¥€ à¤à¤¾à¤²à¥€' },
         ]
     },
     {
         category: 'Emergency',
         phrases: [
-            { english: 'This is an emergency', hindi: 'यह एक आपातकालीन स्थिति है', telugu: 'ఇది అత్యవసర పరిస్థితి', marathi: 'ही आणीबाणीची परिस्थिती आहे' },
-            { english: 'Call an ambulance', hindi: 'एम्बुलेंस बुलाओ', telugu: 'అంబులెన్స్ పిలవండి', marathi: 'रुग्णवाहिका बोलवा' },
-            { english: 'Do not move the patient', hindi: 'रोगी को हिलाएं नहीं', telugu: 'రోగిని కదిలించకండి', marathi: 'रुग्णाला हलवू नका' },
-            { english: 'The patient needs oxygen', hindi: 'मरीज को ऑक्सीजन की जरूरत है', telugu: 'రోగికి ఆక్సిజన్ అవసరం', marathi: 'रुग्णाला ऑक्सिजनची गरज आहे' },
+            { english: 'This is an emergency', hindi: 'à¤¯à¤¹ à¤à¤• à¤†à¤ªà¤¾à¤¤à¤•à¤¾à¤²à¥€à¤¨ à¤¸à¥à¤¥à¤¿à¤¤à¤¿ à¤¹à¥ˆ', telugu: 'à°‡à°¦à°¿ à°…à°¤à±à°¯à°µà°¸à°° à°ªà°°à°¿à°¸à±à°¥à°¿à°¤à°¿', marathi: 'à¤¹à¥€ à¤†à¤£à¥€à¤¬à¤¾à¤£à¥€à¤šà¥€ à¤ªà¤°à¤¿à¤¸à¥à¤¥à¤¿à¤¤à¥€ à¤†à¤¹à¥‡' },
+            { english: 'Call an ambulance', hindi: 'à¤à¤®à¥à¤¬à¥à¤²à¥‡à¤‚à¤¸ à¤¬à¥à¤²à¤¾à¤“', telugu: 'à°…à°‚à°¬à±à°²à±†à°¨à±à°¸à± à°ªà°¿à°²à°µà°‚à°¡à°¿', marathi: 'à¤°à¥à¤—à¥à¤£à¤µà¤¾à¤¹à¤¿à¤•à¤¾ à¤¬à¥‹à¤²à¤µà¤¾' },
+            { english: 'Do not move the patient', hindi: 'à¤°à¥‹à¤—à¥€ à¤•à¥‹ à¤¹à¤¿à¤²à¤¾à¤à¤‚ à¤¨à¤¹à¥€à¤‚', telugu: 'à°°à±‹à°—à°¿à°¨à°¿ à°•à°¦à°¿à°²à°¿à°‚à°šà°•à°‚à°¡à°¿', marathi: 'à¤°à¥à¤—à¥à¤£à¤¾à¤²à¤¾ à¤¹à¤²à¤µà¥‚ à¤¨à¤•à¤¾' },
+            { english: 'The patient needs oxygen', hindi: 'à¤®à¤°à¥€à¤œ à¤•à¥‹ à¤‘à¤•à¥à¤¸à¥€à¤œà¤¨ à¤•à¥€ à¤œà¤°à¥‚à¤°à¤¤ à¤¹à¥ˆ', telugu: 'à°°à±‹à°—à°¿à°•à°¿ à°†à°•à±à°¸à°¿à°œà°¨à± à°…à°µà°¸à°°à°‚', marathi: 'à¤°à¥à¤—à¥à¤£à¤¾à¤²à¤¾ à¤‘à¤•à¥à¤¸à¤¿à¤œà¤¨à¤šà¥€ à¤—à¤°à¤œ à¤†à¤¹à¥‡' },
         ]
     },
     {
         category: 'Comfort & Reassurance',
         phrases: [
-            { english: 'Do not worry, you will be fine', hindi: 'चिंता मत करो, सब ठीक हो जाएगा', telugu: 'చింతించకండి, మీరు బాగుపడతారు', marathi: 'काळजी करू नका, तुम्ही बरे व्हाल' },
-            { english: 'The doctor will see you soon', hindi: 'डॉक्टर जल्दी ही आपको देखेंगे', telugu: 'డాక్టర్ మిమ్మల్ని త్వరలో చూస్తారు', marathi: 'डॉक्टर लवकरच तुम्हाला भेटतील' },
-            { english: 'Please rest and drink water', hindi: 'कृपया आराम करें और पानी पिएं', telugu: 'దయచేసి విశ్రాంతి తీసుకోండి మరియు నీళ్ళు తాగండి', marathi: 'कृपया विश्रांती घ्या आणि पाणी प्या' },
-            { english: 'You are in safe hands', hindi: 'आप सुरक्षित हाथों में हैं', telugu: 'మీరు సురక్షితమైన చేతుల్లో ఉన్నారు', marathi: 'तुम्ही सुरक्षित हातांमध्ये आहात' },
-            { english: 'Your family has been informed', hindi: 'आपके परिवार को सूचित कर दिया गया है', telugu: 'మీ కుటుంబానికి తెలియజేయబడింది', marathi: 'तुमच्या कुटुंबाला कळवले आहे' },
+            { english: 'Do not worry, you will be fine', hindi: 'à¤šà¤¿à¤‚à¤¤à¤¾ à¤®à¤¤ à¤•à¤°à¥‹, à¤¸à¤¬ à¤ à¥€à¤• à¤¹à¥‹ à¤œà¤¾à¤à¤—à¤¾', telugu: 'à°šà°¿à°‚à°¤à°¿à°‚à°šà°•à°‚à°¡à°¿, à°®à±€à°°à± à°¬à°¾à°—à±à°ªà°¡à°¤à°¾à°°à±', marathi: 'à¤•à¤¾à¤³à¤œà¥€ à¤•à¤°à¥‚ à¤¨à¤•à¤¾, à¤¤à¥à¤®à¥à¤¹à¥€ à¤¬à¤°à¥‡ à¤µà¥à¤¹à¤¾à¤²' },
+            { english: 'The doctor will see you soon', hindi: 'à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤œà¤²à¥à¤¦à¥€ à¤¹à¥€ à¤†à¤ªà¤•à¥‹ à¤¦à¥‡à¤–à¥‡à¤‚à¤—à¥‡', telugu: 'à°¡à°¾à°•à±à°Ÿà°°à± à°®à°¿à°®à±à°®à°²à±à°¨à°¿ à°¤à±à°µà°°à°²à±‹ à°šà±‚à°¸à±à°¤à°¾à°°à±', marathi: 'à¤¡à¥‰à¤•à¥à¤Ÿà¤° à¤²à¤µà¤•à¤°à¤š à¤¤à¥à¤®à¥à¤¹à¤¾à¤²à¤¾ à¤­à¥‡à¤Ÿà¤¤à¥€à¤²' },
+            { english: 'Please rest and drink water', hindi: 'à¤•à¥ƒà¤ªà¤¯à¤¾ à¤†à¤°à¤¾à¤® à¤•à¤°à¥‡à¤‚ à¤”à¤° à¤ªà¤¾à¤¨à¥€ à¤ªà¤¿à¤à¤‚', telugu: 'à°¦à°¯à°šà±‡à°¸à°¿ à°µà°¿à°¶à±à°°à°¾à°‚à°¤à°¿ à°¤à±€à°¸à±à°•à±‹à°‚à°¡à°¿ à°®à°°à°¿à°¯à± à°¨à±€à°³à±à°³à± à°¤à°¾à°—à°‚à°¡à°¿', marathi: 'à¤•à¥ƒà¤ªà¤¯à¤¾ à¤µà¤¿à¤¶à¥à¤°à¤¾à¤‚à¤¤à¥€ à¤˜à¥à¤¯à¤¾ à¤†à¤£à¤¿ à¤ªà¤¾à¤£à¥€ à¤ªà¥à¤¯à¤¾' },
+            { english: 'You are in safe hands', hindi: 'à¤†à¤ª à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤ à¤¹à¤¾à¤¥à¥‹à¤‚ à¤®à¥‡à¤‚ à¤¹à¥ˆà¤‚', telugu: 'à°®à±€à°°à± à°¸à±à°°à°•à±à°·à°¿à°¤à°®à±ˆà°¨ à°šà±‡à°¤à±à°²à±à°²à±‹ à°‰à°¨à±à°¨à°¾à°°à±', marathi: 'à¤¤à¥à¤®à¥à¤¹à¥€ à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤ à¤¹à¤¾à¤¤à¤¾à¤‚à¤®à¤§à¥à¤¯à¥‡ à¤†à¤¹à¤¾à¤¤' },
+            { english: 'Your family has been informed', hindi: 'à¤†à¤ªà¤•à¥‡ à¤ªà¤°à¤¿à¤µà¤¾à¤° à¤•à¥‹ à¤¸à¥‚à¤šà¤¿à¤¤ à¤•à¤° à¤¦à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾ à¤¹à¥ˆ', telugu: 'à°®à±€ à°•à±à°Ÿà±à°‚à°¬à°¾à°¨à°¿à°•à°¿ à°¤à±†à°²à°¿à°¯à°œà±‡à°¯à°¬à°¡à°¿à°‚à°¦à°¿', marathi: 'à¤¤à¥à¤®à¤šà¥à¤¯à¤¾ à¤•à¥à¤Ÿà¥à¤‚à¤¬à¤¾à¤²à¤¾ à¤•à¤³à¤µà¤²à¥‡ à¤†à¤¹à¥‡' },
         ]
     },
 ];
@@ -706,12 +694,6 @@ export default function Dashboard() {
     const [translatedOutput, setTranslatedOutput] = useState('');
     const [activeTranslatorCategory, setActiveTranslatorCategory] = useState(null);
 
-    // Medicine Prescription & Price Comparison states
-    const [prescriptions, setPrescriptions] = useState([]);
-    const [selectedApptForRx, setSelectedApptForRx] = useState(null);
-    const [expandedMedicine, setExpandedMedicine] = useState(null);
-    const [sortByPrice, setSortByPrice] = useState('lowest');
-
     // Cost Analysis states
     const [selectedCostSpecialty, setSelectedCostSpecialty] = useState('cardiac');
     const [expandedCostSection, setExpandedCostSection] = useState({});
@@ -722,7 +704,6 @@ export default function Dashboard() {
     const heroRef = useRef(null);
     const appointmentRef = useRef(null);
     const translatorRef = useRef(null);
-    const medicineRef = useRef(null);
     const costRef = useRef(null);
 
     // Check if hospital can treat the condition and recommend doctors
@@ -798,32 +779,6 @@ export default function Dashboard() {
         setApptDoctor(null);
     };
 
-    // Generate prescription when an appointment is selected
-    const generatePrescription = (appt) => {
-        if (selectedApptForRx?.id === appt.id) {
-            setSelectedApptForRx(null);
-            return;
-        }
-        setSelectedApptForRx(appt);
-        setExpandedMedicine(null);
-
-        // Check if prescription already exists
-        if (prescriptions.find(p => p.appointmentId === appt.id)) return;
-
-        const specialty = conditionToSpecialty[appt.condition];
-        const medicines = medicineDatabase[specialty] || medicineDatabase.general;
-        const rx = {
-            id: `RX-${Date.now()}`,
-            appointmentId: appt.id,
-            doctor: appt.doctor,
-            patientName: appt.patientName,
-            condition: appt.condition,
-            medicines: medicines,
-            prescribedAt: new Date().toLocaleString(),
-        };
-        setPrescriptions(prev => [rx, ...prev]);
-    };
-
     // Get best price info for a medicine
     const getBestPrice = (medicine) => {
         const entries = Object.entries(medicine.prices);
@@ -835,13 +790,6 @@ export default function Dashboard() {
         const savings = highest[1] - lowest[1];
         const savingsPercent = Math.round((savings / highest[1]) * 100);
         return { lowestId: lowest[0], lowestPrice: lowest[1], highestPrice: highest[1], savings, savingsPercent };
-    };
-
-    // Get sorted pharmacies for a medicine
-    const getSortedPharmacies = (medicine) => {
-        return nearbyPharmacies
-            .map(ph => ({ ...ph, price: medicine.prices[ph.id] }))
-            .sort((a, b) => sortByPrice === 'lowest' ? a.price - b.price : b.price - a.price);
     };
 
     // Translate medical phrase
@@ -865,7 +813,7 @@ export default function Dashboard() {
                 }
             }
         }
-        setTranslatedOutput('⚠️ Phrase not found in medical dictionary. Please select a phrase from the categories below.');
+        setTranslatedOutput('âš ï¸ Phrase not found in medical dictionary. Please select a phrase from the categories below.');
     };
 
     // Select phrase from phrasebook
@@ -948,19 +896,6 @@ export default function Dashboard() {
     }, []);
 
     useEffect(() => {
-        const el = medicineRef.current;
-        if (!el) return;
-        const ctx = gsap.context(() => {
-            gsap.fromTo(el,
-                { y: 60, opacity: 0 },
-                { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out',
-                  scrollTrigger: { trigger: el, start: 'top 90%' } }
-            );
-        });
-        return () => ctx.revert();
-    }, []);
-
-    useEffect(() => {
         const el = costRef.current;
         if (!el) return;
         const ctx = gsap.context(() => {
@@ -1008,9 +943,9 @@ export default function Dashboard() {
     };
 
     const formatCurrency = (num) => {
-        if (num >= 100000) return `₹${(num / 100000).toFixed(1)}L`;
-        if (num >= 1000) return `₹${(num / 1000).toFixed(1)}K`;
-        return `₹${num}`;
+        if (num >= 100000) return `â‚¹${(num / 100000).toFixed(1)}L`;
+        if (num >= 1000) return `â‚¹${(num / 1000).toFixed(1)}K`;
+        return `â‚¹${num}`;
     };
 
     const totalDoctors = Object.values(specialistDoctors).reduce((sum, arr) => sum + arr.length, 0);
@@ -1018,7 +953,7 @@ export default function Dashboard() {
 
     return (
         <main className="dashboard-page treatment-page">
-            {/* ═══ HERO SECTION ═══ */}
+            {/* â•â•â• HERO SECTION â•â•â• */}
             <section className="trt-hero" ref={heroRef}>
                 <div className="trt-hero-bg">
                     <div className="trt-hero-gradient" />
@@ -1054,7 +989,7 @@ export default function Dashboard() {
                 </div>
             </section>
 
-            {/* ═══ SPECIALTIES BROWSE ═══ */}
+            {/* â•â•â• SPECIALTIES BROWSE â•â•â• */}
             <section className="trt-specialties-section">
                 <h2 className="trt-section-title"><Award size={22} /> Our Specialties</h2>
                 <div className="trt-specialties-grid">
@@ -1080,7 +1015,7 @@ export default function Dashboard() {
                 {/* Expanded specialty doctors */}
                 {activeSpecialty && specialistDoctors[activeSpecialty] && (
                     <div className="trt-specialty-expanded">
-                        <h3>{specialtyCategories.find(c => c.key === activeSpecialty)?.label} Department — Doctors</h3>
+                        <h3>{specialtyCategories.find(c => c.key === activeSpecialty)?.label} Department â€” Doctors</h3>
                         <div className="trt-browse-doctors">
                             {specialistDoctors[activeSpecialty].map(doc => (
                                 <div key={doc.id} className="trt-browse-doc-card">
@@ -1119,7 +1054,7 @@ export default function Dashboard() {
                 )}
             </section>
 
-            {/* ═══ FIND TREATMENT SECTION ═══ */}
+            {/* â•â•â• FIND TREATMENT SECTION â•â•â• */}
             <section className="trt-find-section" ref={treatmentSectionRef}>
                 <h2 className="trt-section-title"><Search size={22} /> Find Treatment for Your Condition</h2>
                 <p className="trt-section-desc">Enter the patient's condition to check if our hospital can help. If treatable, we'll recommend 4 specialist doctors with their qualifications, experience, and patient reviews.</p>
@@ -1324,7 +1259,7 @@ export default function Dashboard() {
                 </div>
             </section>
 
-            {/* ═══ APPOINTMENT BOOKING ═══ */}
+            {/* â•â•â• APPOINTMENT BOOKING â•â•â• */}
             <section className="trt-appointment-section" ref={appointmentRef}>
                 <h2 className="trt-section-title"><Calendar size={22} /> Book Appointment</h2>
                 <p className="trt-section-desc">Schedule an appointment with your assigned specialist doctor. Choose between in-person visit, video call, or phone consultation.</p>
@@ -1355,7 +1290,7 @@ export default function Dashboard() {
                                         <option value="">Choose a doctor</option>
                                         {treatmentSubmissions.map(sub => (
                                             <option key={sub.id} value={sub.id}>
-                                                {sub.doctor.name} — {sub.condition} (Patient: {sub.patientName})
+                                                {sub.doctor.name} â€” {sub.condition} (Patient: {sub.patientName})
                                             </option>
                                         ))}
                                     </select>
@@ -1462,7 +1397,7 @@ export default function Dashboard() {
                                             </div>
                                             <div className="appt-card-patient">
                                                 <User size={12} />
-                                                <span><strong>{appt.patientName}</strong> — {appt.condition}</span>
+                                                <span><strong>{appt.patientName}</strong> â€” {appt.condition}</span>
                                             </div>
                                         </div>
                                         {appt.notes && <p className="appt-card-notes"><FileText size={12} /> {appt.notes}</p>}
@@ -1478,7 +1413,7 @@ export default function Dashboard() {
                 </div>
             </section>
 
-            {/* ═══ LANGUAGE TRANSLATOR ═══ */}
+            {/* â•â•â• LANGUAGE TRANSLATOR â•â•â• */}
             <section className="trt-translator-section" ref={translatorRef}>
                 <h2 className="trt-section-title"><Globe size={22} /> Medical Language Translator</h2>
                 <p className="trt-section-desc">Break the language barrier between doctors and patients. Translate common medical phrases between Telugu, English, Hindi, and Marathi for clear communication.</p>
@@ -1538,7 +1473,7 @@ export default function Dashboard() {
 
                     {/* Medical Phrasebook */}
                     <div className="translator-phrasebook">
-                        <h4><MessageCircle size={16} /> Medical Phrasebook — Quick Select</h4>
+                        <h4><MessageCircle size={16} /> Medical Phrasebook â€” Quick Select</h4>
                         <p className="translator-phrasebook-desc">Click any phrase to auto-fill and translate it instantly between your selected languages.</p>
                         <div className="phrasebook-categories">
                             {medicalPhrases.map((cat, idx) => (
@@ -1568,208 +1503,11 @@ export default function Dashboard() {
                 </div>
             </section>
 
-            {/* ═══ MEDICINE PRESCRIPTION & PRICE COMPARISON ═══ */}
-            <section className="trt-medicine-section" ref={medicineRef}>
-                <h2 className="trt-section-title"><Pill size={22} /> Doctor's Prescription & Medicine Price Comparison</h2>
-                <p className="trt-section-desc">After your appointment, the doctor prescribes medicines. Compare prices at nearby pharmacies to buy at the lowest price and save money.</p>
-
-                <div className="med-content">
-                    {/* Left: Select Appointment to get prescription */}
-                    <div className="med-appointments-panel">
-                        <h4><ClipboardList size={16} /> Your Appointments</h4>
-                        <p className="med-panel-desc">Select an appointment to view the doctor's prescribed medicines.</p>
-
-                        {appointments.length === 0 ? (
-                            <div className="trt-empty">
-                                <Calendar size={36} />
-                                <p>No appointments yet.</p>
-                                <span>Book an appointment first to receive a prescription.</span>
-                            </div>
-                        ) : (
-                            <div className="med-appt-list">
-                                {appointments.map(appt => (
-                                    <button
-                                        key={appt.id}
-                                        className={`med-appt-item ${selectedApptForRx?.id === appt.id ? 'med-appt-item--active' : ''}`}
-                                        onClick={() => generatePrescription(appt)}
-                                    >
-                                        <span className="trt-doc-avatar">{appt.doctor.avatar}</span>
-                                        <div className="med-appt-info">
-                                            <strong>{appt.doctor.name}</strong>
-                                            <span>{appt.condition} &bull; {appt.patientName}</span>
-                                            <span className="med-appt-date"><Calendar size={11} /> {new Date(appt.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })} at {appt.time}</span>
-                                        </div>
-                                        <ChevronDown size={16} className={`trt-specialty-chevron ${selectedApptForRx?.id === appt.id ? 'trt-chevron-up' : ''}`} />
-                                    </button>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Right: Prescription & Price Comparison */}
-                    <div className="med-prescription-panel">
-                        {!selectedApptForRx ? (
-                            <div className="trt-empty">
-                                <Pill size={36} />
-                                <p>No prescription selected.</p>
-                                <span>Select an appointment from the left to view the doctor's prescribed medicines and compare pharmacy prices.</span>
-                            </div>
-                        ) : (() => {
-                            const rx = prescriptions.find(p => p.appointmentId === selectedApptForRx.id);
-                            if (!rx) return null;
-                            const totalLowest = rx.medicines.reduce((sum, m) => sum + getBestPrice(m).lowestPrice, 0);
-                            const totalHighest = rx.medicines.reduce((sum, m) => sum + getBestPrice(m).highestPrice, 0);
-                            const totalSavings = totalHighest - totalLowest;
-                            return (
-                                <>
-                                    {/* Prescription Header */}
-                                    <div className="med-rx-header">
-                                        <div className="med-rx-doctor">
-                                            <span className="trt-doc-avatar">{rx.doctor.avatar}</span>
-                                            <div>
-                                                <strong>Dr. {rx.doctor.name.replace('Dr. ', '')}</strong>
-                                                <span className="trt-doc-spec">{rx.doctor.specialization}</span>
-                                                <span className="med-rx-meta">Patient: <strong>{rx.patientName}</strong> &bull; {rx.condition}</span>
-                                            </div>
-                                        </div>
-                                        <div className="med-rx-badge">
-                                            <BadgeCheck size={14} />
-                                            <span>Prescribed</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Savings Banner */}
-                                    <div className="med-savings-banner">
-                                        <TrendingDown size={18} />
-                                        <div>
-                                            <strong>You can save up to ₹{totalSavings}</strong>
-                                            <span>By buying from the lowest-priced pharmacy for each medicine. Lowest total: <strong>₹{totalLowest}</strong> vs Highest: ₹{totalHighest}</span>
-                                        </div>
-                                    </div>
-
-                                    {/* Medicine Cards */}
-                                    <div className="med-list">
-                                        {rx.medicines.map(med => {
-                                            const best = getBestPrice(med);
-                                            const pharmacies = getSortedPharmacies(med);
-                                            const bestPharmacy = nearbyPharmacies.find(p => p.id === best.lowestId);
-                                            return (
-                                                <div key={med.id} className="med-card">
-                                                    <div className="med-card-top">
-                                                        <div className="med-card-icon">
-                                                            <Pill size={18} />
-                                                        </div>
-                                                        <div className="med-card-info">
-                                                            <strong>{med.name}</strong>
-                                                            <span className="med-generic">Generic: {med.generic}</span>
-                                                            <div className="med-dosage-row">
-                                                                <span className="med-type-tag">{med.type}</span>
-                                                                <span className="med-dosage"><Syringe size={11} /> {med.dosage}</span>
-                                                                <span className="med-duration"><Clock size={11} /> {med.duration}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="med-best-price">
-                                                            <span className="med-best-price-label">Best Price</span>
-                                                            <span className="med-best-price-value">₹{best.lowestPrice}</span>
-                                                            <span className="med-best-price-save">Save {best.savingsPercent}%</span>
-                                                        </div>
-                                                    </div>
-
-                                                    {/* Best pharmacy quick info */}
-                                                    <div className="med-best-pharmacy">
-                                                        <Store size={13} />
-                                                        <span>Lowest at <strong>{bestPharmacy?.name}</strong> ({bestPharmacy?.distance})</span>
-                                                        <span className="med-best-pharmacy-price">₹{best.lowestPrice}</span>
-                                                    </div>
-
-                                                    {/* Expand to see all pharmacies */}
-                                                    <button
-                                                        className="trt-expand-btn"
-                                                        onClick={() => setExpandedMedicine(expandedMedicine === med.id ? null : med.id)}
-                                                    >
-                                                        <Store size={14} />
-                                                        {expandedMedicine === med.id ? 'Hide Price Comparison' : `Compare Prices at ${nearbyPharmacies.length} Pharmacies`}
-                                                        <ChevronDown size={14} className={expandedMedicine === med.id ? 'trt-chevron-up' : ''} />
-                                                    </button>
-
-                                                    {expandedMedicine === med.id && (
-                                                        <div className="med-pharmacies">
-                                                            <div className="med-pharmacies-header">
-                                                                <span>Nearby Pharmacies</span>
-                                                                <button className="med-sort-btn" onClick={() => setSortByPrice(sortByPrice === 'lowest' ? 'highest' : 'lowest')}>
-                                                                    <TrendingDown size={12} /> {sortByPrice === 'lowest' ? 'Lowest First' : 'Highest First'}
-                                                                </button>
-                                                            </div>
-                                                            {pharmacies.map((ph, idx) => {
-                                                                const isLowest = ph.price === best.lowestPrice;
-                                                                return (
-                                                                    <div key={ph.id} className={`med-pharmacy-row ${isLowest ? 'med-pharmacy-row--best' : ''}`}>
-                                                                        <div className="med-pharmacy-rank">{idx + 1}</div>
-                                                                        <div className="med-pharmacy-info">
-                                                                            <div className="med-pharmacy-name">
-                                                                                <strong>{ph.name}</strong>
-                                                                                {ph.verified && <BadgeCheck size={12} className="med-verified-icon" />}
-                                                                            </div>
-                                                                            <span className="med-pharmacy-meta">
-                                                                                <MapPin size={10} /> {ph.distance} &bull; <Star size={10} /> {ph.rating}
-                                                                            </span>
-                                                                        </div>
-                                                                        <div className="med-pharmacy-price">
-                                                                            <strong>₹{ph.price}</strong>
-                                                                            {isLowest && <span className="med-lowest-tag">Lowest</span>}
-                                                                            {!isLowest && <span className="med-extra-cost">+₹{ph.price - best.lowestPrice}</span>}
-                                                                        </div>
-                                                                    </div>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    )}
-                                                </div>
-                                            );
-                                        })}
-                                    </div>
-
-                                    {/* Total price comparison */}
-                                    <div className="med-total-comparison">
-                                        <h5><ShoppingCart size={14} /> Total Prescription Cost Comparison</h5>
-                                        <div className="med-total-pharmacies">
-                                            {nearbyPharmacies.map(ph => {
-                                                const total = rx.medicines.reduce((sum, m) => sum + m.prices[ph.id], 0);
-                                                const isLowest = total === totalLowest;
-                                                return (
-                                                    <div key={ph.id} className={`med-total-row ${isLowest ? 'med-total-row--best' : ''}`}>
-                                                        <div className="med-total-pharmacy">
-                                                            <Store size={13} />
-                                                            <div>
-                                                                <strong>{ph.name}</strong>
-                                                                <span>{ph.distance}</span>
-                                                            </div>
-                                                        </div>
-                                                        <div className="med-total-price">
-                                                            <strong>₹{total}</strong>
-                                                            {isLowest ? (
-                                                                <span className="med-lowest-tag"><TrendingDown size={10} /> Best Deal</span>
-                                                            ) : (
-                                                                <span className="med-extra-cost">+₹{total - totalLowest} more</span>
-                                                            )}
-                                                        </div>
-                                                    </div>
-                                                );
-                                            })}
-                                        </div>
-                                    </div>
-                                </>
-                            );
-                        })()}
-                    </div>
-                </div>
-            </section>
-
-            {/* ═══ COST ANALYSIS & BREAKDOWN ═══ */}
+            {/* â•â•â• COST ANALYSIS & BREAKDOWN â•â•â• */}
             <section className="trt-cost-section" ref={costRef}>
                 <div className="cost-header-area">
                     <h2 className="trt-section-title"><BarChart3 size={22} /> Complete Treatment Cost Analysis</h2>
-                    <p className="trt-section-desc">Full transparency on treatment costs — from consultation to medicines. Know the actual cost of every step so you can plan financially. We highlight the cheapest options and government schemes to help less-affording patients.</p>
+                    <p className="trt-section-desc">Full transparency on treatment costs â€” from consultation to medicines. Know the actual cost of every step so you can plan financially. We highlight the cheapest options and government schemes to help less-affording patients.</p>
 
                     {/* Specialty selector */}
                     <div className="cost-specialty-tabs">
@@ -1795,13 +1533,13 @@ export default function Dashboard() {
 
                     return (
                         <div className="cost-analysis-body">
-                            {/* ── Total Summary Cards ── */}
+                            {/* â”€â”€ Total Summary Cards â”€â”€ */}
                             <div className="cost-summary-cards">
                                 <div className="cost-summary-card cost-summary-card--total">
                                     <div className="cost-summary-icon"><Wallet size={20} /></div>
                                     <div>
                                         <span className="cost-summary-label">Estimated Total Cost</span>
-                                        <span className="cost-summary-range">{formatCurrency(Math.round(totalMin))} — {formatCurrency(Math.round(totalMax))}</span>
+                                        <span className="cost-summary-range">{formatCurrency(Math.round(totalMin))} â€” {formatCurrency(Math.round(totalMax))}</span>
                                         <span className="cost-summary-note">Lowest to highest estimate</span>
                                     </div>
                                 </div>
@@ -1825,13 +1563,13 @@ export default function Dashboard() {
                                     <div className="cost-summary-icon cost-summary-icon--purple"><Landmark size={20} /></div>
                                     <div>
                                         <span className="cost-summary-label">Govt Scheme Cover</span>
-                                        <span className="cost-summary-value cost-summary-value--purple">Up to ₹5L</span>
+                                        <span className="cost-summary-value cost-summary-value--purple">Up to â‚¹5L</span>
                                         <span className="cost-summary-note">Ayushman Bharat (PMJAY)</span>
                                     </div>
                                 </div>
                             </div>
 
-                            {/* ── Visual Cost Breakdown Bar ── */}
+                            {/* â”€â”€ Visual Cost Breakdown Bar â”€â”€ */}
                             <div className="cost-visual-bar-card">
                                 <h4><Layers size={16} /> Cost Distribution (Lowest Estimate)</h4>
                                 <div className="cost-bar-container">
@@ -1845,7 +1583,7 @@ export default function Dashboard() {
                                     ].map((item, i) => {
                                         const pct = Math.max(3, Math.round((item.value / totalMin) * 100));
                                         return (
-                                            <div key={i} className="cost-bar-segment" style={{ flex: pct }} title={`${item.label}: ₹${item.value.toLocaleString()}`}>
+                                            <div key={i} className="cost-bar-segment" style={{ flex: pct }} title={`${item.label}: â‚¹${item.value.toLocaleString()}`}>
                                                 <div className="cost-bar-fill" style={{ background: item.color }} />
                                             </div>
                                         );
@@ -1863,14 +1601,14 @@ export default function Dashboard() {
                                         <div key={i} className="cost-bar-legend-item">
                                             <span className="cost-legend-dot" style={{ background: item.color }} />
                                             <span className="cost-legend-label">{item.label}</span>
-                                            <span className="cost-legend-value">₹{item.value.toLocaleString()}</span>
+                                            <span className="cost-legend-value">â‚¹{item.value.toLocaleString()}</span>
                                             <span className="cost-legend-pct">{Math.round((item.value / totalMin) * 100)}%</span>
                                         </div>
                                     ))}
                                 </div>
                             </div>
 
-                            {/* ── Detailed Breakdown Accordions ── */}
+                            {/* â”€â”€ Detailed Breakdown Accordions â”€â”€ */}
                             <div className="cost-breakdown-grid">
                                 {/* 1. Consultation Fees */}
                                 <div className="cost-breakdown-card">
@@ -1883,7 +1621,7 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="cost-acc-right">
-                                            <span className="cost-acc-price">₹{data.consultation.regular} — ₹{data.consultation.emergency}</span>
+                                            <span className="cost-acc-price">â‚¹{data.consultation.regular} â€” â‚¹{data.consultation.emergency}</span>
                                             <ChevronDown size={16} className={expandedCostSection.consultation ? 'trt-chevron-up' : ''} />
                                         </div>
                                     </button>
@@ -1891,15 +1629,15 @@ export default function Dashboard() {
                                         <div className="cost-acc-body">
                                             <div className="cost-detail-row">
                                                 <span>Regular Consultation</span>
-                                                <strong>₹{data.consultation.regular}</strong>
+                                                <strong>â‚¹{data.consultation.regular}</strong>
                                             </div>
                                             <div className="cost-detail-row">
                                                 <span>Follow-up Visit</span>
-                                                <strong>₹{data.consultation.followUp}</strong>
+                                                <strong>â‚¹{data.consultation.followUp}</strong>
                                             </div>
                                             <div className="cost-detail-row cost-detail-row--highlight">
                                                 <span>Emergency Consultation</span>
-                                                <strong>₹{data.consultation.emergency}</strong>
+                                                <strong>â‚¹{data.consultation.emergency}</strong>
                                             </div>
                                             <div className="cost-tip"><Info size={13} /> <span>Tip: Book a regular appointment to avoid emergency charges. Follow-up visits are cheaper.</span></div>
                                         </div>
@@ -1917,7 +1655,7 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="cost-acc-right">
-                                            <span className="cost-acc-price">₹{diagnosticTotal.toLocaleString()}</span>
+                                            <span className="cost-acc-price">â‚¹{diagnosticTotal.toLocaleString()}</span>
                                             <ChevronDown size={16} className={expandedCostSection.diagnostics ? 'trt-chevron-up' : ''} />
                                         </div>
                                     </button>
@@ -1926,12 +1664,12 @@ export default function Dashboard() {
                                             {data.diagnostics.map((d, i) => (
                                                 <div key={i} className="cost-detail-row">
                                                     <span>{d.name}</span>
-                                                    <strong>₹{d.cost.toLocaleString()}</strong>
+                                                    <strong>â‚¹{d.cost.toLocaleString()}</strong>
                                                 </div>
                                             ))}
                                             <div className="cost-detail-total">
                                                 <span>Total Diagnostics</span>
-                                                <strong>₹{diagnosticTotal.toLocaleString()}</strong>
+                                                <strong>â‚¹{diagnosticTotal.toLocaleString()}</strong>
                                             </div>
                                             <div className="cost-tip"><Info size={13} /> <span>Not all tests may be needed. The doctor will decide based on your condition. Government hospitals offer tests at 50-70% lower cost.</span></div>
                                         </div>
@@ -1949,7 +1687,7 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="cost-acc-right">
-                                            <span className="cost-acc-price">{formatCurrency(Math.round(procMin))} — {formatCurrency(Math.round(procMax))}</span>
+                                            <span className="cost-acc-price">{formatCurrency(Math.round(procMin))} â€” {formatCurrency(Math.round(procMax))}</span>
                                             <ChevronDown size={16} className={expandedCostSection.procedures ? 'trt-chevron-up' : ''} />
                                         </div>
                                     </button>
@@ -1958,7 +1696,7 @@ export default function Dashboard() {
                                             {data.procedures.map((p, i) => (
                                                 <div key={i} className="cost-detail-row">
                                                     <span>{p.name}</span>
-                                                    <strong>₹{p.costRange[0].toLocaleString()} — ₹{p.costRange[1].toLocaleString()}</strong>
+                                                    <strong>â‚¹{p.costRange[0].toLocaleString()} â€” â‚¹{p.costRange[1].toLocaleString()}</strong>
                                                 </div>
                                             ))}
                                             <div className="cost-tip"><Info size={13} /> <span>Costs vary by hospital tier (govt/private), city, and implant/material used. Always ask for a detailed estimate before agreeing.</span></div>
@@ -1977,7 +1715,7 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="cost-acc-right">
-                                            <span className="cost-acc-price">₹{hospitalMin.toLocaleString()} — ₹{hospitalMax.toLocaleString()}</span>
+                                            <span className="cost-acc-price">â‚¹{hospitalMin.toLocaleString()} â€” â‚¹{hospitalMax.toLocaleString()}</span>
                                             <ChevronDown size={16} className={expandedCostSection.hospital ? 'trt-chevron-up' : ''} />
                                         </div>
                                     </button>
@@ -1985,11 +1723,11 @@ export default function Dashboard() {
                                         <div className="cost-acc-body">
                                             <div className="cost-detail-row">
                                                 <span>General Ward (Per Day)</span>
-                                                <strong>₹{data.hospitalStay.perDay.toLocaleString()}</strong>
+                                                <strong>â‚¹{data.hospitalStay.perDay.toLocaleString()}</strong>
                                             </div>
                                             <div className="cost-detail-row cost-detail-row--highlight">
                                                 <span>ICU (Per Day)</span>
-                                                <strong>₹{data.hospitalStay.icuPerDay.toLocaleString()}</strong>
+                                                <strong>â‚¹{data.hospitalStay.icuPerDay.toLocaleString()}</strong>
                                             </div>
                                             <div className="cost-detail-row">
                                                 <span>Average Stay Duration</span>
@@ -1997,11 +1735,11 @@ export default function Dashboard() {
                                             </div>
                                             <div className="cost-detail-total">
                                                 <span>General Ward ({data.hospitalStay.avgDays} days)</span>
-                                                <strong>₹{hospitalMin.toLocaleString()}</strong>
+                                                <strong>â‚¹{hospitalMin.toLocaleString()}</strong>
                                             </div>
                                             <div className="cost-detail-total">
                                                 <span>ICU ({data.hospitalStay.avgDays} days)</span>
-                                                <strong>₹{hospitalMax.toLocaleString()}</strong>
+                                                <strong>â‚¹{hospitalMax.toLocaleString()}</strong>
                                             </div>
                                             <div className="cost-tip"><Info size={13} /> <span>General ward is significantly cheaper. Request it unless ICU is medically necessary. Semi-private rooms are a middle option.</span></div>
                                         </div>
@@ -2019,7 +1757,7 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="cost-acc-right">
-                                            <span className="cost-acc-price">₹{medLowest} — ₹{medHighest}</span>
+                                            <span className="cost-acc-price">â‚¹{medLowest} â€” â‚¹{medHighest}</span>
                                             <ChevronDown size={16} className={expandedCostSection.medicines ? 'trt-chevron-up' : ''} />
                                         </div>
                                     </button>
@@ -2034,20 +1772,20 @@ export default function Dashboard() {
                                                             <span className="cost-med-generic">{med.generic} &bull; {med.type} &bull; Qty: {med.quantity}</span>
                                                         </div>
                                                         <div className="cost-med-prices">
-                                                            <span className="cost-med-lowest">₹{best.lowestPrice} <small>(Jan Aushadhi)</small></span>
-                                                            <span className="cost-med-branded">₹{best.highestPrice} <small>(Branded)</small></span>
+                                                            <span className="cost-med-lowest">â‚¹{best.lowestPrice} <small>(Jan Aushadhi)</small></span>
+                                                            <span className="cost-med-branded">â‚¹{best.highestPrice} <small>(Branded)</small></span>
                                                             <span className="cost-med-save">Save {best.savingsPercent}%</span>
                                                         </div>
                                                     </div>
                                                 );
                                             })}
                                             <div className="cost-detail-total">
-                                                <span>Total (Lowest — Jan Aushadhi)</span>
-                                                <strong className="cost-green">₹{medLowest}</strong>
+                                                <span>Total (Lowest â€” Jan Aushadhi)</span>
+                                                <strong className="cost-green">â‚¹{medLowest}</strong>
                                             </div>
                                             <div className="cost-detail-total">
-                                                <span>Total (Highest — Branded)</span>
-                                                <strong>₹{medHighest}</strong>
+                                                <span>Total (Highest â€” Branded)</span>
+                                                <strong>â‚¹{medHighest}</strong>
                                             </div>
                                             <div className="cost-tip cost-tip--green"><TrendingDown size={13} /> <span>Buy generic medicines from Jan Aushadhi Kendras to save 50-80% on medicine costs. Same quality, government approved.</span></div>
                                         </div>
@@ -2065,61 +1803,61 @@ export default function Dashboard() {
                                             </div>
                                         </div>
                                         <div className="cost-acc-right">
-                                            <span className="cost-acc-price">₹{followUpTotal.toLocaleString()}</span>
+                                            <span className="cost-acc-price">â‚¹{followUpTotal.toLocaleString()}</span>
                                             <ChevronDown size={16} className={expandedCostSection.followup ? 'trt-chevron-up' : ''} />
                                         </div>
                                     </button>
                                     {expandedCostSection.followup && (
                                         <div className="cost-acc-body">
                                             <div className="cost-detail-row">
-                                                <span>Follow-up Visits ({data.followUp.visits} visits × ₹{data.followUp.perVisit})</span>
-                                                <strong>₹{(data.followUp.visits * data.followUp.perVisit).toLocaleString()}</strong>
+                                                <span>Follow-up Visits ({data.followUp.visits} visits Ã— â‚¹{data.followUp.perVisit})</span>
+                                                <strong>â‚¹{(data.followUp.visits * data.followUp.perVisit).toLocaleString()}</strong>
                                             </div>
                                             <div className="cost-detail-row">
                                                 <span>Follow-up Tests</span>
-                                                <strong>₹{data.followUp.tests.toLocaleString()}</strong>
+                                                <strong>â‚¹{data.followUp.tests.toLocaleString()}</strong>
                                             </div>
                                             <div className="cost-detail-total">
                                                 <span>Total Follow-up</span>
-                                                <strong>₹{followUpTotal.toLocaleString()}</strong>
+                                                <strong>â‚¹{followUpTotal.toLocaleString()}</strong>
                                             </div>
                                         </div>
                                     )}
                                 </div>
                             </div>
 
-                            {/* ── Grand Total Summary ── */}
+                            {/* â”€â”€ Grand Total Summary â”€â”€ */}
                             <div className="cost-grand-total">
-                                <h4><Wallet size={18} /> Grand Total — {data.label} Treatment</h4>
+                                <h4><Wallet size={18} /> Grand Total â€” {data.label} Treatment</h4>
                                 <div className="cost-grand-rows">
                                     <div className="cost-grand-row">
                                         <span>Consultation (Regular)</span>
-                                        <strong>₹{data.consultation.regular.toLocaleString()}</strong>
+                                        <strong>â‚¹{data.consultation.regular.toLocaleString()}</strong>
                                     </div>
                                     <div className="cost-grand-row">
                                         <span>All Diagnostic Tests</span>
-                                        <strong>₹{diagnosticTotal.toLocaleString()}</strong>
+                                        <strong>â‚¹{diagnosticTotal.toLocaleString()}</strong>
                                     </div>
                                     <div className="cost-grand-row">
                                         <span>Avg Procedure Cost</span>
-                                        <strong>₹{Math.round(procMin).toLocaleString()} — ₹{Math.round(procMax).toLocaleString()}</strong>
+                                        <strong>â‚¹{Math.round(procMin).toLocaleString()} â€” â‚¹{Math.round(procMax).toLocaleString()}</strong>
                                     </div>
                                     <div className="cost-grand-row">
                                         <span>Hospital Stay ({data.hospitalStay.avgDays} days)</span>
-                                        <strong>₹{hospitalMin.toLocaleString()} — ₹{hospitalMax.toLocaleString()}</strong>
+                                        <strong>â‚¹{hospitalMin.toLocaleString()} â€” â‚¹{hospitalMax.toLocaleString()}</strong>
                                     </div>
                                     <div className="cost-grand-row">
                                         <span>Medicines</span>
-                                        <strong>₹{medLowest.toLocaleString()} — ₹{medHighest.toLocaleString()}</strong>
+                                        <strong>â‚¹{medLowest.toLocaleString()} â€” â‚¹{medHighest.toLocaleString()}</strong>
                                     </div>
                                     <div className="cost-grand-row">
                                         <span>Follow-up Care</span>
-                                        <strong>₹{followUpTotal.toLocaleString()}</strong>
+                                        <strong>â‚¹{followUpTotal.toLocaleString()}</strong>
                                     </div>
                                     <div className="cost-grand-divider" />
                                     <div className="cost-grand-row cost-grand-row--final">
                                         <span>ESTIMATED TOTAL</span>
-                                        <strong>{formatCurrency(Math.round(totalMin))} — {formatCurrency(Math.round(totalMax))}</strong>
+                                        <strong>{formatCurrency(Math.round(totalMin))} â€” {formatCurrency(Math.round(totalMax))}</strong>
                                     </div>
                                     <div className="cost-grand-row cost-grand-row--savings">
                                         <span><TrendingDown size={14} /> Maximum Possible Savings</span>
@@ -2128,7 +1866,7 @@ export default function Dashboard() {
                                 </div>
                             </div>
 
-                            {/* ── Government Schemes & Financial Help ── */}
+                            {/* â”€â”€ Government Schemes & Financial Help â”€â”€ */}
                             <div className="cost-govt-section">
                                 <button className={`cost-govt-toggle ${showGovtSchemes ? 'cost-govt-toggle--open' : ''}`} onClick={() => setShowGovtSchemes(!showGovtSchemes)}>
                                     <Landmark size={18} />
@@ -2142,7 +1880,7 @@ export default function Dashboard() {
                                     <div className="cost-govt-body">
                                         <div className="cost-govt-intro">
                                             <Info size={15} />
-                                            <p>India has multiple government programs to help patients who can't afford treatment. Below are all major central, state and non-profit options. <strong>Click any scheme</strong> to see full details — eligibility, benefits, documents needed, and how to apply.</p>
+                                            <p>India has multiple government programs to help patients who can't afford treatment. Below are all major central, state and non-profit options. <strong>Click any scheme</strong> to see full details â€” eligibility, benefits, documents needed, and how to apply.</p>
                                         </div>
 
                                         {/* Scheme type filters */}
@@ -2164,7 +1902,7 @@ export default function Dashboard() {
                                                                 <span className="cost-govt-fullname">{scheme.fullName}</span>
                                                                 <div className="cost-govt-header-tags">
                                                                     <span className="cost-govt-tag cost-govt-tag--type">{scheme.type}</span>
-                                                                    {scheme.coverage > 0 && <span className="cost-govt-tag cost-govt-tag--cover">₹{(scheme.coverage / 100000).toFixed(0)}L Coverage</span>}
+                                                                    {scheme.coverage > 0 && <span className="cost-govt-tag cost-govt-tag--cover">â‚¹{(scheme.coverage / 100000).toFixed(0)}L Coverage</span>}
                                                                 </div>
                                                             </div>
                                                             <ChevronDown size={16} className={isExpanded ? 'trt-chevron-up' : ''} />
@@ -2244,7 +1982,7 @@ export default function Dashboard() {
                                                     <span className="cost-govt-step-num">1</span>
                                                     <div>
                                                         <strong>Check Ayushman Bharat Eligibility First</strong>
-                                                        <p>Call <strong>14555</strong> or visit mera.pmjay.gov.in — if eligible, up to ₹5 Lakh treatment is <strong>completely free</strong>.</p>
+                                                        <p>Call <strong>14555</strong> or visit mera.pmjay.gov.in â€” if eligible, up to â‚¹5 Lakh treatment is <strong>completely free</strong>.</p>
                                                     </div>
                                                 </div>
                                                 <div className="cost-govt-action-step">
@@ -2280,13 +2018,13 @@ export default function Dashboard() {
 
                                         <div className="cost-tip cost-tip--green cost-govt-bottom-tip">
                                             <Info size={13} />
-                                            <span><strong>Important:</strong> You can combine multiple schemes — for example, use Ayushman Bharat for hospitalization + Jan Aushadhi for medicines + state scheme for additional coverage. Always ask the hospital patient welfare officer to help you maximize your benefits.</span>
+                                            <span><strong>Important:</strong> You can combine multiple schemes â€” for example, use Ayushman Bharat for hospitalization + Jan Aushadhi for medicines + state scheme for additional coverage. Always ask the hospital patient welfare officer to help you maximize your benefits.</span>
                                         </div>
                                     </div>
                                 )}
                             </div>
 
-                            {/* ── Money Saving Tips ── */}
+                            {/* â”€â”€ Money Saving Tips â”€â”€ */}
                             <div className="cost-tips-card">
                                 <h4><TrendingDown size={16} /> Tips to Reduce Treatment Cost</h4>
                                 <div className="cost-tips-grid">
@@ -2301,7 +2039,7 @@ export default function Dashboard() {
                                         <span className="cost-tip-num">2</span>
                                         <div>
                                             <strong>Check Government Schemes</strong>
-                                            <p>Ayushman Bharat covers up to ₹5 Lakh. Many state schemes provide additional coverage. Check eligibility before treatment.</p>
+                                            <p>Ayushman Bharat covers up to â‚¹5 Lakh. Many state schemes provide additional coverage. Check eligibility before treatment.</p>
                                         </div>
                                     </div>
                                     <div className="cost-tip-item">

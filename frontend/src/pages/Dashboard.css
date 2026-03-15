@@ -1,6 +1,6 @@
-/* ═══════════════════════════════════════════════════════════════
-   TREATMENT & DOCTOR RECOMMENDATION — FULL PAGE STYLES
-═══════════════════════════════════════════════════════════════ */
+﻿/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   TREATMENT & DOCTOR RECOMMENDATION â€” FULL PAGE STYLES
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .treatment-page {
     min-height: 100vh;
@@ -8,7 +8,7 @@
     padding-top: 70px;
 }
 
-/* ─── Hero Section ─── */
+/* â”€â”€â”€ Hero Section â”€â”€â”€ */
 .trt-hero {
     position: relative;
     padding: 60px 28px 50px;
@@ -99,7 +99,7 @@
     font-weight: 600;
 }
 
-/* ─── Section Titles ─── */
+/* â”€â”€â”€ Section Titles â”€â”€â”€ */
 .trt-section-title {
     display: flex;
     align-items: center;
@@ -122,7 +122,7 @@
     max-width: 700px;
 }
 
-/* ─── Specialties Section ─── */
+/* â”€â”€â”€ Specialties Section â”€â”€â”€ */
 .trt-specialties-section {
     padding: 0 28px 40px;
     max-width: 1200px;
@@ -203,7 +203,7 @@
     flex-shrink: 0;
 }
 
-/* ─── Specialty Expanded ─── */
+/* â”€â”€â”€ Specialty Expanded â”€â”€â”€ */
 .trt-specialty-expanded {
     margin-top: 24px;
     padding: 24px;
@@ -294,14 +294,14 @@
     line-height: 1.5;
 }
 
-/* ─── Find Treatment Section ─── */
+/* â”€â”€â”€ Find Treatment Section â”€â”€â”€ */
 .trt-find-section {
     padding: 40px 28px 60px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* ─── Form & Results (reuse Hospital.css classes via trt- prefix) ─── */
+/* â”€â”€â”€ Form & Results (reuse Hospital.css classes via trt- prefix) â”€â”€â”€ */
 .trt-body {
     display: grid;
     grid-template-columns: 380px 1fr;
@@ -459,7 +459,7 @@
 
 .trt-reset-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
 
-/* ─── Results ─── */
+/* â”€â”€â”€ Results â”€â”€â”€ */
 .trt-results { min-width: 0; overflow: hidden; }
 
 .trt-results > h4 {
@@ -507,7 +507,7 @@
 .trt-can-treat-banner span { color: #94a3b8; font-size: 0.82rem; line-height: 1.5; }
 .trt-can-treat-banner span strong { color: #34d399; font-size: 0.82rem; display: inline; }
 
-/* ─── Doctor Cards ─── */
+/* â”€â”€â”€ Doctor Cards â”€â”€â”€ */
 .trt-doctors-list {
     display: flex;
     flex-direction: column;
@@ -613,7 +613,7 @@
 .trt-expand-btn svg { transition: transform 0.3s; }
 .trt-chevron-up { transform: rotate(180deg); }
 
-/* ─── Reviews ─── */
+/* â”€â”€â”€ Reviews â”€â”€â”€ */
 .trt-reviews {
     margin-top: 12px;
     display: flex;
@@ -663,7 +663,7 @@
     font-style: italic;
 }
 
-/* ─── Action Bar ─── */
+/* â”€â”€â”€ Action Bar â”€â”€â”€ */
 .trt-action-bar { display: flex; gap: 12px; align-items: center; }
 
 .trt-confirm-btn {
@@ -711,7 +711,7 @@
     border-color: rgba(239, 68, 68, 0.3);
 }
 
-/* ─── History ─── */
+/* â”€â”€â”€ History â”€â”€â”€ */
 .trt-history {
     margin-top: 24px;
     padding-top: 20px;
@@ -794,7 +794,7 @@
     flex-shrink: 0;
 }
 
-/* ─── Responsive ─── */
+/* â”€â”€â”€ Responsive â”€â”€â”€ */
 @media (max-width: 1024px) {
     .trt-specialties-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -839,9 +839,9 @@
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    APPOINTMENT BOOKING SECTION
-═══════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .trt-appointment-section {
     padding: 40px 28px 50px;
@@ -974,7 +974,7 @@
     color: #10b981 !important;
 }
 
-/* ── Appointment List Card ── */
+/* â”€â”€ Appointment List Card â”€â”€ */
 .appt-list-card {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1158,9 +1158,9 @@
     color: #10b981;
 }
 
-/* ═══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    LANGUAGE TRANSLATOR SECTION
-═══════════════════════════════════════════════════════════════ */
+â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .trt-translator-section {
     padding: 40px 28px 80px;
@@ -1323,7 +1323,7 @@
     text-align: center;
 }
 
-/* ── Medical Phrasebook ── */
+/* â”€â”€ Medical Phrasebook â”€â”€ */
 .translator-phrasebook {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1438,7 +1438,7 @@
     text-align: right;
 }
 
-/* ── Appointment & Translator Responsive ── */
+/* â”€â”€ Appointment & Translator Responsive â”€â”€ */
 @media (max-width: 1024px) {
     .appt-content {
         grid-template-columns: 1fr;
@@ -1491,639 +1491,11 @@
     }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   MEDICINE PRESCRIPTION & PRICE COMPARISON
-═══════════════════════════════════════════════════════════════ */
 
-.trt-medicine-section {
-    padding: 40px 28px 80px;
-    max-width: 1200px;
-    margin: 0 auto;
-}
 
-.med-content {
-    display: grid;
-    grid-template-columns: 340px 1fr;
-    gap: 24px;
-    align-items: start;
-    margin-top: 20px;
-}
-
-/* ── Left - Appointment Selector ── */
-.med-appointments-panel {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    padding: 22px;
-}
-
-.med-appointments-panel h4 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: #e2e8f0;
-    margin: 0 0 4px 0;
-}
-
-.med-appointments-panel h4 svg {
-    color: #10b981;
-}
-
-.med-panel-desc {
-    font-size: 0.8rem;
-    color: #64748b;
-    margin: 0 0 18px 0;
-    line-height: 1.5;
-}
-
-.med-appt-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.med-appt-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
-    padding: 14px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-align: left;
-}
-
-.med-appt-item:hover {
-    border-color: rgba(16, 185, 129, 0.2);
-    background: rgba(16, 185, 129, 0.03);
-}
-
-.med-appt-item--active {
-    border-color: rgba(16, 185, 129, 0.5) !important;
-    background: rgba(16, 185, 129, 0.08) !important;
-}
-
-.med-appt-info {
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.med-appt-info strong {
-    font-size: 0.85rem;
-    color: #f8fafc;
-}
-
-.med-appt-info > span {
-    font-size: 0.76rem;
-    color: #94a3b8;
-}
-
-.med-appt-date {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.72rem !important;
-    color: #64748b !important;
-    margin-top: 2px;
-}
-
-/* ── Right - Prescription Panel ── */
-.med-prescription-panel {
-    min-width: 0;
-}
-
-.med-rx-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 18px 20px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-    margin-bottom: 14px;
-}
-
-.med-rx-doctor {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-}
-
-.med-rx-doctor strong {
-    display: block;
-    font-size: 0.95rem;
-    color: #f8fafc;
-    margin-bottom: 2px;
-}
-
-.med-rx-meta {
-    display: block;
-    font-size: 0.78rem;
-    color: #94a3b8;
-    margin-top: 4px;
-}
-
-.med-rx-meta strong {
-    font-size: 0.78rem;
-    display: inline;
-    color: #e2e8f0;
-}
-
-.med-rx-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 14px;
-    background: rgba(16, 185, 129, 0.15);
-    border-radius: 8px;
-    color: #10b981;
-    font-size: 0.78rem;
-    font-weight: 700;
-    flex-shrink: 0;
-}
-
-/* ── Savings Banner ── */
-.med-savings-banner {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 16px 20px;
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(6, 182, 212, 0.06));
-    border: 1px solid rgba(16, 185, 129, 0.2);
-    border-radius: 12px;
-    margin-bottom: 18px;
-}
-
-.med-savings-banner svg {
-    flex-shrink: 0;
-    color: #10b981;
-}
-
-.med-savings-banner strong {
-    display: block;
-    color: #6ee7b7;
-    font-size: 0.95rem;
-    margin-bottom: 2px;
-}
-
-.med-savings-banner span {
-    font-size: 0.82rem;
-    color: #94a3b8;
-    line-height: 1.5;
-}
-
-.med-savings-banner span strong {
-    color: #10b981;
-    font-size: 0.82rem;
-    display: inline;
-}
-
-/* ── Medicine Cards ── */
-.med-list {
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
-    margin-bottom: 18px;
-}
-
-.med-card {
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 16px;
-    transition: all 0.3s;
-}
-
-.med-card:hover {
-    border-color: rgba(255, 255, 255, 0.12);
-}
-
-.med-card-top {
-    display: flex;
-    align-items: flex-start;
-    gap: 14px;
-}
-
-.med-card-icon {
-    flex-shrink: 0;
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
-    background: rgba(16, 185, 129, 0.12);
-    color: #10b981;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.med-card-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.med-card-info strong {
-    display: block;
-    font-size: 0.95rem;
-    color: #f8fafc;
-    margin-bottom: 2px;
-}
-
-.med-generic {
-    display: block;
-    font-size: 0.76rem;
-    color: #64748b;
-    margin-bottom: 8px;
-}
-
-.med-dosage-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-}
-
-.med-type-tag {
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 6px;
-    background: rgba(139, 92, 246, 0.15);
-    color: #a78bfa;
-    text-transform: uppercase;
-}
-
-.med-dosage,
-.med-duration {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.75rem;
-    color: #94a3b8;
-}
-
-.med-dosage svg {
-    color: #10b981;
-}
-
-.med-duration svg {
-    color: #60a5fa;
-}
-
-.med-best-price {
-    flex-shrink: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
-}
-
-.med-best-price-label {
-    font-size: 0.68rem;
-    color: #64748b;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-
-.med-best-price-value {
-    font-size: 1.2rem;
-    font-weight: 800;
-    color: #10b981;
-}
-
-.med-best-price-save {
-    font-size: 0.7rem;
-    font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 6px;
-    background: rgba(16, 185, 129, 0.15);
-    color: #10b981;
-}
-
-/* ── Best Pharmacy Quick ── */
-.med-best-pharmacy {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 12px;
-    padding: 10px 14px;
-    background: rgba(16, 185, 129, 0.05);
-    border: 1px solid rgba(16, 185, 129, 0.1);
-    border-radius: 8px;
-    font-size: 0.8rem;
-    color: #94a3b8;
-}
-
-.med-best-pharmacy svg {
-    color: #10b981;
-    flex-shrink: 0;
-}
-
-.med-best-pharmacy strong {
-    color: #6ee7b7;
-}
-
-.med-best-pharmacy-price {
-    margin-left: auto;
-    font-weight: 800;
-    color: #10b981;
-}
-
-/* ── Pharmacy Price Comparison ── */
-.med-pharmacies {
-    margin-top: 12px;
-    animation: trt-slide-in 0.3s ease-out;
-}
-
-.med-pharmacies-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: #94a3b8;
-}
-
-.med-sort-btn {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    padding: 4px 10px;
-    background: rgba(255, 255, 255, 0.06);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 6px;
-    color: #94a3b8;
-    font-size: 0.72rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.med-sort-btn:hover {
-    background: rgba(255, 255, 255, 0.1);
-    color: #e2e8f0;
-}
-
-.med-pharmacy-row {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 14px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
-    margin-bottom: 6px;
-    transition: all 0.2s;
-}
-
-.med-pharmacy-row:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.med-pharmacy-row--best {
-    border-color: rgba(16, 185, 129, 0.3);
-    background: rgba(16, 185, 129, 0.06);
-}
-
-.med-pharmacy-rank {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.06);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: #94a3b8;
-    flex-shrink: 0;
-}
-
-.med-pharmacy-row--best .med-pharmacy-rank {
-    background: rgba(16, 185, 129, 0.2);
-    color: #10b981;
-}
-
-.med-pharmacy-info {
-    flex: 1;
-    min-width: 0;
-}
-
-.med-pharmacy-name {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.med-pharmacy-name strong {
-    font-size: 0.85rem;
-    color: #f8fafc;
-}
-
-.med-verified-icon {
-    color: #3b82f6;
-}
-
-.med-pharmacy-meta {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.72rem;
-    color: #64748b;
-    margin-top: 2px;
-}
-
-.med-pharmacy-meta svg {
-    color: #64748b;
-}
-
-.med-pharmacy-price {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 2px;
-    flex-shrink: 0;
-}
-
-.med-pharmacy-price strong {
-    font-size: 0.95rem;
-    color: #f8fafc;
-}
-
-.med-pharmacy-row--best .med-pharmacy-price strong {
-    color: #10b981;
-}
-
-.med-lowest-tag {
-    display: flex;
-    align-items: center;
-    gap: 3px;
-    font-size: 0.68rem;
-    font-weight: 700;
-    color: #10b981;
-    padding: 2px 8px;
-    background: rgba(16, 185, 129, 0.15);
-    border-radius: 6px;
-}
-
-.med-extra-cost {
-    font-size: 0.72rem;
-    color: #ef4444;
-    font-weight: 600;
-}
-
-/* ── Total Cost Comparison ── */
-.med-total-comparison {
-    margin-top: 20px;
-    padding: 20px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 14px;
-}
-
-.med-total-comparison h5 {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: #e2e8f0;
-    margin: 0 0 16px 0;
-}
-
-.med-total-comparison h5 svg {
-    color: #10b981;
-}
-
-.med-total-pharmacies {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.med-total-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 10px;
-    transition: all 0.2s;
-}
-
-.med-total-row:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.med-total-row--best {
-    border-color: rgba(16, 185, 129, 0.35);
-    background: rgba(16, 185, 129, 0.06);
-}
-
-.med-total-pharmacy {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.med-total-pharmacy svg {
-    color: #64748b;
-    flex-shrink: 0;
-}
-
-.med-total-row--best .med-total-pharmacy svg {
-    color: #10b981;
-}
-
-.med-total-pharmacy strong {
-    display: block;
-    font-size: 0.88rem;
-    color: #f8fafc;
-}
-
-.med-total-pharmacy span {
-    font-size: 0.72rem;
-    color: #64748b;
-}
-
-.med-total-price {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-shrink: 0;
-}
-
-.med-total-price strong {
-    font-size: 1.1rem;
-    color: #f8fafc;
-}
-
-.med-total-row--best .med-total-price strong {
-    color: #10b981;
-}
-
-/* ── Medicine Section Responsive ── */
-@media (max-width: 1024px) {
-    .med-content {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 900px) {
-    .trt-medicine-section {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-
-    .med-card-top {
-        flex-wrap: wrap;
-    }
-
-    .med-best-price {
-        align-items: flex-start;
-        width: 100%;
-        flex-direction: row;
-        gap: 10px;
-        margin-top: 8px;
-        padding-top: 8px;
-        border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .med-total-row {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-}
-
-@media (max-width: 600px) {
-    .med-dosage-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .med-best-pharmacy {
-        flex-wrap: wrap;
-    }
-
-    .med-pharmacy-row {
-        flex-wrap: wrap;
-    }
-}
-
-
-/* ══════════════════════════════════════════════════════════════
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
    COST ANALYSIS SECTION
-   ══════════════════════════════════════════════════════════════ */
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
 .trt-cost-section {
     padding: 60px 0 40px;
@@ -2139,7 +1511,7 @@
     margin: 0 auto 28px;
 }
 
-/* ── Specialty Tabs ── */
+/* â”€â”€ Specialty Tabs â”€â”€ */
 .cost-specialty-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -2175,7 +1547,7 @@
     font-weight: 600;
 }
 
-/* ── Summary Cards ── */
+/* â”€â”€ Summary Cards â”€â”€ */
 .cost-summary-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -2250,7 +1622,7 @@
     margin-top: 2px;
 }
 
-/* ── Visual Cost Bar ── */
+/* â”€â”€ Visual Cost Bar â”€â”€ */
 .cost-visual-bar-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -2329,7 +1701,7 @@
     font-size: 0.72rem;
 }
 
-/* ── Breakdown Accordions ── */
+/* â”€â”€ Breakdown Accordions â”€â”€ */
 .cost-breakdown-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -2487,7 +1859,7 @@
     color: #10b981;
 }
 
-/* ── Medicine Row in Cost ── */
+/* â”€â”€ Medicine Row in Cost â”€â”€ */
 .cost-med-row {
     display: flex;
     justify-content: space-between;
@@ -2547,7 +1919,7 @@
     font-weight: 600;
 }
 
-/* ── Grand Total ── */
+/* â”€â”€ Grand Total â”€â”€ */
 .cost-grand-total {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(59, 130, 246, 0.04));
     border: 1px solid rgba(16, 185, 129, 0.15);
@@ -2626,7 +1998,7 @@
     color: #10b981;
 }
 
-/* ── Government Schemes (Expanded) ── */
+/* â”€â”€ Government Schemes (Expanded) â”€â”€ */
 .cost-govt-section {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -2810,7 +2182,7 @@
     color: #10b981;
 }
 
-/* ── Expanded Card Body ── */
+/* â”€â”€ Expanded Card Body â”€â”€ */
 .cost-govt-card-body {
     padding: 0 20px 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -2907,7 +2279,7 @@
 }
 
 .cost-govt-doc-list li::before {
-    content: '📄';
+    content: 'ðŸ“„';
     position: absolute;
     left: 0;
     font-size: 0.65rem;
@@ -2933,7 +2305,7 @@
     font-weight: 700;
 }
 
-/* ── Contact Bar ── */
+/* â”€â”€ Contact Bar â”€â”€ */
 .cost-govt-contact {
     display: flex;
     flex-wrap: wrap;
@@ -2961,7 +2333,7 @@
     color: #f8fafc;
 }
 
-/* ── Quick Action Steps ── */
+/* â”€â”€ Quick Action Steps â”€â”€ */
 .cost-govt-quick-actions {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(59, 130, 246, 0.04));
     border: 1px solid rgba(16, 185, 129, 0.12);
@@ -3029,7 +2401,7 @@
     margin-top: 0;
 }
 
-/* ── Govt Schemes Responsive ── */
+/* â”€â”€ Govt Schemes Responsive â”€â”€ */
 @media (max-width: 900px) {
     .cost-govt-detail-grid {
         grid-template-columns: 1fr;
@@ -3065,7 +2437,7 @@
     }
 }
 
-/* ── Saving Tips ── */
+/* â”€â”€ Saving Tips â”€â”€ */
 .cost-tips-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -3122,7 +2494,7 @@
     margin: 0;
 }
 
-/* ── Cost Section Responsive ── */
+/* â”€â”€ Cost Section Responsive â”€â”€ */
 @media (max-width: 900px) {
     .cost-summary-cards {
         grid-template-columns: repeat(2, 1fr);
@@ -3169,11 +2541,11 @@
 }
 
 
-/* ═══════════════════════════════════════════════════════════
-   ENHANCED ANIMATIONS — TREATMENT PAGE
-   ═══════════════════════════════════════════════════════════ */
+/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+   ENHANCED ANIMATIONS â€” TREATMENT PAGE
+   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
 
-/* ── Hero Animated Background ── */
+/* â”€â”€ Hero Animated Background â”€â”€ */
 .trt-hero::before {
     content: '';
     position: absolute;
@@ -3202,7 +2574,7 @@
     z-index: 0;
 }
 
-/* ── Hero Title Glow ── */
+/* â”€â”€ Hero Title Glow â”€â”€ */
 .trt-hero-title {
     text-shadow: 0 0 40px rgba(16, 185, 129, 0.15);
     animation: hero-title-glow 4s ease-in-out infinite;
@@ -3213,7 +2585,7 @@
     50% { text-shadow: 0 0 60px rgba(16, 185, 129, 0.25); }
 }
 
-/* ── Specialty Cards Hover ── */
+/* â”€â”€ Specialty Cards Hover â”€â”€ */
 .trt-specialty-card {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.4s ease,
@@ -3233,7 +2605,7 @@
     transform: scale(1.25) rotate(-8deg);
 }
 
-/* ── Doctor Cards Hover ── */
+/* â”€â”€ Doctor Cards Hover â”€â”€ */
 .trt-doc-card {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.4s ease,
@@ -3255,7 +2627,7 @@
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
 }
 
-/* ── Appointment Cards ── */
+/* â”€â”€ Appointment Cards â”€â”€ */
 .trt-appt-card {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s;
 }
@@ -3265,7 +2637,7 @@
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* ── Animated Borders ── */
+/* â”€â”€ Animated Borders â”€â”€ */
 .trt-form-card {
     position: relative;
     transition: border-color 0.3s ease;
@@ -3290,7 +2662,7 @@
     opacity: 1;
 }
 
-/* ── Button Animations ── */
+/* â”€â”€ Button Animations â”€â”€ */
 .trt-find-btn,
 .trt-book-btn {
     position: relative;
@@ -3319,28 +2691,8 @@
     transform: translateX(100%);
 }
 
-/* ── Medicine Card Hover ── */
-.med-card {
-    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s, border-color 0.35s;
-}
 
-.med-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-    border-color: rgba(16, 185, 129, 0.2);
-}
-
-/* ── Pharmacy Row Hover ── */
-.med-pharmacy-row {
-    transition: background 0.25s ease, transform 0.25s;
-}
-
-.med-pharmacy-row:hover {
-    background: rgba(255, 255, 255, 0.04);
-    transform: translateX(4px);
-}
-
-/* ── Cost Section Card Hovers ── */
+/* â”€â”€ Cost Section Card Hovers â”€â”€ */
 .cost-breakdown-card {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.35s,
@@ -3369,7 +2721,7 @@
     transform: scale(1.15) rotate(-5deg);
 }
 
-/* ── Cost Bar Animation ── */
+/* â”€â”€ Cost Bar Animation â”€â”€ */
 .cost-bar-fill {
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     animation: bar-grow 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
@@ -3380,7 +2732,7 @@
     to { transform: scaleX(1); }
 }
 
-/* ── Grand Total Pulse ── */
+/* â”€â”€ Grand Total Pulse â”€â”€ */
 .cost-grand-row--final strong {
     animation: grand-total-pulse 2.5s ease-in-out infinite;
 }
@@ -3390,7 +2742,7 @@
     50% { text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
 }
 
-/* ── Govt Scheme Card Hover ── */
+/* â”€â”€ Govt Scheme Card Hover â”€â”€ */
 .cost-govt-detail-card {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s, border-color 0.3s;
 }
@@ -3408,7 +2760,7 @@
     transform: scale(1.2);
 }
 
-/* ── Saving Tip Number Bounce ── */
+/* â”€â”€ Saving Tip Number Bounce â”€â”€ */
 .cost-tip-num {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
 }
@@ -3418,7 +2770,7 @@
     background: rgba(16, 185, 129, 0.25);
 }
 
-/* ── Accordion Body Slide ── */
+/* â”€â”€ Accordion Body Slide â”€â”€ */
 .cost-acc-body,
 .cost-govt-card-body {
     animation: accordion-slide 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -3429,7 +2781,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* ── Section Marquee Separator ── */
+/* â”€â”€ Section Marquee Separator â”€â”€ */
 .trt-cost-section::before {
     content: '';
     display: block;
@@ -3446,7 +2798,7 @@
     50% { opacity: 1; width: 80%; }
 }
 
-/* ── Floating label animation for inputs ── */
+/* â”€â”€ Floating label animation for inputs â”€â”€ */
 .trt-input:focus {
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2), 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
@@ -3457,7 +2809,7 @@
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* ── Tag / Badge pulsing ── */
+/* â”€â”€ Tag / Badge pulsing â”€â”€ */
 .cost-govt-tag--cover {
     animation: tag-pulse 2s ease-in-out infinite;
 }
