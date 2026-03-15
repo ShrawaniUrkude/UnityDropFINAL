@@ -1,6 +1,6 @@
-﻿/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   TREATMENT & DOCTOR RECOMMENDATION â€” FULL PAGE STYLES
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ═══════════════════════════════════════════════════════════════
+   TREATMENT & DOCTOR RECOMMENDATION — FULL PAGE STYLES
+═══════════════════════════════════════════════════════════════ */
 
 .treatment-page {
     min-height: 100vh;
@@ -8,7 +8,7 @@
     padding-top: 70px;
 }
 
-/* â”€â”€â”€ Hero Section â”€â”€â”€ */
+/* ─── Hero Section ─── */
 .trt-hero {
     position: relative;
     padding: 60px 28px 50px;
@@ -99,7 +99,7 @@
     font-weight: 600;
 }
 
-/* â”€â”€â”€ Section Titles â”€â”€â”€ */
+/* ─── Section Titles ─── */
 .trt-section-title {
     display: flex;
     align-items: center;
@@ -122,7 +122,7 @@
     max-width: 700px;
 }
 
-/* â”€â”€â”€ Specialties Section â”€â”€â”€ */
+/* ─── Specialties Section ─── */
 .trt-specialties-section {
     padding: 0 28px 40px;
     max-width: 1200px;
@@ -203,7 +203,7 @@
     flex-shrink: 0;
 }
 
-/* â”€â”€â”€ Specialty Expanded â”€â”€â”€ */
+/* ─── Specialty Expanded ─── */
 .trt-specialty-expanded {
     margin-top: 24px;
     padding: 24px;
@@ -294,14 +294,14 @@
     line-height: 1.5;
 }
 
-/* â”€â”€â”€ Find Treatment Section â”€â”€â”€ */
+/* ─── Find Treatment Section ─── */
 .trt-find-section {
     padding: 40px 28px 60px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* â”€â”€â”€ Form & Results (reuse Hospital.css classes via trt- prefix) â”€â”€â”€ */
+/* ─── Form & Results (reuse Hospital.css classes via trt- prefix) ─── */
 .trt-body {
     display: grid;
     grid-template-columns: 380px 1fr;
@@ -459,7 +459,7 @@
 
 .trt-reset-btn:hover { background: rgba(255, 255, 255, 0.15); color: #fff; }
 
-/* â”€â”€â”€ Results â”€â”€â”€ */
+/* ─── Results ─── */
 .trt-results { min-width: 0; overflow: hidden; }
 
 .trt-results > h4 {
@@ -507,7 +507,7 @@
 .trt-can-treat-banner span { color: #94a3b8; font-size: 0.82rem; line-height: 1.5; }
 .trt-can-treat-banner span strong { color: #34d399; font-size: 0.82rem; display: inline; }
 
-/* â”€â”€â”€ Doctor Cards â”€â”€â”€ */
+/* ─── Doctor Cards ─── */
 .trt-doctors-list {
     display: flex;
     flex-direction: column;
@@ -613,7 +613,7 @@
 .trt-expand-btn svg { transition: transform 0.3s; }
 .trt-chevron-up { transform: rotate(180deg); }
 
-/* â”€â”€â”€ Reviews â”€â”€â”€ */
+/* ─── Reviews ─── */
 .trt-reviews {
     margin-top: 12px;
     display: flex;
@@ -663,7 +663,7 @@
     font-style: italic;
 }
 
-/* â”€â”€â”€ Action Bar â”€â”€â”€ */
+/* ─── Action Bar ─── */
 .trt-action-bar { display: flex; gap: 12px; align-items: center; }
 
 .trt-confirm-btn {
@@ -711,7 +711,7 @@
     border-color: rgba(239, 68, 68, 0.3);
 }
 
-/* â”€â”€â”€ History â”€â”€â”€ */
+/* ─── History ─── */
 .trt-history {
     margin-top: 24px;
     padding-top: 20px;
@@ -794,7 +794,7 @@
     flex-shrink: 0;
 }
 
-/* â”€â”€â”€ Responsive â”€â”€â”€ */
+/* ─── Responsive ─── */
 @media (max-width: 1024px) {
     .trt-specialties-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -839,9 +839,9 @@
     }
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════════════════
    APPOINTMENT BOOKING SECTION
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════════════════ */
 
 .trt-appointment-section {
     padding: 40px 28px 50px;
@@ -974,7 +974,7 @@
     color: #10b981 !important;
 }
 
-/* â”€â”€ Appointment List Card â”€â”€ */
+/* ── Appointment List Card ── */
 .appt-list-card {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1158,9 +1158,9 @@
     color: #10b981;
 }
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ═══════════════════════════════════════════════════════════════
    LANGUAGE TRANSLATOR SECTION
-â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+═══════════════════════════════════════════════════════════════ */
 
 .trt-translator-section {
     padding: 40px 28px 80px;
@@ -1323,7 +1323,7 @@
     text-align: center;
 }
 
-/* â”€â”€ Medical Phrasebook â”€â”€ */
+/* ── Medical Phrasebook ── */
 .translator-phrasebook {
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1438,7 +1438,7 @@
     text-align: right;
 }
 
-/* â”€â”€ Appointment & Translator Responsive â”€â”€ */
+/* ── Appointment & Translator Responsive ── */
 @media (max-width: 1024px) {
     .appt-content {
         grid-template-columns: 1fr;
@@ -1493,9 +1493,9 @@
 
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+/* ══════════════════════════════════════════════════════════════
    COST ANALYSIS SECTION
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+   ══════════════════════════════════════════════════════════════ */
 
 .trt-cost-section {
     padding: 60px 0 40px;
@@ -1511,7 +1511,7 @@
     margin: 0 auto 28px;
 }
 
-/* â”€â”€ Specialty Tabs â”€â”€ */
+/* ── Specialty Tabs ── */
 .cost-specialty-tabs {
     display: flex;
     flex-wrap: wrap;
@@ -1547,7 +1547,7 @@
     font-weight: 600;
 }
 
-/* â”€â”€ Summary Cards â”€â”€ */
+/* ── Summary Cards ── */
 .cost-summary-cards {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1622,7 +1622,7 @@
     margin-top: 2px;
 }
 
-/* â”€â”€ Visual Cost Bar â”€â”€ */
+/* ── Visual Cost Bar ── */
 .cost-visual-bar-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -1701,7 +1701,7 @@
     font-size: 0.72rem;
 }
 
-/* â”€â”€ Breakdown Accordions â”€â”€ */
+/* ── Breakdown Accordions ── */
 .cost-breakdown-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -1859,7 +1859,7 @@
     color: #10b981;
 }
 
-/* â”€â”€ Medicine Row in Cost â”€â”€ */
+/* ── Medicine Row in Cost ── */
 .cost-med-row {
     display: flex;
     justify-content: space-between;
@@ -1919,7 +1919,7 @@
     font-weight: 600;
 }
 
-/* â”€â”€ Grand Total â”€â”€ */
+/* ── Grand Total ── */
 .cost-grand-total {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(59, 130, 246, 0.04));
     border: 1px solid rgba(16, 185, 129, 0.15);
@@ -1998,7 +1998,7 @@
     color: #10b981;
 }
 
-/* â”€â”€ Government Schemes (Expanded) â”€â”€ */
+/* ── Government Schemes (Expanded) ── */
 .cost-govt-section {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -2182,7 +2182,7 @@
     color: #10b981;
 }
 
-/* â”€â”€ Expanded Card Body â”€â”€ */
+/* ── Expanded Card Body ── */
 .cost-govt-card-body {
     padding: 0 20px 20px;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -2279,7 +2279,7 @@
 }
 
 .cost-govt-doc-list li::before {
-    content: 'ðŸ“„';
+    content: '📄';
     position: absolute;
     left: 0;
     font-size: 0.65rem;
@@ -2305,7 +2305,7 @@
     font-weight: 700;
 }
 
-/* â”€â”€ Contact Bar â”€â”€ */
+/* ── Contact Bar ── */
 .cost-govt-contact {
     display: flex;
     flex-wrap: wrap;
@@ -2333,7 +2333,7 @@
     color: #f8fafc;
 }
 
-/* â”€â”€ Quick Action Steps â”€â”€ */
+/* ── Quick Action Steps ── */
 .cost-govt-quick-actions {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.06), rgba(59, 130, 246, 0.04));
     border: 1px solid rgba(16, 185, 129, 0.12);
@@ -2401,7 +2401,7 @@
     margin-top: 0;
 }
 
-/* â”€â”€ Govt Schemes Responsive â”€â”€ */
+/* ── Govt Schemes Responsive ── */
 @media (max-width: 900px) {
     .cost-govt-detail-grid {
         grid-template-columns: 1fr;
@@ -2437,7 +2437,7 @@
     }
 }
 
-/* â”€â”€ Saving Tips â”€â”€ */
+/* ── Saving Tips ── */
 .cost-tips-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
@@ -2494,7 +2494,7 @@
     margin: 0;
 }
 
-/* â”€â”€ Cost Section Responsive â”€â”€ */
+/* ── Cost Section Responsive ── */
 @media (max-width: 900px) {
     .cost-summary-cards {
         grid-template-columns: repeat(2, 1fr);
@@ -2541,11 +2541,11 @@
 }
 
 
-/* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-   ENHANCED ANIMATIONS â€” TREATMENT PAGE
-   â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
+/* ═══════════════════════════════════════════════════════════
+   ENHANCED ANIMATIONS — TREATMENT PAGE
+   ═══════════════════════════════════════════════════════════ */
 
-/* â”€â”€ Hero Animated Background â”€â”€ */
+/* ── Hero Animated Background ── */
 .trt-hero::before {
     content: '';
     position: absolute;
@@ -2574,7 +2574,7 @@
     z-index: 0;
 }
 
-/* â”€â”€ Hero Title Glow â”€â”€ */
+/* ── Hero Title Glow ── */
 .trt-hero-title {
     text-shadow: 0 0 40px rgba(16, 185, 129, 0.15);
     animation: hero-title-glow 4s ease-in-out infinite;
@@ -2585,7 +2585,7 @@
     50% { text-shadow: 0 0 60px rgba(16, 185, 129, 0.25); }
 }
 
-/* â”€â”€ Specialty Cards Hover â”€â”€ */
+/* ── Specialty Cards Hover ── */
 .trt-specialty-card {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.4s ease,
@@ -2605,7 +2605,7 @@
     transform: scale(1.25) rotate(-8deg);
 }
 
-/* â”€â”€ Doctor Cards Hover â”€â”€ */
+/* ── Doctor Cards Hover ── */
 .trt-doc-card {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.4s ease,
@@ -2627,7 +2627,7 @@
     box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
 }
 
-/* â”€â”€ Appointment Cards â”€â”€ */
+/* ── Appointment Cards ── */
 .trt-appt-card {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s;
 }
@@ -2637,7 +2637,7 @@
     box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* â”€â”€ Animated Borders â”€â”€ */
+/* ── Animated Borders ── */
 .trt-form-card {
     position: relative;
     transition: border-color 0.3s ease;
@@ -2662,7 +2662,7 @@
     opacity: 1;
 }
 
-/* â”€â”€ Button Animations â”€â”€ */
+/* ── Button Animations ── */
 .trt-find-btn,
 .trt-book-btn {
     position: relative;
@@ -2692,7 +2692,7 @@
 }
 
 
-/* â”€â”€ Cost Section Card Hovers â”€â”€ */
+/* ── Cost Section Card Hovers ── */
 .cost-breakdown-card {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
                 box-shadow 0.35s,
@@ -2721,7 +2721,7 @@
     transform: scale(1.15) rotate(-5deg);
 }
 
-/* â”€â”€ Cost Bar Animation â”€â”€ */
+/* ── Cost Bar Animation ── */
 .cost-bar-fill {
     transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
     animation: bar-grow 0.8s cubic-bezier(0.4, 0, 0.2, 1) both;
@@ -2732,7 +2732,7 @@
     to { transform: scaleX(1); }
 }
 
-/* â”€â”€ Grand Total Pulse â”€â”€ */
+/* ── Grand Total Pulse ── */
 .cost-grand-row--final strong {
     animation: grand-total-pulse 2.5s ease-in-out infinite;
 }
@@ -2742,7 +2742,7 @@
     50% { text-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
 }
 
-/* â”€â”€ Govt Scheme Card Hover â”€â”€ */
+/* ── Govt Scheme Card Hover ── */
 .cost-govt-detail-card {
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.35s, border-color 0.3s;
 }
@@ -2760,7 +2760,7 @@
     transform: scale(1.2);
 }
 
-/* â”€â”€ Saving Tip Number Bounce â”€â”€ */
+/* ── Saving Tip Number Bounce ── */
 .cost-tip-num {
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
 }
@@ -2770,7 +2770,7 @@
     background: rgba(16, 185, 129, 0.25);
 }
 
-/* â”€â”€ Accordion Body Slide â”€â”€ */
+/* ── Accordion Body Slide ── */
 .cost-acc-body,
 .cost-govt-card-body {
     animation: accordion-slide 0.35s cubic-bezier(0.4, 0, 0.2, 1);
@@ -2781,7 +2781,7 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-/* â”€â”€ Section Marquee Separator â”€â”€ */
+/* ── Section Marquee Separator ── */
 .trt-cost-section::before {
     content: '';
     display: block;
@@ -2798,7 +2798,7 @@
     50% { opacity: 1; width: 80%; }
 }
 
-/* â”€â”€ Floating label animation for inputs â”€â”€ */
+/* ── Floating label animation for inputs ── */
 .trt-input:focus {
     box-shadow: 0 0 0 2px rgba(16, 185, 129, 0.2), 0 4px 15px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
@@ -2809,7 +2809,7 @@
     transition: box-shadow 0.3s ease, border-color 0.3s ease;
 }
 
-/* â”€â”€ Tag / Badge pulsing â”€â”€ */
+/* ── Tag / Badge pulsing ── */
 .cost-govt-tag--cover {
     animation: tag-pulse 2s ease-in-out infinite;
 }
