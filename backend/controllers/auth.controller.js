@@ -1,6 +1,8 @@
 const User = require('../models/User');
 const jwt = require('jsonwebtoken');
 
+const allowedRoles = ['donor', 'ngo', 'volunteer', 'admin', 'hospital', 'patient', 'doctor'];
+
 // Generate JWT Token
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET || 'unitydrop_secret', {
@@ -9,13 +11,49 @@ const generateToken = (id) => {
 };
 
 // In-memory users for fallback
-let inMemoryUsers = [];
+let inMemoryUsers = [
+    {
+        _id: 'demo_patient_1',
+        name: 'Aarav Patient',
+        email: 'patient@unitydrop.demo',
+        password: 'patient123',
+        phone: '9000000001',
+        role: 'patient',
+        createdAt: new Date()
+    },
+    {
+        _id: 'demo_doctor_1',
+        name: 'Dr. Meera Shah',
+        email: 'doctor@unitydrop.demo',
+        password: 'doctor123',
+        phone: '9000000002',
+        role: 'doctor',
+        createdAt: new Date()
+    },
+    {
+        _id: 'demo_hospital_1',
+        name: 'CityCare Hospital',
+        email: 'hospital@unitydrop.demo',
+        password: 'hospital123',
+        phone: '9000000003',
+        role: 'hospital',
+        createdAt: new Date()
+    }
+];
 
 // @desc    Register user
 // @route   POST /api/auth/register
 exports.register = async (req, res) => {
     try {
         const { name, email, password, phone, role } = req.body;
+        const normalizedRole = role || 'donor';
+
+        if (!allowedRoles.includes(normalizedRole)) {
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid role selected'
+            });
+        }
         
         // Check if user exists
         try {
@@ -27,7 +65,7 @@ exports.register = async (req, res) => {
                 });
             }
             
-            const user = await User.create({ name, email, password, phone, role });
+            const user = await User.create({ name, email, password, phone, role: normalizedRole });
             const token = generateToken(user._id);
             
             res.status(201).json({
@@ -50,7 +88,7 @@ exports.register = async (req, res) => {
             
             const newUser = {
                 _id: `user_${Date.now()}`,
-                name, email, password, phone, role: role || 'donor',
+                name, email, password, phone, role: normalizedRole,
                 createdAt: new Date()
             };
             inMemoryUsers.push(newUser);
@@ -71,7 +109,7 @@ exports.register = async (req, res) => {
 // @route   POST /api/auth/login
 exports.login = async (req, res) => {
     try {
-        const { email, password } = req.body;
+        const { email, password, role } = req.body;
         
         if (!email || !password) {
             return res.status(400).json({
@@ -87,6 +125,13 @@ exports.login = async (req, res) => {
                 return res.status(401).json({
                     success: false,
                     message: 'Invalid email or password'
+                });
+            }
+
+            if (role && user.role !== role) {
+                return res.status(403).json({
+                    success: false,
+                    message: `This account is registered as ${user.role}, not ${role}`
                 });
             }
             
@@ -111,6 +156,13 @@ exports.login = async (req, res) => {
             const user = inMemoryUsers.find(u => u.email === email && u.password === password);
             if (!user) {
                 return res.status(401).json({ success: false, message: 'Invalid email or password' });
+            }
+
+            if (role && user.role !== role) {
+                return res.status(403).json({
+                    success: false,
+                    message: `This account is registered as ${user.role}, not ${role}`
+                });
             }
             
             const token = generateToken(user._id);

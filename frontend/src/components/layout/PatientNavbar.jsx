@@ -1,5 +1,7 @@
 import { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { getRoleLabel } from '../../utils/authRoutes';
 import './PatientNavbar.css';
 
 const patientLinks = [
@@ -12,6 +14,14 @@ const patientLinks = [
 
 export default function PatientNavbar() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const navigate = useNavigate();
+    const { user, isAuthenticated, logout, getHomeRoute } = useAuth();
+
+    const handleLogout = async () => {
+        await logout();
+        setMenuOpen(false);
+        navigate('/login');
+    };
 
     return (
         <header className="patient-navbar">
@@ -36,9 +46,20 @@ export default function PatientNavbar() {
                     ))}
                 </nav>
 
-                <Link to="/donate" className="patient-navbar__cta">
-                    Emergency Donate
-                </Link>
+                {isAuthenticated ? (
+                    <div className="patient-navbar__session">
+                        <Link to={getHomeRoute(user?.role)} className="patient-navbar__role-chip">
+                            {user?.name || 'User'} · {getRoleLabel(user?.role)}
+                        </Link>
+                        <button type="button" className="patient-navbar__logout" onClick={handleLogout}>
+                            Logout
+                        </button>
+                    </div>
+                ) : (
+                    <Link to="/login" className="patient-navbar__cta">
+                        Role Login
+                    </Link>
+                )}
 
                 <button
                     className={`patient-navbar__menu-btn ${menuOpen ? 'open' : ''}`}
@@ -65,9 +86,24 @@ export default function PatientNavbar() {
                         {label}
                     </NavLink>
                 ))}
-                <Link to="/donate" className="patient-navbar__mobile-cta" onClick={() => setMenuOpen(false)}>
-                    Emergency Donate
-                </Link>
+                {isAuthenticated ? (
+                    <>
+                        <Link
+                            to={getHomeRoute(user?.role)}
+                            className="patient-navbar__mobile-cta patient-navbar__mobile-role"
+                            onClick={() => setMenuOpen(false)}
+                        >
+                            {user?.name || 'User'} · {getRoleLabel(user?.role)}
+                        </Link>
+                        <button type="button" className="patient-navbar__mobile-logout" onClick={handleLogout}>
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <Link to="/login" className="patient-navbar__mobile-cta" onClick={() => setMenuOpen(false)}>
+                        Role Login
+                    </Link>
+                )}
             </div>
         </header>
     );

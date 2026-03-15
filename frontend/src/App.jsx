@@ -4,6 +4,7 @@ import { gsap } from './hooks/useGsap';
 import Navbar from './components/layout/Navbar';
 import PatientNavbar from './components/layout/PatientNavbar';
 import Footer from './components/layout/Footer';
+import { AuthProvider } from './context/AuthContext';
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import About from './pages/About';
@@ -11,6 +12,7 @@ import Donate from './pages/Donate';
 import Hospital from './pages/Hospital';
 import FoodDonation from './pages/FoodDonation';
 import AssetTracking from './pages/AssetTracking';
+import AuthPortal from './pages/AuthPortal';
 
 /* Scroll to top + page transition on navigation */
 function ScrollToTop() {
@@ -129,6 +131,7 @@ function AppInner() {
           <Route path="/hospital" element={<Hospital />} />
           <Route path="/asset-tracking" element={<AssetTracking />} />
           <Route path="/donate" element={<Donate />} />
+          <Route path="/login" element={<AuthPortal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </PageTransition>
@@ -159,8 +162,10 @@ function NotFound() {
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <AppInner />
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <AppInner />
+      </BrowserRouter>
+    </AuthProvider>
   );
 }

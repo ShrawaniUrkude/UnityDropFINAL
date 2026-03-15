@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { NavLink, Link, useLocation } from 'react-router-dom';
+import { NavLink, Link, useLocation, useNavigate } from 'react-router-dom';
 import { gsap } from '../../hooks/useGsap';
+import { useAuth } from '../../context/AuthContext';
+import { getRoleLabel } from '../../utils/authRoutes';
 import './Navbar.css';
 
 const navLinks = [
@@ -17,6 +19,8 @@ export default function Navbar() {
     const [menuOpen, setMenuOpen] = useState(false);
     const [notifOpen, setNotifOpen] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
+    const { user, isAuthenticated, logout, getHomeRoute } = useAuth();
     const isHome = location.pathname === '/';
 
     const headerRef = useRef(null);
@@ -25,7 +29,6 @@ export default function Navbar() {
     const actionsRef = useRef(null);
     const notifPanelRef = useRef(null);
     const mobileMenuRef = useRef(null);
-    const donateRef = useRef(null);
 
     /* Entrance animation */
     useEffect(() => {
@@ -33,18 +36,6 @@ export default function Navbar() {
         tl.fromTo(logoRef.current, { x: -30, opacity: 0, scale: 0.8 }, { x: 0, opacity: 1, scale: 1, duration: 0.6 })
           .fromTo(navRef.current?.children || [], { y: -20, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, stagger: 0.06 }, '-=0.3')
           .fromTo(actionsRef.current, { x: 30, opacity: 0 }, { x: 0, opacity: 1, duration: 0.5 }, '-=0.3');
-    }, []);
-
-    /* Donate button pulse */
-    useEffect(() => {
-        if (!donateRef.current) return;
-        gsap.to(donateRef.current, {
-            boxShadow: '0 0 20px rgba(76, 175, 135, 0.5), 0 0 40px rgba(76, 175, 135, 0.2)',
-            duration: 1.2,
-            repeat: -1,
-            yoyo: true,
-            ease: 'sine.inOut',
-        });
     }, []);
 
     useEffect(() => {
@@ -99,6 +90,10 @@ export default function Navbar() {
     }, []);
 
     const transparent = isHome && !scrolled;
+    const handleLogout = async () => {
+        await logout();
+        navigate('/login');
+    };
 
     return (
         <header ref={headerRef} className={`navbar ${scrolled ? 'navbar--scrolled' : ''} ${transparent ? 'navbar--transparent' : ''}`}>
@@ -156,10 +151,20 @@ export default function Navbar() {
                         </div>
                     )}
 
-                    <Link to="/donate" className="btn btn-primary btn-sm navbar__donate-btn" ref={donateRef}>
-                        <span className="navbar__donate-sparkle">✦</span>
-                        Donate Now
-                    </Link>
+                    {isAuthenticated ? (
+                        <>
+                            <Link to={getHomeRoute(user?.role)} className="navbar__session-pill">
+                                {user?.name || 'User'} · {getRoleLabel(user?.role)}
+                            </Link>
+                            <button type="button" className="navbar__auth-btn" onClick={handleLogout}>
+                                Logout
+                            </button>
+                        </>
+                    ) : (
+                        <Link to="/login" className="navbar__auth-btn navbar__auth-btn--primary">
+                            Role Login
+                        </Link>
+                    )}
 
                     {/* Hamburger */}
                     <button
@@ -186,9 +191,20 @@ export default function Navbar() {
                         {label}
                     </NavLink>
                 ))}
-                <Link to="/donate" className="btn btn-primary" style={{ margin: '8px 0 0' }}>
-                    Donate Now
-                </Link>
+                {isAuthenticated ? (
+                    <>
+                        <Link to={getHomeRoute(user?.role)} className="navbar__mobile-auth-link">
+                            {user?.name || 'User'} · {getRoleLabel(user?.role)}
+                        </Link>
+                        <button type="button" className="navbar__mobile-auth-btn" onClick={handleLogout}>
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <Link to="/login" className="navbar__mobile-auth-link navbar__mobile-auth-link--primary">
+                        Role Login
+                    </Link>
+                )}
             </div>
         </header>
     );

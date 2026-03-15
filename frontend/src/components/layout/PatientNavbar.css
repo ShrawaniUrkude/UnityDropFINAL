@@ -6,6 +6,7 @@
     z-index: 1000;
     height: var(--navbar-h);
     background: rgba(8, 16, 30, 0.92);
+    -webkit-backdrop-filter: blur(18px);
     backdrop-filter: blur(18px);
     border-bottom: 1px solid rgba(56, 189, 248, 0.2);
 }
@@ -80,6 +81,43 @@
     flex-shrink: 0;
 }
 
+.patient-navbar__session {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-left: auto;
+}
+
+.patient-navbar__role-chip,
+.patient-navbar__logout,
+.patient-navbar__mobile-logout {
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    padding: 9px 14px;
+}
+
+.patient-navbar__role-chip {
+    color: #ecfeff;
+    background: rgba(56, 189, 248, 0.16);
+    border: 1px solid rgba(125, 211, 252, 0.34);
+}
+
+.patient-navbar__logout,
+.patient-navbar__mobile-logout {
+    color: #ffe4e6;
+    background: rgba(244, 63, 94, 0.16);
+    border: 1px solid rgba(251, 113, 133, 0.28);
+}
+
+.patient-navbar__mobile-logout {
+    text-align: center;
+}
+
+.patient-navbar__mobile-role {
+    background: rgba(56, 189, 248, 0.16);
+}
+
 .patient-navbar__menu-btn {
     display: none;
     width: 38px;
@@ -106,7 +144,8 @@
 
 @media (max-width: 1024px) {
     .patient-navbar__links,
-    .patient-navbar__cta {
+    .patient-navbar__cta,
+    .patient-navbar__session {
         display: none;
     }
 
